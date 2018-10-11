@@ -8,24 +8,66 @@
 
 /* Begin PBXBuildFile section */
 		113444682148F539001D3046 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 113444672148F539001D3046 /* AppDelegate.m */; };
-		1134446B2148F53A001D3046 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1134446A2148F53A001D3046 /* ViewController.m */; };
-		1134446E2148F53A001D3046 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1134446C2148F53A001D3046 /* Main.storyboard */; };
 		113444702148F545001D3046 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1134446F2148F545001D3046 /* Assets.xcassets */; };
-		113444732148F545001D3046 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 113444712148F545001D3046 /* LaunchScreen.storyboard */; };
 		113444762148F545001D3046 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 113444752148F545001D3046 /* main.m */; };
+		114C2AD2214904A300F71482 /* V2RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 114C2AD1214904A300F71482 /* V2RootViewController.m */; };
+		11C33577214D2956009D3CE1 /* QHNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 11C33576214D2956009D3CE1 /* QHNavigationController.m */; };
+		11C33580214D2B97009D3CE1 /* QHViewController+NaviBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 11C3357F214D2B97009D3CE1 /* QHViewController+NaviBar.m */; };
+		11C33583214D2C51009D3CE1 /* QHNavigationItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 11C33582214D2C51009D3CE1 /* QHNavigationItem.m */; };
+		11C33586214D2C71009D3CE1 /* QHBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 11C33585214D2C71009D3CE1 /* QHBarButtonItem.m */; };
+		11C3358B214D354A009D3CE1 /* QHNavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 11C3358A214D354A009D3CE1 /* QHNavigationBar.m */; };
+		11C33590214D38E0009D3CE1 /* UIView+SafeArea.m in Sources */ = {isa = PBXBuildFile; fileRef = 11C3358F214D38E0009D3CE1 /* UIView+SafeArea.m */; };
+		11C33594214D3B7F009D3CE1 /* QHSettingManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 11C33593214D3B7F009D3CE1 /* QHSettingManager.m */; };
+		11C33599214E0C10009D3CE1 /* QHCategoriesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 11C33598214E0C10009D3CE1 /* QHCategoriesViewController.m */; };
+		11C3359C214E0C2B009D3CE1 /* QHTopicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 11C3359B214E0C2B009D3CE1 /* QHTopicViewController.m */; };
+		11C3359F214E403E009D3CE1 /* QHNavigationPushAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 11C3359E214E403E009D3CE1 /* QHNavigationPushAnimation.m */; };
+		11C335A2214E4081009D3CE1 /* QHNavigationPopAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 11C335A1214E4081009D3CE1 /* QHNavigationPopAnimation.m */; };
+		11DB38CB216DF97200E63924 /* UIImage+Tint.m in Sources */ = {isa = PBXBuildFile; fileRef = 11DB38CA216DF97200E63924 /* UIImage+Tint.m */; };
+		11DB38D0216F0CC200E63924 /* EXTScope.m in Sources */ = {isa = PBXBuildFile; fileRef = 11DB38CE216F0CC200E63924 /* EXTScope.m */; };
+		1B42F89DF540AFAA6C6F4762 /* Pods_v2exnew.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF7150F585E834B6461D29DB /* Pods_v2exnew.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		113444632148F539001D3046 /* v2exnew.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = v2exnew.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		113444662148F539001D3046 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		113444672148F539001D3046 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		113444692148F539001D3046 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		1134446A2148F53A001D3046 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		1134446D2148F53A001D3046 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		1134446F2148F545001D3046 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		113444722148F545001D3046 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		113444742148F545001D3046 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		113444752148F545001D3046 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		114C2AD0214904A300F71482 /* V2RootViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = V2RootViewController.h; sourceTree = "<group>"; };
+		114C2AD1214904A300F71482 /* V2RootViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = V2RootViewController.m; sourceTree = "<group>"; };
+		11C33575214D2956009D3CE1 /* QHNavigationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QHNavigationController.h; sourceTree = "<group>"; };
+		11C33576214D2956009D3CE1 /* QHNavigationController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QHNavigationController.m; sourceTree = "<group>"; };
+		11C3357E214D2B97009D3CE1 /* QHViewController+NaviBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "QHViewController+NaviBar.h"; sourceTree = "<group>"; };
+		11C3357F214D2B97009D3CE1 /* QHViewController+NaviBar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "QHViewController+NaviBar.m"; sourceTree = "<group>"; };
+		11C33581214D2C51009D3CE1 /* QHNavigationItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QHNavigationItem.h; sourceTree = "<group>"; };
+		11C33582214D2C51009D3CE1 /* QHNavigationItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QHNavigationItem.m; sourceTree = "<group>"; };
+		11C33584214D2C71009D3CE1 /* QHBarButtonItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QHBarButtonItem.h; sourceTree = "<group>"; };
+		11C33585214D2C71009D3CE1 /* QHBarButtonItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QHBarButtonItem.m; sourceTree = "<group>"; };
+		11C33587214D2D9E009D3CE1 /* v2ex-new-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "v2ex-new-Prefix.pch"; sourceTree = "<group>"; };
+		11C33588214D350A009D3CE1 /* QHNavigation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QHNavigation.h; sourceTree = "<group>"; };
+		11C33589214D354A009D3CE1 /* QHNavigationBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QHNavigationBar.h; sourceTree = "<group>"; };
+		11C3358A214D354A009D3CE1 /* QHNavigationBar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QHNavigationBar.m; sourceTree = "<group>"; };
+		11C3358E214D38E0009D3CE1 /* UIView+SafeArea.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIView+SafeArea.h"; sourceTree = "<group>"; };
+		11C3358F214D38E0009D3CE1 /* UIView+SafeArea.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIView+SafeArea.m"; sourceTree = "<group>"; };
+		11C33592214D3B7F009D3CE1 /* QHSettingManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QHSettingManager.h; sourceTree = "<group>"; };
+		11C33593214D3B7F009D3CE1 /* QHSettingManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QHSettingManager.m; sourceTree = "<group>"; };
+		11C33597214E0C10009D3CE1 /* QHCategoriesViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QHCategoriesViewController.h; sourceTree = "<group>"; };
+		11C33598214E0C10009D3CE1 /* QHCategoriesViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QHCategoriesViewController.m; sourceTree = "<group>"; };
+		11C3359A214E0C2B009D3CE1 /* QHTopicViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QHTopicViewController.h; sourceTree = "<group>"; };
+		11C3359B214E0C2B009D3CE1 /* QHTopicViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QHTopicViewController.m; sourceTree = "<group>"; };
+		11C3359D214E403E009D3CE1 /* QHNavigationPushAnimation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QHNavigationPushAnimation.h; sourceTree = "<group>"; };
+		11C3359E214E403E009D3CE1 /* QHNavigationPushAnimation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QHNavigationPushAnimation.m; sourceTree = "<group>"; };
+		11C335A0214E4081009D3CE1 /* QHNavigationPopAnimation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QHNavigationPopAnimation.h; sourceTree = "<group>"; };
+		11C335A1214E4081009D3CE1 /* QHNavigationPopAnimation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QHNavigationPopAnimation.m; sourceTree = "<group>"; };
+		11DB38C9216DF97200E63924 /* UIImage+Tint.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+Tint.h"; sourceTree = "<group>"; };
+		11DB38CA216DF97200E63924 /* UIImage+Tint.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Tint.m"; sourceTree = "<group>"; };
+		11DB38CD216F0CC100E63924 /* EXTScope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EXTScope.h; sourceTree = "<group>"; };
+		11DB38CE216F0CC200E63924 /* EXTScope.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EXTScope.m; sourceTree = "<group>"; };
+		11DB38CF216F0CC200E63924 /* metamacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = metamacros.h; sourceTree = "<group>"; };
+		7BEFEFCDBDD025EEB72EEF59 /* Pods-v2exnew.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-v2exnew.debug.xcconfig"; path = "Pods/Target Support Files/Pods-v2exnew/Pods-v2exnew.debug.xcconfig"; sourceTree = "<group>"; };
+		8ADA0D8BE6493C90151FC7D5 /* Pods-v2exnew.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-v2exnew.release.xcconfig"; path = "Pods/Target Support Files/Pods-v2exnew/Pods-v2exnew.release.xcconfig"; sourceTree = "<group>"; };
+		CF7150F585E834B6461D29DB /* Pods_v2exnew.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_v2exnew.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,6 +75,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1B42F89DF540AFAA6C6F4762 /* Pods_v2exnew.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -44,6 +87,8 @@
 			children = (
 				113444652148F539001D3046 /* v2exnew */,
 				113444642148F539001D3046 /* Products */,
+				C185D3D846F2BB4DE1CD96F7 /* Pods */,
+				3A3313AC21317C048EC2574E /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -58,17 +103,141 @@
 		113444652148F539001D3046 /* v2exnew */ = {
 			isa = PBXGroup;
 			children = (
-				113444662148F539001D3046 /* AppDelegate.h */,
-				113444672148F539001D3046 /* AppDelegate.m */,
-				113444692148F539001D3046 /* ViewController.h */,
-				1134446A2148F53A001D3046 /* ViewController.m */,
-				1134446C2148F53A001D3046 /* Main.storyboard */,
+				11C33591214D3B53009D3CE1 /* Managers */,
+				11C33573214D2900009D3CE1 /* Additions */,
+				114C2ACF2149045900F71482 /* Controllers */,
+				1134447D21490316001D3046 /* Supporting Files */,
 				1134446F2148F545001D3046 /* Assets.xcassets */,
-				113444712148F545001D3046 /* LaunchScreen.storyboard */,
-				113444742148F545001D3046 /* Info.plist */,
-				113444752148F545001D3046 /* main.m */,
 			);
 			path = v2exnew;
+			sourceTree = "<group>";
+		};
+		1134447D21490316001D3046 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				113444662148F539001D3046 /* AppDelegate.h */,
+				113444672148F539001D3046 /* AppDelegate.m */,
+				113444742148F545001D3046 /* Info.plist */,
+				113444752148F545001D3046 /* main.m */,
+				11C33587214D2D9E009D3CE1 /* v2ex-new-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		114C2ACF2149045900F71482 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				114C2AD0214904A300F71482 /* V2RootViewController.h */,
+				114C2AD1214904A300F71482 /* V2RootViewController.m */,
+				11C33595214E0BAD009D3CE1 /* Sections */,
+				11C33596214E0BB6009D3CE1 /* Contents */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		11C33573214D2900009D3CE1 /* Additions */ = {
+			isa = PBXGroup;
+			children = (
+				11DB38CC216F0C9A00E63924 /* EXTScope */,
+				11DB38C8216DF94D00E63924 /* Helpers */,
+				11C3358C214D38B2009D3CE1 /* Categories */,
+				11C33574214D290D009D3CE1 /* QHNavigation */,
+			);
+			path = Additions;
+			sourceTree = "<group>";
+		};
+		11C33574214D290D009D3CE1 /* QHNavigation */ = {
+			isa = PBXGroup;
+			children = (
+				11C335A0214E4081009D3CE1 /* QHNavigationPopAnimation.h */,
+				11C335A1214E4081009D3CE1 /* QHNavigationPopAnimation.m */,
+				11C3359D214E403E009D3CE1 /* QHNavigationPushAnimation.h */,
+				11C3359E214E403E009D3CE1 /* QHNavigationPushAnimation.m */,
+				11C33575214D2956009D3CE1 /* QHNavigationController.h */,
+				11C33576214D2956009D3CE1 /* QHNavigationController.m */,
+				11C3357E214D2B97009D3CE1 /* QHViewController+NaviBar.h */,
+				11C3357F214D2B97009D3CE1 /* QHViewController+NaviBar.m */,
+				11C33581214D2C51009D3CE1 /* QHNavigationItem.h */,
+				11C33582214D2C51009D3CE1 /* QHNavigationItem.m */,
+				11C33584214D2C71009D3CE1 /* QHBarButtonItem.h */,
+				11C33585214D2C71009D3CE1 /* QHBarButtonItem.m */,
+				11C33588214D350A009D3CE1 /* QHNavigation.h */,
+				11C33589214D354A009D3CE1 /* QHNavigationBar.h */,
+				11C3358A214D354A009D3CE1 /* QHNavigationBar.m */,
+			);
+			path = QHNavigation;
+			sourceTree = "<group>";
+		};
+		11C3358C214D38B2009D3CE1 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				11C3358E214D38E0009D3CE1 /* UIView+SafeArea.h */,
+				11C3358F214D38E0009D3CE1 /* UIView+SafeArea.m */,
+			);
+			path = Categories;
+			sourceTree = "<group>";
+		};
+		11C33591214D3B53009D3CE1 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				11C33592214D3B7F009D3CE1 /* QHSettingManager.h */,
+				11C33593214D3B7F009D3CE1 /* QHSettingManager.m */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		11C33595214E0BAD009D3CE1 /* Sections */ = {
+			isa = PBXGroup;
+			children = (
+				11C33597214E0C10009D3CE1 /* QHCategoriesViewController.h */,
+				11C33598214E0C10009D3CE1 /* QHCategoriesViewController.m */,
+			);
+			path = Sections;
+			sourceTree = "<group>";
+		};
+		11C33596214E0BB6009D3CE1 /* Contents */ = {
+			isa = PBXGroup;
+			children = (
+				11C3359A214E0C2B009D3CE1 /* QHTopicViewController.h */,
+				11C3359B214E0C2B009D3CE1 /* QHTopicViewController.m */,
+			);
+			path = Contents;
+			sourceTree = "<group>";
+		};
+		11DB38C8216DF94D00E63924 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				11DB38C9216DF97200E63924 /* UIImage+Tint.h */,
+				11DB38CA216DF97200E63924 /* UIImage+Tint.m */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		11DB38CC216F0C9A00E63924 /* EXTScope */ = {
+			isa = PBXGroup;
+			children = (
+				11DB38CD216F0CC100E63924 /* EXTScope.h */,
+				11DB38CE216F0CC200E63924 /* EXTScope.m */,
+				11DB38CF216F0CC200E63924 /* metamacros.h */,
+			);
+			path = EXTScope;
+			sourceTree = "<group>";
+		};
+		3A3313AC21317C048EC2574E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				CF7150F585E834B6461D29DB /* Pods_v2exnew.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C185D3D846F2BB4DE1CD96F7 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				7BEFEFCDBDD025EEB72EEF59 /* Pods-v2exnew.debug.xcconfig */,
+				8ADA0D8BE6493C90151FC7D5 /* Pods-v2exnew.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -78,9 +247,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 113444792148F545001D3046 /* Build configuration list for PBXNativeTarget "v2exnew" */;
 			buildPhases = (
+				04DB332D950BEEC2845B4F47 /* [CP] Check Pods Manifest.lock */,
 				1134445F2148F539001D3046 /* Sources */,
 				113444602148F539001D3046 /* Frameworks */,
 				113444612148F539001D3046 /* Resources */,
+				181CEFF21196EF0308E32404 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -128,45 +299,78 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				113444732148F545001D3046 /* LaunchScreen.storyboard in Resources */,
 				113444702148F545001D3046 /* Assets.xcassets in Resources */,
-				1134446E2148F53A001D3046 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		04DB332D950BEEC2845B4F47 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-v2exnew-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		181CEFF21196EF0308E32404 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-v2exnew/Pods-v2exnew-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/BlocksKit/BlocksKit.framework",
+				"${BUILT_PRODUCTS_DIR}/FrameAccessor/FrameAccessor.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BlocksKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FrameAccessor.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-v2exnew/Pods-v2exnew-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		1134445F2148F539001D3046 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1134446B2148F53A001D3046 /* ViewController.m in Sources */,
+				11DB38D0216F0CC200E63924 /* EXTScope.m in Sources */,
+				11C33590214D38E0009D3CE1 /* UIView+SafeArea.m in Sources */,
+				11C33586214D2C71009D3CE1 /* QHBarButtonItem.m in Sources */,
+				11C33580214D2B97009D3CE1 /* QHViewController+NaviBar.m in Sources */,
+				11C3358B214D354A009D3CE1 /* QHNavigationBar.m in Sources */,
+				11C33577214D2956009D3CE1 /* QHNavigationController.m in Sources */,
+				11C335A2214E4081009D3CE1 /* QHNavigationPopAnimation.m in Sources */,
+				11C3359F214E403E009D3CE1 /* QHNavigationPushAnimation.m in Sources */,
+				11C33599214E0C10009D3CE1 /* QHCategoriesViewController.m in Sources */,
+				114C2AD2214904A300F71482 /* V2RootViewController.m in Sources */,
 				113444762148F545001D3046 /* main.m in Sources */,
+				11C33594214D3B7F009D3CE1 /* QHSettingManager.m in Sources */,
+				11C3359C214E0C2B009D3CE1 /* QHTopicViewController.m in Sources */,
+				11DB38CB216DF97200E63924 /* UIImage+Tint.m in Sources */,
 				113444682148F539001D3046 /* AppDelegate.m in Sources */,
+				11C33583214D2C51009D3CE1 /* QHNavigationItem.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		1134446C2148F53A001D3046 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				1134446D2148F53A001D3046 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		113444712148F545001D3046 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				113444722148F545001D3046 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		113444772148F545001D3046 /* Debug */ = {
@@ -281,10 +485,18 @@
 		};
 		1134447A2148F545001D3046 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7BEFEFCDBDD025EEB72EEF59 /* Pods-v2exnew.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = J5FZC7U82Y;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "v2exnew/v2ex-new-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_ROOT}/Headers/Public/BlocksKit\"",
+					"\"${PODS_ROOT}/Headers/Public/FrameAccessor\"",
+				);
 				INFOPLIST_FILE = v2exnew/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -292,16 +504,25 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = sysu.pqh.v2exnew;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
 		1134447B2148F545001D3046 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8ADA0D8BE6493C90151FC7D5 /* Pods-v2exnew.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = J5FZC7U82Y;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "v2exnew/v2ex-new-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_ROOT}/Headers/Public/BlocksKit\"",
+					"\"${PODS_ROOT}/Headers/Public/FrameAccessor\"",
+				);
 				INFOPLIST_FILE = v2exnew/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -309,6 +530,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = sysu.pqh.v2exnew;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

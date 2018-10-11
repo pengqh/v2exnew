@@ -7,11 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+@class V2RootViewController;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 
+@property (nonatomic, strong) V2RootViewController *rootViewController;
 
 @end
 
