@@ -9,6 +9,7 @@
 #import "V2RootViewController.h"
 
 #import "QHCategoriesViewController.h"
+#import "QHMenuView.h"
 
 static CGFloat const kMenuWidth = 240.0;
 
@@ -28,7 +29,7 @@ static CGFloat const kMenuWidth = 240.0;
 @property (nonatomic, strong) QHNavigationController       *nofificationNavigationController;
 @property (nonatomic, strong) QHNavigationController       *profilenavigationController;
 
-
+@property (nonatomic, strong) QHMenuView *menuView;
 @property (nonatomic, strong) UIView *viewControllerContainView;
 @property (nonatomic, assign) NSInteger currentSelectedIndex;
 
@@ -72,6 +73,7 @@ static CGFloat const kMenuWidth = 240.0;
 - (void)viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
     
+    self.viewControllerContainView.frame = self.view.frame;
     self.rootBackgroundButton.frame = self.view.frame;
 }
 
@@ -84,6 +86,8 @@ static CGFloat const kMenuWidth = 240.0;
     self.rootBackgroundButton.hidden = YES;
     [self.view addSubview:self.rootBackgroundButton];
     
+    self.menuView = [[QHMenuView alloc] initWithFrame:(CGRect){-kMenuWidth, 0, kMenuWidth, kScreenHeight}];
+    [self.view addSubview:self.menuView];
     
     // Handles
     @weakify(self);
@@ -93,6 +97,13 @@ static CGFloat const kMenuWidth = 240.0;
         [UIView animateWithDuration:0.3 animations:^{
             [self setMenuOffset:0.0f];
         }];
+    }];
+    
+    [self.menuView setDidSelectedIndexBlock:^(NSInteger index) {
+        @strongify(self);
+        
+        [self showViewControllerAtIndex:index animated:YES];
+        //[V2SettingManager manager].selectedSectionIndex = index;
     }];
 }
 
@@ -126,7 +137,14 @@ static CGFloat const kMenuWidth = 240.0;
     [self.rootBackgroundButton addGestureRecognizer:panRecoginzer];
 }
 
-#pragma mark private method
+#pragma mark - Private Methods
+
+- (void)showViewControllerAtIndex:(V2SectionIndex)index animated:(BOOL)animated {
+    NSLog(@"aaaaaaaa");
+    [UIView animateWithDuration:0.3 delay:0.1 options:UIViewAnimationOptionCurveEaseOut animations:^{
+        [self setMenuOffset:0.0f];
+    } completion:nil];
+}
 
 - (UIViewController *)viewControllerForIndex:(V2SectionIndex)index {
     
@@ -159,7 +177,8 @@ static CGFloat const kMenuWidth = 240.0;
 }
 
 - (void)setMenuOffset:(CGFloat)offset {
-    
+    self.menuView.x = offset - kMenuWidth;
+    [self.menuView setOffsetProgress:offset/kMenuWidth];
     self.rootBackgroundButton.alpha = offset/kMenuWidth * 0.3;
     UIViewController *previousViewController = [self viewControllerForIndex:self.currentSelectedIndex];
     previousViewController.view.x       = offset/8.0;

@@ -24,6 +24,9 @@
 		11C335A2214E4081009D3CE1 /* QHNavigationPopAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 11C335A1214E4081009D3CE1 /* QHNavigationPopAnimation.m */; };
 		11DB38CB216DF97200E63924 /* UIImage+Tint.m in Sources */ = {isa = PBXBuildFile; fileRef = 11DB38CA216DF97200E63924 /* UIImage+Tint.m */; };
 		11DB38D0216F0CC200E63924 /* EXTScope.m in Sources */ = {isa = PBXBuildFile; fileRef = 11DB38CE216F0CC200E63924 /* EXTScope.m */; };
+		11DB38D5216F1D0E00E63924 /* QHMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 11DB38D4216F1D0E00E63924 /* QHMenuView.m */; };
+		11DB38D8216F2C6900E63924 /* QHMenuSectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 11DB38D7216F2C6900E63924 /* QHMenuSectionView.m */; };
+		11DB38DB216F341200E63924 /* QHMenuSectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 11DB38DA216F341200E63924 /* QHMenuSectionCell.m */; };
 		1B42F89DF540AFAA6C6F4762 /* Pods_v2exnew.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF7150F585E834B6461D29DB /* Pods_v2exnew.framework */; };
 /* End PBXBuildFile section */
 
@@ -65,6 +68,12 @@
 		11DB38CD216F0CC100E63924 /* EXTScope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EXTScope.h; sourceTree = "<group>"; };
 		11DB38CE216F0CC200E63924 /* EXTScope.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EXTScope.m; sourceTree = "<group>"; };
 		11DB38CF216F0CC200E63924 /* metamacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = metamacros.h; sourceTree = "<group>"; };
+		11DB38D3216F1D0E00E63924 /* QHMenuView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QHMenuView.h; sourceTree = "<group>"; };
+		11DB38D4216F1D0E00E63924 /* QHMenuView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QHMenuView.m; sourceTree = "<group>"; };
+		11DB38D6216F2C6900E63924 /* QHMenuSectionView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QHMenuSectionView.h; sourceTree = "<group>"; };
+		11DB38D7216F2C6900E63924 /* QHMenuSectionView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QHMenuSectionView.m; sourceTree = "<group>"; };
+		11DB38D9216F341200E63924 /* QHMenuSectionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QHMenuSectionCell.h; sourceTree = "<group>"; };
+		11DB38DA216F341200E63924 /* QHMenuSectionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QHMenuSectionCell.m; sourceTree = "<group>"; };
 		7BEFEFCDBDD025EEB72EEF59 /* Pods-v2exnew.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-v2exnew.debug.xcconfig"; path = "Pods/Target Support Files/Pods-v2exnew/Pods-v2exnew.debug.xcconfig"; sourceTree = "<group>"; };
 		8ADA0D8BE6493C90151FC7D5 /* Pods-v2exnew.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-v2exnew.release.xcconfig"; path = "Pods/Target Support Files/Pods-v2exnew/Pods-v2exnew.release.xcconfig"; sourceTree = "<group>"; };
 		CF7150F585E834B6461D29DB /* Pods_v2exnew.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_v2exnew.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -103,6 +112,7 @@
 		113444652148F539001D3046 /* v2exnew */ = {
 			isa = PBXGroup;
 			children = (
+				11DB38D1216F1CBA00E63924 /* Views */,
 				11C33591214D3B53009D3CE1 /* Managers */,
 				11C33573214D2900009D3CE1 /* Additions */,
 				114C2ACF2149045900F71482 /* Controllers */,
@@ -221,6 +231,27 @@
 				11DB38CF216F0CC200E63924 /* metamacros.h */,
 			);
 			path = EXTScope;
+			sourceTree = "<group>";
+		};
+		11DB38D1216F1CBA00E63924 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				11DB38D2216F1CCF00E63924 /* Menu */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		11DB38D2216F1CCF00E63924 /* Menu */ = {
+			isa = PBXGroup;
+			children = (
+				11DB38D3216F1D0E00E63924 /* QHMenuView.h */,
+				11DB38D4216F1D0E00E63924 /* QHMenuView.m */,
+				11DB38D6216F2C6900E63924 /* QHMenuSectionView.h */,
+				11DB38D7216F2C6900E63924 /* QHMenuSectionView.m */,
+				11DB38D9216F341200E63924 /* QHMenuSectionCell.h */,
+				11DB38DA216F341200E63924 /* QHMenuSectionCell.m */,
+			);
+			path = Menu;
 			sourceTree = "<group>";
 		};
 		3A3313AC21317C048EC2574E /* Frameworks */ = {
@@ -353,10 +384,12 @@
 			files = (
 				11DB38D0216F0CC200E63924 /* EXTScope.m in Sources */,
 				11C33590214D38E0009D3CE1 /* UIView+SafeArea.m in Sources */,
+				11DB38DB216F341200E63924 /* QHMenuSectionCell.m in Sources */,
 				11C33586214D2C71009D3CE1 /* QHBarButtonItem.m in Sources */,
 				11C33580214D2B97009D3CE1 /* QHViewController+NaviBar.m in Sources */,
 				11C3358B214D354A009D3CE1 /* QHNavigationBar.m in Sources */,
 				11C33577214D2956009D3CE1 /* QHNavigationController.m in Sources */,
+				11DB38D8216F2C6900E63924 /* QHMenuSectionView.m in Sources */,
 				11C335A2214E4081009D3CE1 /* QHNavigationPopAnimation.m in Sources */,
 				11C3359F214E403E009D3CE1 /* QHNavigationPushAnimation.m in Sources */,
 				11C33599214E0C10009D3CE1 /* QHCategoriesViewController.m in Sources */,
@@ -365,6 +398,7 @@
 				11C33594214D3B7F009D3CE1 /* QHSettingManager.m in Sources */,
 				11C3359C214E0C2B009D3CE1 /* QHTopicViewController.m in Sources */,
 				11DB38CB216DF97200E63924 /* UIImage+Tint.m in Sources */,
+				11DB38D5216F1D0E00E63924 /* QHMenuView.m in Sources */,
 				113444682148F539001D3046 /* AppDelegate.m in Sources */,
 				11C33583214D2C51009D3CE1 /* QHNavigationItem.m in Sources */,
 			);
