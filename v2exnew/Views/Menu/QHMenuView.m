@@ -97,4 +97,8 @@
     self.leftShadowImageView.x     = -5 + progress * 5;
 }
 
+- (void)selectIndex:(NSUInteger)index {
+    self.sectionView.selectedIndex = index;
+}
+
 @end

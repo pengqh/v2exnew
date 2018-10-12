@@ -45,6 +45,7 @@ static CGFloat const kMenuWidth = 240.0;
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         self.currentSelectedIndex = 0;
+        [QHSettingManager manager];
     }
     return self;
 }
@@ -103,7 +104,7 @@ static CGFloat const kMenuWidth = 240.0;
         @strongify(self);
         
         [self showViewControllerAtIndex:index animated:YES];
-        //[V2SettingManager manager].selectedSectionIndex = index;
+        [QHSettingManager manager].selectedSectionIndex = index;
     }];
 }
 
@@ -112,12 +113,28 @@ static CGFloat const kMenuWidth = 240.0;
     self.viewControllerContainView          = [[UIView alloc] initWithFrame:(CGRect){0, 0, kScreenWidth, kScreenHeight}];
     [self.view addSubview:self.viewControllerContainView];
     
+    self.latestViewController       = [[UIViewController alloc] init];
+    self.latestNavigationController = [[QHNavigationController alloc] initWithRootViewController:self.latestViewController];
+    
     self.categoriesViewController = [[QHCategoriesViewController alloc] init];
     self.categoriesNavigationController = [[QHNavigationController alloc] initWithRootViewController:self.categoriesViewController];
     
-    //self.currentSelectedIndex = [V2SettingManager manager].selectedSectionIndex;
+    self.nodesViewController        = [[UIViewController alloc] init];
+    self.nodesNavigationController = [[QHNavigationController alloc] initWithRootViewController:self.nodesViewController];
     
-    [self.viewControllerContainView addSubview:self.categoriesNavigationController.view];
+    self.favouriteViewController      = [[UIViewController alloc] init];
+    //self.favouriteViewController.favorite = YES;
+    self.favoriteNavigationController = [[QHNavigationController alloc] initWithRootViewController:self.favouriteViewController];
+    
+    self.notificationViewController = [[UIViewController alloc] init];
+    self.nofificationNavigationController = [[QHNavigationController alloc] initWithRootViewController:self.notificationViewController];
+    
+    self.profileViewController      = [[UIViewController alloc] init];
+    //self.profileViewController.isSelf = YES;
+    self.profilenavigationController = [[QHNavigationController alloc] initWithRootViewController:self.profileViewController];
+    
+    self.currentSelectedIndex = [QHSettingManager manager].selectedSectionIndex;
+    [self.viewControllerContainView addSubview:[self viewControllerForIndex:[QHSettingManager manager].selectedSectionIndex].view];
 }
 
 - (void)configureNotifications {
@@ -144,6 +161,7 @@ static CGFloat const kMenuWidth = 240.0;
     [UIView animateWithDuration:0.3 delay:0.1 options:UIViewAnimationOptionCurveEaseOut animations:^{
         [self setMenuOffset:0.0f];
     } completion:nil];
+    [self.menuView selectIndex:index];
 }
 
 - (UIViewController *)viewControllerForIndex:(V2SectionIndex)index {

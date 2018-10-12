@@ -76,7 +76,7 @@ static CGFloat const kAvatarHeight = 70.0f;
     self.divideImageView = [[UIImageView alloc] init];
     self.divideImageView.backgroundColor = kLineColorBlackDark;
     self.divideImageView.contentMode = UIViewContentModeScaleAspectFill;
-    //    self.divideImageView.image = [UIImage imageNamed:@"section_divide"];
+    //    self.divideImageView.image = [UIImage imageNamed:@"section_divid学会如何学习：帮助你掌握复杂学科的强大智力工具e"];
     self.divideImageView.clipsToBounds = YES;
     [self addSubview:self.divideImageView];
     
@@ -96,7 +96,31 @@ static CGFloat const kAvatarHeight = 70.0f;
     self.divideImageView.frame = (CGRect){-self.width, kAvatarHeight + 30 + UIView.sc_statusBarHeight, self.width * 2, 0.5};
     self.tableView.frame = (CGRect){0, 0, self.width, self.height};
     
-    //[self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:[V2SettingManager manager].selectedSectionIndex inSection:0] animated:NO scrollPosition:UITableViewScrollPositionNone];
+    [self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:[QHSettingManager manager].selectedSectionIndex inSection:0] animated:NO scrollPosition:UITableViewScrollPositionNone];
+}
+
+#pragma mark - Setters
+
+- (void)setSelectedIndex:(NSInteger)selectedIndex {
+    if (selectedIndex < self.sectionTitleArray.count) {
+        _selectedIndex = selectedIndex;
+        
+        [self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:selectedIndex inSection:0] animated:NO scrollPosition:UITableViewScrollPositionNone];
+    }
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    CGFloat offsetY = - scrollView.contentOffsetY;
+    NSLog(@"%f", offsetY);
+    
+    //    CGFloat spaceHeight = (self.tableView.contentInsetTop - kAvatarHeight) / 3.0;
+    
+    self.avatarImageView.y = 30 - (scrollView.contentInsetTop - offsetY) / 1.7;
+    self.avatarButton.frame = self.avatarImageView.frame;
+    
+    self.divideImageView.y = self.avatarImageView.y + kAvatarHeight + (offsetY - (self.avatarImageView.y + kAvatarHeight)) / 2.0 + fabs(offsetY - self.tableView.contentInsetTop)/self.tableView.contentInsetTop * 8.0 + 10;
+    
+    
 }
 
 #pragma mark - TableVIewDelegate

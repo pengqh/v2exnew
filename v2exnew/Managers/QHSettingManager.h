@@ -8,11 +8,23 @@
 
 #import <Foundation/Foundation.h>
 
+typedef NS_ENUM(NSInteger, V2Theme) {
+    V2ThemeDefault,
+    V2ThemeNight,
+};
+
 @interface QHSettingManager : NSObject
 
 + (instancetype)manager;
 
+#pragma mark - Index
+
+@property (nonatomic, assign) NSUInteger selectedSectionIndex;
+
 #pragma mark - Theme
+
+@property (nonatomic, assign) V2Theme theme;
+@property (nonatomic, assign) BOOL themeAutoChange;
 
 @property (nonatomic, copy) UIColor *navigationBarColor;
 @property (nonatomic, copy) UIColor *navigationBarLineColor;

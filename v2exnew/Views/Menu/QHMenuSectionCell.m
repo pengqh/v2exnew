@@ -82,34 +82,31 @@ static CGFloat const kFontSize = 16;
 - (void)setCellHighlighted:(BOOL)cellHighlighted {
     _cellHighlighted = cellHighlighted;
     
-//    if (cellHighlighted) {
-//
-//        if (kSetting.theme == V2ThemeNight) {
-//            self.titleLabel.textColor = kFontColorBlackMid;
-//            self.backgroundColor = kMenuCellHighlightedColor;
-//            self.iconImageView.image = self.normalImage;
-//        } else {
-//            self.titleLabel.textColor = kColorBlue;
-//            self.backgroundColor = kMenuCellHighlightedColor;
-//            self.iconImageView.image = self.highlightedImage;
-//        }
-//
-//    } else {
-//
-//        if (kSetting.theme == V2ThemeNight) {
-//            self.titleLabel.textColor = kFontColorBlackMid;
-//            self.backgroundColor = [UIColor clearColor];
-//            self.iconImageView.image = self.normalImage;
-//        } else {
-//            self.titleLabel.textColor = kFontColorBlackMid;
-//            self.backgroundColor = [UIColor clearColor];
-//            self.iconImageView.image = self.normalImage;
-//        }
-//
-//    }
-    self.titleLabel.textColor = kFontColorBlackMid;
-    self.backgroundColor = [UIColor clearColor];
-    self.iconImageView.image = self.normalImage;
+    if (cellHighlighted) {
+
+        if (kSetting.theme == V2ThemeNight) {
+            self.titleLabel.textColor = kFontColorBlackMid;
+            self.backgroundColor = kMenuCellHighlightedColor;
+            self.iconImageView.image = self.normalImage;
+        } else {
+            self.titleLabel.textColor = kColorBlue;
+            self.backgroundColor = kMenuCellHighlightedColor;
+            self.iconImageView.image = self.highlightedImage;
+        }
+
+    } else {
+
+        if (kSetting.theme == V2ThemeNight) {
+            self.titleLabel.textColor = kFontColorBlackMid;
+            self.backgroundColor = [UIColor clearColor];
+            self.iconImageView.image = self.normalImage;
+        } else {
+            self.titleLabel.textColor = kFontColorBlackMid;
+            self.backgroundColor = [UIColor clearColor];
+            self.iconImageView.image = self.normalImage;
+        }
+
+    }
     
 }
 
