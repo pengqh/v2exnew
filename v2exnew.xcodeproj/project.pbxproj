@@ -27,6 +27,9 @@
 		11DB38D5216F1D0E00E63924 /* QHMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 11DB38D4216F1D0E00E63924 /* QHMenuView.m */; };
 		11DB38D8216F2C6900E63924 /* QHMenuSectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 11DB38D7216F2C6900E63924 /* QHMenuSectionView.m */; };
 		11DB38DB216F341200E63924 /* QHMenuSectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 11DB38DA216F341200E63924 /* QHMenuSectionCell.m */; };
+		11DED600217051B200B832C2 /* SCPullRefreshViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 11DED5FD217051B200B832C2 /* SCPullRefreshViewController.m */; };
+		11DED601217051B200B832C2 /* SCAnimationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 11DED5FE217051B200B832C2 /* SCAnimationView.m */; };
+		11DED605217051F800B832C2 /* CAAnimation+Blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 11DED603217051F700B832C2 /* CAAnimation+Blocks.m */; };
 		1B42F89DF540AFAA6C6F4762 /* Pods_v2exnew.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF7150F585E834B6461D29DB /* Pods_v2exnew.framework */; };
 /* End PBXBuildFile section */
 
@@ -74,6 +77,12 @@
 		11DB38D7216F2C6900E63924 /* QHMenuSectionView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QHMenuSectionView.m; sourceTree = "<group>"; };
 		11DB38D9216F341200E63924 /* QHMenuSectionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QHMenuSectionCell.h; sourceTree = "<group>"; };
 		11DB38DA216F341200E63924 /* QHMenuSectionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QHMenuSectionCell.m; sourceTree = "<group>"; };
+		11DED5FC217051B200B832C2 /* SCAnimationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCAnimationView.h; sourceTree = "<group>"; };
+		11DED5FD217051B200B832C2 /* SCPullRefreshViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCPullRefreshViewController.m; sourceTree = "<group>"; };
+		11DED5FE217051B200B832C2 /* SCAnimationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCAnimationView.m; sourceTree = "<group>"; };
+		11DED5FF217051B200B832C2 /* SCPullRefreshViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCPullRefreshViewController.h; sourceTree = "<group>"; };
+		11DED603217051F700B832C2 /* CAAnimation+Blocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CAAnimation+Blocks.m"; sourceTree = "<group>"; };
+		11DED604217051F700B832C2 /* CAAnimation+Blocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CAAnimation+Blocks.h"; sourceTree = "<group>"; };
 		7BEFEFCDBDD025EEB72EEF59 /* Pods-v2exnew.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-v2exnew.debug.xcconfig"; path = "Pods/Target Support Files/Pods-v2exnew/Pods-v2exnew.debug.xcconfig"; sourceTree = "<group>"; };
 		8ADA0D8BE6493C90151FC7D5 /* Pods-v2exnew.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-v2exnew.release.xcconfig"; path = "Pods/Target Support Files/Pods-v2exnew/Pods-v2exnew.release.xcconfig"; sourceTree = "<group>"; };
 		CF7150F585E834B6461D29DB /* Pods_v2exnew.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_v2exnew.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -148,6 +157,7 @@
 		11C33573214D2900009D3CE1 /* Additions */ = {
 			isa = PBXGroup;
 			children = (
+				11DED5FB2170518700B832C2 /* SCPullRefresh */,
 				11DB38CC216F0C9A00E63924 /* EXTScope */,
 				11DB38C8216DF94D00E63924 /* Helpers */,
 				11C3358C214D38B2009D3CE1 /* Categories */,
@@ -252,6 +262,27 @@
 				11DB38DA216F341200E63924 /* QHMenuSectionCell.m */,
 			);
 			path = Menu;
+			sourceTree = "<group>";
+		};
+		11DED5FB2170518700B832C2 /* SCPullRefresh */ = {
+			isa = PBXGroup;
+			children = (
+				11DED602217051DB00B832C2 /* CAAnimationView */,
+				11DED5FC217051B200B832C2 /* SCAnimationView.h */,
+				11DED5FE217051B200B832C2 /* SCAnimationView.m */,
+				11DED5FF217051B200B832C2 /* SCPullRefreshViewController.h */,
+				11DED5FD217051B200B832C2 /* SCPullRefreshViewController.m */,
+			);
+			path = SCPullRefresh;
+			sourceTree = "<group>";
+		};
+		11DED602217051DB00B832C2 /* CAAnimationView */ = {
+			isa = PBXGroup;
+			children = (
+				11DED604217051F700B832C2 /* CAAnimation+Blocks.h */,
+				11DED603217051F700B832C2 /* CAAnimation+Blocks.m */,
+			);
+			path = CAAnimationView;
 			sourceTree = "<group>";
 		};
 		3A3313AC21317C048EC2574E /* Frameworks */ = {
@@ -387,18 +418,21 @@
 				11DB38DB216F341200E63924 /* QHMenuSectionCell.m in Sources */,
 				11C33586214D2C71009D3CE1 /* QHBarButtonItem.m in Sources */,
 				11C33580214D2B97009D3CE1 /* QHViewController+NaviBar.m in Sources */,
+				11DED600217051B200B832C2 /* SCPullRefreshViewController.m in Sources */,
 				11C3358B214D354A009D3CE1 /* QHNavigationBar.m in Sources */,
 				11C33577214D2956009D3CE1 /* QHNavigationController.m in Sources */,
 				11DB38D8216F2C6900E63924 /* QHMenuSectionView.m in Sources */,
 				11C335A2214E4081009D3CE1 /* QHNavigationPopAnimation.m in Sources */,
 				11C3359F214E403E009D3CE1 /* QHNavigationPushAnimation.m in Sources */,
 				11C33599214E0C10009D3CE1 /* QHCategoriesViewController.m in Sources */,
+				11DED605217051F800B832C2 /* CAAnimation+Blocks.m in Sources */,
 				114C2AD2214904A300F71482 /* V2RootViewController.m in Sources */,
 				113444762148F545001D3046 /* main.m in Sources */,
 				11C33594214D3B7F009D3CE1 /* QHSettingManager.m in Sources */,
 				11C3359C214E0C2B009D3CE1 /* QHTopicViewController.m in Sources */,
 				11DB38CB216DF97200E63924 /* UIImage+Tint.m in Sources */,
 				11DB38D5216F1D0E00E63924 /* QHMenuView.m in Sources */,
+				11DED601217051B200B832C2 /* SCAnimationView.m in Sources */,
 				113444682148F539001D3046 /* AppDelegate.m in Sources */,
 				11C33583214D2C51009D3CE1 /* QHNavigationItem.m in Sources */,
 			);
