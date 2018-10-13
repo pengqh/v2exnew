@@ -8,5 +8,6 @@ target 'v2exnew' do
   # Pods for v2exnew
   pod 'FrameAccessor', '~> 1.3.2'
   pod 'BlocksKit', '~> 2.2.0'
+  pod 'AFNetworking', '~> 2.2'
 
 end

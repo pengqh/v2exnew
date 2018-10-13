@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SCPullRefreshViewController.h"
 
-@interface QHCategoriesViewController : UIViewController
+@interface QHCategoriesViewController : SCPullRefreshViewController
+
+@property (nonatomic, assign, getter = isFavorite) BOOL favorite;
 
 @end

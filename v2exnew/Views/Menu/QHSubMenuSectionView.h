@@ -10,4 +10,12 @@
 
 @interface QHSubMenuSectionView : UIView
 
+@property (nonatomic, strong) NSArray *sectionTitleArray;
+@property (nonatomic, assign, getter = isFavorite) BOOL favorite;
+
+//@property (nonatomic, assign) NSInteger selectedIndex;
+@property (nonatomic, copy) void (^didSelectedIndexBlock)(NSInteger index);
+
+- (void)setDidSelectedIndexBlock:(void (^)(NSInteger index))didSelectedIndexBlock;
+
 @end

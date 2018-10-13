@@ -11,4 +11,8 @@
 @property (nonatomic, strong) QHNavigationItem *sc_navigationItem;
 @property (nonatomic, strong) UIView *sc_navigationBar;
 
+@property(nonatomic, getter = sc_isNavigationBarHidden) BOOL sc_navigationBarHidden;
+
+- (void)sc_setNavigationBarHidden:(BOOL)hidden animated:(BOOL)animated;
+
 @end

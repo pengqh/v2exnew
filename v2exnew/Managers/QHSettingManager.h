@@ -20,6 +20,8 @@ typedef NS_ENUM(NSInteger, V2Theme) {
 #pragma mark - Index
 
 @property (nonatomic, assign) NSUInteger selectedSectionIndex;
+@property (nonatomic, assign) NSUInteger categoriesSelectedSectionIndex;
+@property (nonatomic, assign) NSUInteger favoriteSelectedSectionIndex;
 
 #pragma mark - Theme
 
@@ -44,5 +46,13 @@ typedef NS_ENUM(NSInteger, V2Theme) {
 @property (nonatomic, copy) UIColor *colorBlue;
 @property (nonatomic, copy) UIColor *cellHighlightedColor;
 @property (nonatomic, copy) UIColor *menuCellHighlightedColor;
+
+#pragma mark - NavigationBar
+
+@property (nonatomic, assign) BOOL navigationBarAutoHidden;
+
+#pragma mark - Traffic
+
+@property (nonatomic, assign) BOOL preferHttps;
 
 @end

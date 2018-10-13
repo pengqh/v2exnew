@@ -30,7 +30,10 @@
 		11DED600217051B200B832C2 /* SCPullRefreshViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 11DED5FD217051B200B832C2 /* SCPullRefreshViewController.m */; };
 		11DED601217051B200B832C2 /* SCAnimationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 11DED5FE217051B200B832C2 /* SCAnimationView.m */; };
 		11DED605217051F800B832C2 /* CAAnimation+Blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 11DED603217051F700B832C2 /* CAAnimation+Blocks.m */; };
-		1B42F89DF540AFAA6C6F4762 /* Pods_v2exnew.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF7150F585E834B6461D29DB /* Pods_v2exnew.framework */; };
+		11DED60821705A8B00B832C2 /* QHSubMenuSectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 11DED60721705A8B00B832C2 /* QHSubMenuSectionView.m */; };
+		11DED60B21705C2400B832C2 /* QHSubMenuSectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 11DED60A21705C2400B832C2 /* QHSubMenuSectionCell.m */; };
+		11DED60E2170988500B832C2 /* QHDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 11DED60D2170988500B832C2 /* QHDataManager.m */; };
+		D10D2B94C6AC0F7BEC76A866 /* libPods-v2exnew.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E1E26836E5432C3BB567B09B /* libPods-v2exnew.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -83,9 +86,15 @@
 		11DED5FF217051B200B832C2 /* SCPullRefreshViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCPullRefreshViewController.h; sourceTree = "<group>"; };
 		11DED603217051F700B832C2 /* CAAnimation+Blocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CAAnimation+Blocks.m"; sourceTree = "<group>"; };
 		11DED604217051F700B832C2 /* CAAnimation+Blocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CAAnimation+Blocks.h"; sourceTree = "<group>"; };
+		11DED60621705A8B00B832C2 /* QHSubMenuSectionView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QHSubMenuSectionView.h; sourceTree = "<group>"; };
+		11DED60721705A8B00B832C2 /* QHSubMenuSectionView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QHSubMenuSectionView.m; sourceTree = "<group>"; };
+		11DED60921705C2400B832C2 /* QHSubMenuSectionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QHSubMenuSectionCell.h; sourceTree = "<group>"; };
+		11DED60A21705C2400B832C2 /* QHSubMenuSectionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QHSubMenuSectionCell.m; sourceTree = "<group>"; };
+		11DED60C2170988500B832C2 /* QHDataManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QHDataManager.h; sourceTree = "<group>"; };
+		11DED60D2170988500B832C2 /* QHDataManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QHDataManager.m; sourceTree = "<group>"; };
 		7BEFEFCDBDD025EEB72EEF59 /* Pods-v2exnew.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-v2exnew.debug.xcconfig"; path = "Pods/Target Support Files/Pods-v2exnew/Pods-v2exnew.debug.xcconfig"; sourceTree = "<group>"; };
 		8ADA0D8BE6493C90151FC7D5 /* Pods-v2exnew.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-v2exnew.release.xcconfig"; path = "Pods/Target Support Files/Pods-v2exnew/Pods-v2exnew.release.xcconfig"; sourceTree = "<group>"; };
-		CF7150F585E834B6461D29DB /* Pods_v2exnew.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_v2exnew.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E1E26836E5432C3BB567B09B /* libPods-v2exnew.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-v2exnew.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,7 +102,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1B42F89DF540AFAA6C6F4762 /* Pods_v2exnew.framework in Frameworks */,
+				D10D2B94C6AC0F7BEC76A866 /* libPods-v2exnew.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -202,6 +211,8 @@
 			children = (
 				11C33592214D3B7F009D3CE1 /* QHSettingManager.h */,
 				11C33593214D3B7F009D3CE1 /* QHSettingManager.m */,
+				11DED60C2170988500B832C2 /* QHDataManager.h */,
+				11DED60D2170988500B832C2 /* QHDataManager.m */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -260,6 +271,10 @@
 				11DB38D7216F2C6900E63924 /* QHMenuSectionView.m */,
 				11DB38D9216F341200E63924 /* QHMenuSectionCell.h */,
 				11DB38DA216F341200E63924 /* QHMenuSectionCell.m */,
+				11DED60621705A8B00B832C2 /* QHSubMenuSectionView.h */,
+				11DED60721705A8B00B832C2 /* QHSubMenuSectionView.m */,
+				11DED60921705C2400B832C2 /* QHSubMenuSectionCell.h */,
+				11DED60A21705C2400B832C2 /* QHSubMenuSectionCell.m */,
 			);
 			path = Menu;
 			sourceTree = "<group>";
@@ -288,7 +303,7 @@
 		3A3313AC21317C048EC2574E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				CF7150F585E834B6461D29DB /* Pods_v2exnew.framework */,
+				E1E26836E5432C3BB567B09B /* libPods-v2exnew.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -313,7 +328,6 @@
 				1134445F2148F539001D3046 /* Sources */,
 				113444602148F539001D3046 /* Frameworks */,
 				113444612148F539001D3046 /* Resources */,
-				181CEFF21196EF0308E32404 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -386,26 +400,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		181CEFF21196EF0308E32404 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-v2exnew/Pods-v2exnew-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/BlocksKit/BlocksKit.framework",
-				"${BUILT_PRODUCTS_DIR}/FrameAccessor/FrameAccessor.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BlocksKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FrameAccessor.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-v2exnew/Pods-v2exnew-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -415,6 +409,7 @@
 			files = (
 				11DB38D0216F0CC200E63924 /* EXTScope.m in Sources */,
 				11C33590214D38E0009D3CE1 /* UIView+SafeArea.m in Sources */,
+				11DED60E2170988500B832C2 /* QHDataManager.m in Sources */,
 				11DB38DB216F341200E63924 /* QHMenuSectionCell.m in Sources */,
 				11C33586214D2C71009D3CE1 /* QHBarButtonItem.m in Sources */,
 				11C33580214D2B97009D3CE1 /* QHViewController+NaviBar.m in Sources */,
@@ -428,12 +423,14 @@
 				11DED605217051F800B832C2 /* CAAnimation+Blocks.m in Sources */,
 				114C2AD2214904A300F71482 /* V2RootViewController.m in Sources */,
 				113444762148F545001D3046 /* main.m in Sources */,
+				11DED60821705A8B00B832C2 /* QHSubMenuSectionView.m in Sources */,
 				11C33594214D3B7F009D3CE1 /* QHSettingManager.m in Sources */,
 				11C3359C214E0C2B009D3CE1 /* QHTopicViewController.m in Sources */,
 				11DB38CB216DF97200E63924 /* UIImage+Tint.m in Sources */,
 				11DB38D5216F1D0E00E63924 /* QHMenuView.m in Sources */,
 				11DED601217051B200B832C2 /* SCAnimationView.m in Sources */,
 				113444682148F539001D3046 /* AppDelegate.m in Sources */,
+				11DED60B21705C2400B832C2 /* QHSubMenuSectionCell.m in Sources */,
 				11C33583214D2C51009D3CE1 /* QHNavigationItem.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

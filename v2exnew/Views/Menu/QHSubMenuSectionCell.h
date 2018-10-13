@@ -10,4 +10,8 @@
 
 @interface QHSubMenuSectionCell : UITableViewCell
 
+@property (nonatomic, copy) NSString *title;
+
++ (CGFloat)getCellHeight;
+
 @end

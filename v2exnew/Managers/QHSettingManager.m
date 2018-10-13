@@ -20,9 +20,14 @@
 #define kColorBlueDefault             RGB(0x3fb7fc, 1.0)
 
 static NSString *const kSelectedSectionIndex = @"SelectedSectionIndex";
+static NSString *const kCategoriesSelectedSectionIndex = @"CategoriesSelectedSectionIndex";
+static NSString *const kFavoriteSelectedSectionIndex = @"FavoriteSelectedSectionIndex";
 
 static NSString *const kTheme = @"Theme";
 static NSString *const kThemeAutoChange = @"ThemeAutoChange";
+
+static NSString *const kNavigationBarHidden   = @"NavigationBarHidden";
+static NSString *const kPreferHttps = @"PreferHttps";
 
 @implementation QHSettingManager
 
@@ -48,24 +53,13 @@ static NSString *const kThemeAutoChange = @"ThemeAutoChange";
             _themeAutoChange = YES;
         }
         
-        self.navigationBarTintColor = [UIColor blackColor];
-        self.navigationBarColor = [UIColor colorWithWhite:1.00 alpha:0.980];
-        self.navigationBarLineColor = [UIColor colorWithWhite:0.869 alpha:1];
+        id preferHttps = [userDefaults objectForKey:kPreferHttps];
+        if (preferHttps) {
+            _preferHttps = [preferHttps boolValue];
+        } else {
+            _preferHttps = NO;
+        }
         
-        self.backgroundColorWhite = [UIColor whiteColor];
-        self.backgroundColorWhiteDark = [UIColor colorWithWhite:0.98 alpha:1.000];
-        
-        self.lineColorBlackDark = kLineColorBlackDarkDefault;
-        self.lineColorBlackLight = kLineColorBlackLightDefault;
-        
-        self.fontColorBlackDark = kFontColorBlackDarkDefault;
-        self.fontColorBlackMid = kFontColorBlackDarkMiddle;
-        self.fontColorBlackLight = kFontColorBlackLightDefault;
-        self.fontColorBlackBlue = kFontColorBlackBlueDefault;
-        
-        self.colorBlue = kColorBlueDefault;
-        self.cellHighlightedColor = RGB(0xdbdbdb, 0.6f);
-        self.menuCellHighlightedColor = RGB(0xf6f6f6,1.0);
     }
     return self;
 }
@@ -80,6 +74,21 @@ static NSString *const kThemeAutoChange = @"ThemeAutoChange";
     
 }
 
+- (void)setCategoriesSelectedSectionIndex:(NSUInteger)categoriesSelectedSectionIndex {
+    _categoriesSelectedSectionIndex = categoriesSelectedSectionIndex;
+    
+    [userDefaults setObject:@(categoriesSelectedSectionIndex) forKey:kCategoriesSelectedSectionIndex];
+    [userDefaults synchronize];
+    
+}
+
+- (void)setFavoriteSelectedSectionIndex:(NSUInteger)favoriteSelectedSectionIndex {
+    _favoriteSelectedSectionIndex = favoriteSelectedSectionIndex;
+    
+    [userDefaults setObject:@(favoriteSelectedSectionIndex) forKey:kFavoriteSelectedSectionIndex];
+    [userDefaults synchronize];
+    
+}
 
 
 #pragma mark - Theme
@@ -146,6 +155,27 @@ static NSString *const kThemeAutoChange = @"ThemeAutoChange";
         
     }
     
+}
+
+#pragma mark - Navigation Bar
+
+- (void)setNavigationBarAutoHidden:(BOOL)navigationBarAutoHidden {
+    _navigationBarAutoHidden = navigationBarAutoHidden;
+    
+    [userDefaults setObject:@(navigationBarAutoHidden) forKey:kNavigationBarHidden];
+    [userDefaults synchronize];
+    
+}
+
+#pragma mark - Traffic
+
+- (void)setPreferHttps:(BOOL)preferHttps {
+    _preferHttps = preferHttps;
+    
+    [QHDataManager manager].preferHttps = preferHttps;
+    
+    [userDefaults setObject:@(preferHttps) forKey:kPreferHttps];
+    [userDefaults synchronize];
 }
 
 @end
