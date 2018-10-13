@@ -20,12 +20,18 @@ typedef NS_ENUM(NSInteger, V2RequestMethod) {
 
 @property (nonatomic, strong) AFHTTPSessionManager *manager;
 
+@property (nonatomic, copy) NSString *userAgentMobile;
+@property (nonatomic, copy) NSString *userAgentPC;
+
 @end
 
 @implementation QHDataManager
 
 - (instancetype)init {
     if (self = [super init]) {
+        UIWebView *webView = [[UIWebView alloc] initWithFrame:CGRectZero];
+        self.userAgentMobile = [webView stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
+        self.userAgentPC = @"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_2) AppleWebKit/537.75.14 (KHTML, like Gecko) Version/7.0.3 Safari/537.75.14";
         
         self.preferHttps = kSetting.preferHttps;
     }
@@ -59,10 +65,86 @@ typedef NS_ENUM(NSInteger, V2RequestMethod) {
                                  parameters:(NSDictionary *)parameters
                                     success:(void (^)(NSURLSessionDataTask *task, id responseObject))success
                                     failure:(void (^)(NSError *error))failure  {
+    // stateBar
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    
+    // Handle Common Mission, Cache, Data Reading & etc.
+    void (^responseHandleBlock)(NSURLSessionDataTask *task, id responseObject) = ^(NSURLSessionDataTask *task, id responseObject) {
+        success(task, responseObject);
+    };
+    
     NSURLSessionDataTask *task = nil;
     
+    [self.manager.requestSerializer setValue:self.userAgentMobile forHTTPHeaderField:@"User-Agent"];
+    
+    if (method == V2RequestMethodHTTPGET) {
+        AFHTTPResponseSerializer *responseSerializer = [AFHTTPResponseSerializer serializer];
+        self.manager.responseSerializer = responseSerializer;
+        task = [self.manager GET:URLString parameters:parameters success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
+            responseHandleBlock(task, responseObject);
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+            failure(error);
+        }];
+    }
+    
     return task;
+}
+
+#pragma mark - Public Request Methods - Get
+
+- (NSURLSessionDataTask *)getTopicListWithType:(V2HotNodesType)type Success:(void (^)(NSArray *))success failure:(void (^)(NSError *))failure {
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
+    switch (type) {
+        case V2HotNodesTypeTech:
+            [parameters setObject:@"tech" forKey:@"tab"];
+            break;
+        case V2HotNodesTypeCreative:
+            [parameters setObject:@"creative" forKey:@"tab"];
+            break;
+        case V2HotNodesTypePlay:
+            [parameters setObject:@"play" forKey:@"tab"];
+            break;
+        case V2HotNodesTypeApple:
+            [parameters setObject:@"apple" forKey:@"tab"];
+            break;
+        case V2HotNodesTypeJobs:
+            [parameters setObject:@"jobs" forKey:@"tab"];
+            break;
+        case V2HotNodesTypeDeals:
+            [parameters setObject:@"deals" forKey:@"tab"];
+            break;
+        case V2HotNodesTypeCity:
+            [parameters setObject:@"city" forKey:@"tab"];
+            break;
+        case V2HotNodesTypeQna:
+            [parameters setObject:@"qna" forKey:@"tab"];
+            break;
+        case V2HotNodesTypeHot:
+            [parameters setObject:@"hot" forKey:@"tab"];
+            break;
+        case V2HotNodesTypeAll:
+            [parameters setObject:@"all" forKey:@"tab"];
+            break;
+        case V2HotNodesTypeR2:
+            [parameters setObject:@"r2" forKey:@"tab"];
+            break;
+        case V2HotNodesTypeNodes:
+            [parameters setObject:@"nodes" forKey:@"tab"];
+            break;
+        case V2HotNodesTypeMembers:
+            [parameters setObject:@"members" forKey:@"tab"];
+            break;
+        default:
+            [parameters setObject:@"all" forKey:@"tab"];
+            break;
+    }
+    
+    return [self requestWithMethod:V2RequestMethodHTTPGET URLString:@"" parameters:parameters success:^(NSURLSessionDataTask *task, id responseObject) {
+        [QHTopicList getTopicListFromResponseObject:responseObject];
+    } failure:^(NSError *error) {
+        failure(error);
+    }];
 }
 
 @end

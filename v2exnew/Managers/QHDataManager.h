@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+#import "QHTopicModel.h"
+
 typedef NS_ENUM (NSInteger, V2HotNodesType) {
     
     V2HotNodesTypeTech,

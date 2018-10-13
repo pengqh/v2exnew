@@ -50,6 +50,12 @@
     self.sc_navigationItem.leftBarButtonItem = self.leftBarItem;
     self.sc_navigationItem.rightBarButtonItem = self.rightBarItemExpend;
     self.sc_navigationItem.title = @"好玩";
+    
+    [[QHDataManager manager] getTopicListWithType:V2HotNodesTypeTech Success:^(NSArray *list) {
+        
+    } failure:^(NSError *error) {
+        
+    }];
 }
 
 #pragma mark - Layouts
