@@ -36,6 +36,10 @@
 		11DED6122171949D00B832C2 /* QHTopicModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 11DED6112171949D00B832C2 /* QHTopicModel.m */; };
 		11DED61821719C0E00B832C2 /* HTMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 11DED61421719C0E00B832C2 /* HTMLParser.m */; };
 		11DED61921719C0E00B832C2 /* HTMLNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 11DED61621719C0E00B832C2 /* HTMLNode.m */; };
+		11DED61B21719DF000B832C2 /* libxml2.2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 11DED61A21719DF000B832C2 /* libxml2.2.tbd */; };
+		11DED61E2171C91600B832C2 /* QHBaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 11DED61D2171C91600B832C2 /* QHBaseModel.m */; };
+		11DED6212171CB0E00B832C2 /* QHNodeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 11DED6202171CB0E00B832C2 /* QHNodeModel.m */; };
+		11DED6242171CCFD00B832C2 /* NSDictionary+NotNullKey.m in Sources */ = {isa = PBXBuildFile; fileRef = 11DED6232171CCFD00B832C2 /* NSDictionary+NotNullKey.m */; };
 		D10D2B94C6AC0F7BEC76A866 /* libPods-v2exnew.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E1E26836E5432C3BB567B09B /* libPods-v2exnew.a */; };
 /* End PBXBuildFile section */
 
@@ -101,6 +105,13 @@
 		11DED61521719C0E00B832C2 /* HTMLNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTMLNode.h; sourceTree = "<group>"; };
 		11DED61621719C0E00B832C2 /* HTMLNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTMLNode.m; sourceTree = "<group>"; };
 		11DED61721719C0E00B832C2 /* HTMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTMLParser.h; sourceTree = "<group>"; };
+		11DED61A21719DF000B832C2 /* libxml2.2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.2.tbd; path = usr/lib/libxml2.2.tbd; sourceTree = SDKROOT; };
+		11DED61C2171C91600B832C2 /* QHBaseModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QHBaseModel.h; sourceTree = "<group>"; };
+		11DED61D2171C91600B832C2 /* QHBaseModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QHBaseModel.m; sourceTree = "<group>"; };
+		11DED61F2171CB0E00B832C2 /* QHNodeModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QHNodeModel.h; sourceTree = "<group>"; };
+		11DED6202171CB0E00B832C2 /* QHNodeModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QHNodeModel.m; sourceTree = "<group>"; };
+		11DED6222171CCFD00B832C2 /* NSDictionary+NotNullKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+NotNullKey.h"; sourceTree = "<group>"; };
+		11DED6232171CCFD00B832C2 /* NSDictionary+NotNullKey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+NotNullKey.m"; sourceTree = "<group>"; };
 		7BEFEFCDBDD025EEB72EEF59 /* Pods-v2exnew.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-v2exnew.debug.xcconfig"; path = "Pods/Target Support Files/Pods-v2exnew/Pods-v2exnew.debug.xcconfig"; sourceTree = "<group>"; };
 		8ADA0D8BE6493C90151FC7D5 /* Pods-v2exnew.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-v2exnew.release.xcconfig"; path = "Pods/Target Support Files/Pods-v2exnew/Pods-v2exnew.release.xcconfig"; sourceTree = "<group>"; };
 		E1E26836E5432C3BB567B09B /* libPods-v2exnew.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-v2exnew.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -111,6 +122,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				11DED61B21719DF000B832C2 /* libxml2.2.tbd in Frameworks */,
 				D10D2B94C6AC0F7BEC76A866 /* libPods-v2exnew.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -211,6 +223,8 @@
 		11C3358C214D38B2009D3CE1 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				11DED6222171CCFD00B832C2 /* NSDictionary+NotNullKey.h */,
+				11DED6232171CCFD00B832C2 /* NSDictionary+NotNullKey.m */,
 				11C3358E214D38E0009D3CE1 /* UIView+SafeArea.h */,
 				11C3358F214D38E0009D3CE1 /* UIView+SafeArea.m */,
 			);
@@ -316,6 +330,10 @@
 			children = (
 				11DED6102171949D00B832C2 /* QHTopicModel.h */,
 				11DED6112171949D00B832C2 /* QHTopicModel.m */,
+				11DED61C2171C91600B832C2 /* QHBaseModel.h */,
+				11DED61D2171C91600B832C2 /* QHBaseModel.m */,
+				11DED61F2171CB0E00B832C2 /* QHNodeModel.h */,
+				11DED6202171CB0E00B832C2 /* QHNodeModel.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -334,6 +352,7 @@
 		3A3313AC21317C048EC2574E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				11DED61A21719DF000B832C2 /* libxml2.2.tbd */,
 				E1E26836E5432C3BB567B09B /* libPods-v2exnew.a */,
 			);
 			name = Frameworks;
@@ -448,12 +467,14 @@
 				11DED600217051B200B832C2 /* SCPullRefreshViewController.m in Sources */,
 				11C3358B214D354A009D3CE1 /* QHNavigationBar.m in Sources */,
 				11DED6122171949D00B832C2 /* QHTopicModel.m in Sources */,
+				11DED6242171CCFD00B832C2 /* NSDictionary+NotNullKey.m in Sources */,
 				11C33577214D2956009D3CE1 /* QHNavigationController.m in Sources */,
 				11DB38D8216F2C6900E63924 /* QHMenuSectionView.m in Sources */,
 				11C335A2214E4081009D3CE1 /* QHNavigationPopAnimation.m in Sources */,
 				11C3359F214E403E009D3CE1 /* QHNavigationPushAnimation.m in Sources */,
 				11DED61821719C0E00B832C2 /* HTMLParser.m in Sources */,
 				11C33599214E0C10009D3CE1 /* QHCategoriesViewController.m in Sources */,
+				11DED6212171CB0E00B832C2 /* QHNodeModel.m in Sources */,
 				11DED605217051F800B832C2 /* CAAnimation+Blocks.m in Sources */,
 				114C2AD2214904A300F71482 /* V2RootViewController.m in Sources */,
 				113444762148F545001D3046 /* main.m in Sources */,
@@ -464,6 +485,7 @@
 				11DB38D5216F1D0E00E63924 /* QHMenuView.m in Sources */,
 				11DED601217051B200B832C2 /* SCAnimationView.m in Sources */,
 				113444682148F539001D3046 /* AppDelegate.m in Sources */,
+				11DED61E2171C91600B832C2 /* QHBaseModel.m in Sources */,
 				11DED60B21705C2400B832C2 /* QHSubMenuSectionCell.m in Sources */,
 				11C33583214D2C51009D3CE1 /* QHNavigationItem.m in Sources */,
 			);
@@ -595,6 +617,7 @@
 					"$(inherited)",
 					"\"${PODS_ROOT}/Headers/Public/BlocksKit\"",
 					"\"${PODS_ROOT}/Headers/Public/FrameAccessor\"",
+					/usr/include/libxml2,
 				);
 				INFOPLIST_FILE = v2exnew/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -621,6 +644,7 @@
 					"$(inherited)",
 					"\"${PODS_ROOT}/Headers/Public/BlocksKit\"",
 					"\"${PODS_ROOT}/Headers/Public/FrameAccessor\"",
+					/usr/include/libxml2,
 				);
 				INFOPLIST_FILE = v2exnew/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (

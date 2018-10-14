@@ -7,13 +7,48 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "QHBaseModel.h"
+
+typedef NS_ENUM (NSInteger, V2TopicState) {
+    
+    V2TopicStateUnreadWithReply      = 1 << 0,
+    V2TopicStateUnreadWithoutReply   = 1 << 1,
+    V2TopicStateReadWithoutReply     = 1 << 2,
+    V2TopicStateReadWithReply        = 1 << 3,
+    V2TopicStateReadWithNewReply     = 1 << 4,
+    V2TopicStateRepliedWithNewReply  = 1 << 5,
+    
+};
 
 @interface QHTopicModel : NSObject
+
+@property (nonatomic, copy) NSString *topicId;
+@property (nonatomic, copy) NSString *topicTitle;
+@property (nonatomic, copy) NSString *topicReplyCount;
+@property (nonatomic, copy) NSString *topicUrl;
+@property (nonatomic, copy) NSString *topicContent;
+@property (nonatomic, copy) NSString *topicContentRendered;
+@property (nonatomic, copy) NSNumber *topicCreated;
+@property (nonatomic, copy) NSString *topicCreatedDescription;
+@property (nonatomic, copy) NSString *topicModified;
+@property (nonatomic, copy) NSString *topicTouched;
+
+@property (nonatomic, strong) NSArray            *quoteArray;
+@property (nonatomic, copy  ) NSAttributedString *attributedString;
+@property (nonatomic, strong) NSArray            *contentArray;
+@property (nonatomic, strong) NSArray            *imageURLs;
+
+@property (nonatomic, strong) V2MemberModel *topicCreator;
+@property (nonatomic, strong) V2NodeModel   *topicNode;
+
+@property (nonatomic, assign) V2TopicState  state;
+@property (nonatomic, assign) CGFloat cellHeight;
+@property (nonatomic, assign) CGFloat titleHeight;
 
 @end
 
 
-@interface QHTopicList : NSObject
+@interface QHTopicList : QHBaseModel
 
 @property (nonatomic, strong) NSArray *list;
 
