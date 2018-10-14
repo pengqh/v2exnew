@@ -48,6 +48,8 @@
                 NSLog(@"%@", cellNode.rawContents);
                 
                 QHTopicModel *model = [[QHTopicModel alloc] init];
+                model.topicCreator = [[QHMemberModel alloc] init];
+                model.topicNode = [[QHNodeModel alloc] init];
                 
                 NSArray *tdNodes = [cellNode findChildTags:@"td"];
                 NSInteger index = 0;
@@ -59,6 +61,7 @@
                         if (userIdNode) {
                             NSString *idUrlString = [userIdNode getAttributeNamed:@"href"];
                             NSString *memberName = [[idUrlString componentsSeparatedByString:@"/"] lastObject];
+                            model.topicCreator.memberName = memberName;
                         }
                         
                         HTMLNode *avatarNode = [tdNode findChildTag:@"img"];
@@ -68,6 +71,7 @@
                                 avatarString = [@"http:" stringByAppendingString:avatarString];
                             }
                             NSString *memberAvatarNormal = avatarString;
+                            model.topicCreator.memberAvatarNormal = memberAvatarNormal;
                         }
                     }
                     
@@ -77,17 +81,21 @@
                             if ([[aNode getAttributeNamed:@"class"] isEqualToString:@"node"]) {
                                 NSString *nodeUrlString = [aNode getAttributeNamed:@"href"];
                                 NSString *nodeName = [[nodeUrlString componentsSeparatedByString:@"/"] lastObject];
+                                model.topicNode.nodeName = nodeName;
                                 NSString *nodeTitle = aNode.allContents;
-                                
+                                model.topicNode.nodeTitle = nodeTitle;
                             } else {
                                 if ([aNode.rawContents rangeOfString:@"reply"].location != NSNotFound) {
                                     NSString *topicTitle = aNode.allContents;
+                                    model.topicTitle = topicTitle;
                                     
                                     NSString *topicIdString = [aNode getAttributeNamed:@"href"];
                                     NSArray *subArray = [topicIdString componentsSeparatedByString:@"#"];
                                     NSString *topicId = [(NSString *)subArray.firstObject stringByReplacingOccurrencesOfString:@"/t/" withString:@""];
-                                     NSString *topicReplyCount = [(NSString *)subArray.lastObject stringByReplacingOccurrencesOfString:@"reply" withString:@""];
+                                    model.topicId = topicId;
                                     
+                                     NSString *topicReplyCount = [(NSString *)subArray.lastObject stringByReplacingOccurrencesOfString:@"reply" withString:@""];
+                                    model.topicReplyCount = topicReplyCount;
                                     
                                 }
                             }
@@ -97,6 +105,7 @@
                         for (HTMLNode *spanNode in spanNodes) {
                             if ([spanNode.rawContents rangeOfString:@"href"].location == NSNotFound) {
                                 NSString *topicCreatedDescription = spanNode.allContents;
+                                model.topicCreatedDescription = topicCreatedDescription;
                             }
                             
                             if ([spanNode.rawContents rangeOfString:@"最后回复"].location != NSNotFound || [spanNode.rawContents rangeOfString:@"前"].location != NSNotFound) {
@@ -131,15 +140,28 @@
                                     dateString = @"刚刚";
                                 }
                                 NSString *topicCreatedDescription = dateString;
+                                model.topicCreatedDescription = topicCreatedDescription;
                             }
                         }
                     }
+                    index ++;
                 }
+                //model.state = [[V2TopicStateManager manager] getTopicStateWithTopicModel:model];
+                //model.cellHeight = [QHTopicListCell heightWithTopicModel:model];
+                model.cellHeight = 44.0;
+                [topicArray addObject:model];
             }
         }
     }
     
-    return nil;
+    QHTopicList *list;
+    
+    if (topicArray.count) {
+        list = [[QHTopicList alloc] init];
+        list.list = topicArray;
+    }
+    
+    return list;
 }
 
 @end

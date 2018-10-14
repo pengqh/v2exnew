@@ -22,6 +22,7 @@
 @property (nonatomic, strong) QHBarButtonItem *leftBarItem;
 @property (nonatomic, strong) QHBarButtonItem *rightBarItemExpend;
 
+@property (nonatomic, strong) QHTopicList *topicList;
 
 @end
 
@@ -52,7 +53,7 @@
     self.sc_navigationItem.title = @"好玩";
     
     [[QHDataManager manager] getTopicListWithType:V2HotNodesTypeTech Success:^(NSArray *list) {
-        
+        self.topicList = list;
     } failure:^(NSError *error) {
         
     }];
@@ -247,19 +248,24 @@
     [self.navigationController pushViewController:topViewController animated:YES];
 }
 
+#pragma mark - Data
+
+- (void)setTopicList:(QHTopicList *)topicList {
+    _topicList = topicList;
+    [self.tableView reloadData];
+}
+
 #pragma mark - TableViewDelegate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    //return self.topicList.list.count;
-    return 10;
+    return self.topicList.list.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    //return [self heightOfTopicCellForIndexPath:indexPath];
-    return 44;
+    return [self heightOfTopicCellForIndexPath:indexPath];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -287,6 +293,12 @@
 //    topicViewController.model = model;
 //    [self.navigationController pushViewController:topicViewController animated:YES];
     
+}
+
+#pragma mark - Configure TableCell
+
+- (CGFloat)heightOfTopicCellForIndexPath:(NSIndexPath *)indexPath {
+    return 44.0;
 }
 
 #pragma mark - Private Methods

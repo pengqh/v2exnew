@@ -41,6 +41,7 @@
 		11DED6212171CB0E00B832C2 /* QHNodeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 11DED6202171CB0E00B832C2 /* QHNodeModel.m */; };
 		11DED6242171CCFD00B832C2 /* NSDictionary+NotNullKey.m in Sources */ = {isa = PBXBuildFile; fileRef = 11DED6232171CCFD00B832C2 /* NSDictionary+NotNullKey.m */; };
 		11DED6272172F71A00B832C2 /* QHMemberModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 11DED6262172F71A00B832C2 /* QHMemberModel.m */; };
+		11DED62A2173046A00B832C2 /* QHTopicListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 11DED6292173046A00B832C2 /* QHTopicListCell.m */; };
 		D10D2B94C6AC0F7BEC76A866 /* libPods-v2exnew.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E1E26836E5432C3BB567B09B /* libPods-v2exnew.a */; };
 /* End PBXBuildFile section */
 
@@ -115,6 +116,8 @@
 		11DED6232171CCFD00B832C2 /* NSDictionary+NotNullKey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+NotNullKey.m"; sourceTree = "<group>"; };
 		11DED6252172F71A00B832C2 /* QHMemberModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QHMemberModel.h; sourceTree = "<group>"; };
 		11DED6262172F71A00B832C2 /* QHMemberModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QHMemberModel.m; sourceTree = "<group>"; };
+		11DED6282173046A00B832C2 /* QHTopicListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QHTopicListCell.h; sourceTree = "<group>"; };
+		11DED6292173046A00B832C2 /* QHTopicListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QHTopicListCell.m; sourceTree = "<group>"; };
 		7BEFEFCDBDD025EEB72EEF59 /* Pods-v2exnew.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-v2exnew.debug.xcconfig"; path = "Pods/Target Support Files/Pods-v2exnew/Pods-v2exnew.debug.xcconfig"; sourceTree = "<group>"; };
 		8ADA0D8BE6493C90151FC7D5 /* Pods-v2exnew.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-v2exnew.release.xcconfig"; path = "Pods/Target Support Files/Pods-v2exnew/Pods-v2exnew.release.xcconfig"; sourceTree = "<group>"; };
 		E1E26836E5432C3BB567B09B /* libPods-v2exnew.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-v2exnew.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -286,6 +289,8 @@
 			isa = PBXGroup;
 			children = (
 				11DB38D2216F1CCF00E63924 /* Menu */,
+				11DED6282173046A00B832C2 /* QHTopicListCell.h */,
+				11DED6292173046A00B832C2 /* QHTopicListCell.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -487,6 +492,7 @@
 				11DED60821705A8B00B832C2 /* QHSubMenuSectionView.m in Sources */,
 				11C33594214D3B7F009D3CE1 /* QHSettingManager.m in Sources */,
 				11C3359C214E0C2B009D3CE1 /* QHTopicViewController.m in Sources */,
+				11DED62A2173046A00B832C2 /* QHTopicListCell.m in Sources */,
 				11DB38CB216DF97200E63924 /* UIImage+Tint.m in Sources */,
 				11DB38D5216F1D0E00E63924 /* QHMenuView.m in Sources */,
 				11DED601217051B200B832C2 /* SCAnimationView.m in Sources */,
