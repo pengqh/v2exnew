@@ -7,6 +7,7 @@
 //
 
 #import "QHTopicListCell.h"
+//#import "UIImage+Cache.h"
 
 static CGFloat const kAvatarHeight          = 26.0f;
 static CGFloat const kTitleFontSize         = 17.0f;
@@ -144,7 +145,12 @@ static CGFloat const kBottomFontSize        = 12.0f;
     _model = model;
     
     @weakify(self);
-    //self.avatarImageView
+    self.avatarImageView setImageWithURL:[NSURL URLWithString:model.topicCreator.memberAvatarNormal] placeholderImage:[UIImage imageNamed:@"default_avatar"] options:0 completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
+        @strongify(self);
+//        if (!image.cached) {
+//            
+//        }
+    }
 }
 
 @end
