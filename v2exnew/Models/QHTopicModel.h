@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 #import "QHBaseModel.h"
+#import "QHMemberModel.h"
+#import "QHNodeModel.h"
 
 typedef NS_ENUM (NSInteger, V2TopicState) {
     
@@ -38,8 +40,8 @@ typedef NS_ENUM (NSInteger, V2TopicState) {
 @property (nonatomic, strong) NSArray            *contentArray;
 @property (nonatomic, strong) NSArray            *imageURLs;
 
-@property (nonatomic, strong) V2MemberModel *topicCreator;
-@property (nonatomic, strong) V2NodeModel   *topicNode;
+@property (nonatomic, strong) QHMemberModel *topicCreator;
+@property (nonatomic, strong) QHNodeModel   *topicNode;
 
 @property (nonatomic, assign) V2TopicState  state;
 @property (nonatomic, assign) CGFloat cellHeight;

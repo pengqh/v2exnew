@@ -40,6 +40,7 @@
 		11DED61E2171C91600B832C2 /* QHBaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 11DED61D2171C91600B832C2 /* QHBaseModel.m */; };
 		11DED6212171CB0E00B832C2 /* QHNodeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 11DED6202171CB0E00B832C2 /* QHNodeModel.m */; };
 		11DED6242171CCFD00B832C2 /* NSDictionary+NotNullKey.m in Sources */ = {isa = PBXBuildFile; fileRef = 11DED6232171CCFD00B832C2 /* NSDictionary+NotNullKey.m */; };
+		11DED6272172F71A00B832C2 /* QHMemberModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 11DED6262172F71A00B832C2 /* QHMemberModel.m */; };
 		D10D2B94C6AC0F7BEC76A866 /* libPods-v2exnew.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E1E26836E5432C3BB567B09B /* libPods-v2exnew.a */; };
 /* End PBXBuildFile section */
 
@@ -112,6 +113,8 @@
 		11DED6202171CB0E00B832C2 /* QHNodeModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QHNodeModel.m; sourceTree = "<group>"; };
 		11DED6222171CCFD00B832C2 /* NSDictionary+NotNullKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+NotNullKey.h"; sourceTree = "<group>"; };
 		11DED6232171CCFD00B832C2 /* NSDictionary+NotNullKey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+NotNullKey.m"; sourceTree = "<group>"; };
+		11DED6252172F71A00B832C2 /* QHMemberModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QHMemberModel.h; sourceTree = "<group>"; };
+		11DED6262172F71A00B832C2 /* QHMemberModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QHMemberModel.m; sourceTree = "<group>"; };
 		7BEFEFCDBDD025EEB72EEF59 /* Pods-v2exnew.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-v2exnew.debug.xcconfig"; path = "Pods/Target Support Files/Pods-v2exnew/Pods-v2exnew.debug.xcconfig"; sourceTree = "<group>"; };
 		8ADA0D8BE6493C90151FC7D5 /* Pods-v2exnew.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-v2exnew.release.xcconfig"; path = "Pods/Target Support Files/Pods-v2exnew/Pods-v2exnew.release.xcconfig"; sourceTree = "<group>"; };
 		E1E26836E5432C3BB567B09B /* libPods-v2exnew.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-v2exnew.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -334,6 +337,8 @@
 				11DED61D2171C91600B832C2 /* QHBaseModel.m */,
 				11DED61F2171CB0E00B832C2 /* QHNodeModel.h */,
 				11DED6202171CB0E00B832C2 /* QHNodeModel.m */,
+				11DED6252172F71A00B832C2 /* QHMemberModel.h */,
+				11DED6262172F71A00B832C2 /* QHMemberModel.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -469,6 +474,7 @@
 				11DED6122171949D00B832C2 /* QHTopicModel.m in Sources */,
 				11DED6242171CCFD00B832C2 /* NSDictionary+NotNullKey.m in Sources */,
 				11C33577214D2956009D3CE1 /* QHNavigationController.m in Sources */,
+				11DED6272172F71A00B832C2 /* QHMemberModel.m in Sources */,
 				11DB38D8216F2C6900E63924 /* QHMenuSectionView.m in Sources */,
 				11C335A2214E4081009D3CE1 /* QHNavigationPopAnimation.m in Sources */,
 				11C3359F214E403E009D3CE1 /* QHNavigationPushAnimation.m in Sources */,
