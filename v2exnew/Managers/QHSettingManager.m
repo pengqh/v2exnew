@@ -157,6 +157,16 @@ static NSString *const kPreferHttps = @"PreferHttps";
     
 }
 
+#pragma mark - Alpha
+
+- (CGFloat)imageViewAlphaForCurrentTheme {
+    if (kCurrentTheme == V2ThemeNight) {
+        return 0.4;
+    } else {
+        return 1.0;
+    }
+}
+
 #pragma mark - Navigation Bar
 
 - (void)setNavigationBarAutoHidden:(BOOL)navigationBarAutoHidden {

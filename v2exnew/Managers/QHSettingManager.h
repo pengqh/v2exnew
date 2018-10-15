@@ -47,6 +47,8 @@ typedef NS_ENUM(NSInteger, V2Theme) {
 @property (nonatomic, copy) UIColor *cellHighlightedColor;
 @property (nonatomic, copy) UIColor *menuCellHighlightedColor;
 
+@property (nonatomic, assign) CGFloat imageViewAlphaForCurrentTheme;
+
 #pragma mark - NavigationBar
 
 @property (nonatomic, assign) BOOL navigationBarAutoHidden;

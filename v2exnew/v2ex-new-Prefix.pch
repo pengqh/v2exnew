@@ -29,11 +29,15 @@
 #import "NSDictionary+NotNullKey.h"
 #import "SDWebImageManager.h"
 #import "UIImageView+WebCache.h"
+#import "V2Helper.h"
+#import <AFNetworking.h>
 //#endif
 
 #define RGB(c,a)    [UIColor colorWithRed:((c>>16)&0xFF)/256.0  green:((c>>8)&0xFF)/256.0   blue:((c)&0xFF)/256.0   alpha:a]
 
 #define kSetting                   [QHSettingManager manager]
+
+#define kCurrentTheme              kSetting.theme
 
 #define kNavigationBarTintColor    kSetting.navigationBarTintColor
 #define kNavigationBarColor        kSetting.navigationBarColor

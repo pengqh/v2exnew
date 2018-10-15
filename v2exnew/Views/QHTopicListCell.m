@@ -7,7 +7,7 @@
 //
 
 #import "QHTopicListCell.h"
-//#import "UIImage+Cache.h"
+#import "UIImage+Cache.h"
 
 static CGFloat const kAvatarHeight          = 26.0f;
 static CGFloat const kTitleFontSize         = 17.0f;
@@ -145,12 +145,126 @@ static CGFloat const kBottomFontSize        = 12.0f;
     _model = model;
     
     @weakify(self);
-    self.avatarImageView setImageWithURL:[NSURL URLWithString:model.topicCreator.memberAvatarNormal] placeholderImage:[UIImage imageNamed:@"default_avatar"] options:0 completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
+    [self.avatarImageView setImageWithURL:[NSURL URLWithString:model.topicCreator.memberAvatarNormal] placeholderImage:[UIImage imageNamed:@"default_avatar"] options:0 completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
         @strongify(self);
-//        if (!image.cached) {
-//            
-//        }
+        if (!image.cached) {
+            
+            UIImage *cornerRadiusImage = [image imageWithCornerRadius:3];
+            cornerRadiusImage.cached = YES;
+            
+            [[SDWebImageManager sharedManager].imageCache storeImage:cornerRadiusImage forKey:model.topicCreator.memberAvatarNormal];
+            self.avatarImageView.image = cornerRadiusImage;
+        }
+        
+        self.replyCountLabel.text = model.topicReplyCount;
+        self.titleLabel.text = model.topicTitle;
+        self.timeLabel.text = model.topicCreatedDescription;
+        [self.timeLabel sizeToFit];
+        
+        self.nameLabel.text = model.topicCreator.memberName;
+        [self.nameLabel sizeToFit];
+        
+        self.nodeLabel.text = [NSString stringWithFormat:@"%@", model.topicNode.nodeTitle];
+        [self.nodeLabel sizeToFit];
+        self.nodeLabel.width += 4;
+        
+        self.titleHeight = ceil(model.titleHeight);
+        
+        self.avatarImageView.alpha = kSetting.imageViewAlphaForCurrentTheme;
+        
+        [self updateStatus];
+    }];
+}
+
+- (void)updateStatus {
+    switch (self.model.state) {
+        case V2TopicStateReadWithNewReply:
+            self.stateLabel.backgroundColor = [UIColor colorWithRed:1.000 green:0.581 blue:0.312 alpha:0.800];
+            break;
+        case V2TopicStateReadWithReply:
+            self.stateLabel.backgroundColor = [UIColor colorWithWhite:0.000 alpha:0.040];
+            break;
+        case V2TopicStateReadWithoutReply:
+            self.stateLabel.backgroundColor = [UIColor colorWithWhite:0.000 alpha:0.040];
+            break;
+        case V2TopicStateUnreadWithReply:
+            self.stateLabel.backgroundColor = [self stateColorWithReplyCount:[self.model.topicReplyCount integerValue]];
+            break;
+        case V2TopicStateUnreadWithoutReply:
+            self.stateLabel.backgroundColor = [UIColor colorWithRed:0.318 green:0.782 blue:1.000 alpha:0.300];
+            break;
+            
+        default:
+            break;
     }
+}
+
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated
+{
+    [super setSelected:selected animated:animated];
+    
+    UIColor *backbroundColor = kBackgroundColorWhite;
+    if (selected) {
+        
+        backbroundColor = kCellHighlightedColor;
+        self.backgroundColor = backbroundColor;
+        
+    } else {
+        
+        [UIView animateWithDuration:0.3 animations:^{
+            self.backgroundColor = backbroundColor;
+        } completion:^(BOOL finished) {
+            [self setNeedsLayout];
+        }];
+        
+    }
+}
+
+- (void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated {
+    [super setHighlighted:highlighted animated:animated];
+    
+    UIColor *backbroundColor = kBackgroundColorWhite;
+    if (highlighted) {
+        backbroundColor = kCellHighlightedColor;
+    }
+    [UIView animateWithDuration:0.1 animations:^{
+        self.backgroundColor = backbroundColor;
+    }];
+    
+}
+
+#pragma mark - Private Methods
+
+- (UIColor *)stateColorWithReplyCount:(NSInteger)replyCount {
+    
+    CGFloat alpha = 0.6 + (CGFloat)replyCount * 0.02;
+    UIColor *color = [UIColor colorWithRed:0.318 green:0.782 blue:1.000 alpha:alpha];
+    
+    return color;
+}
+
+#pragma mark - Class Methods
+
++ (CGFloat)getCellHeightWithTopicModel:(QHTopicModel *)model {
+    
+    if (model.cellHeight > 10) {
+        return model.cellHeight;
+    } else {
+        return [self heightWithTopicModel:model];
+    }
+}
+
++ (CGFloat)heightWithTopicModel:(QHTopicModel *)model {
+    
+    NSInteger titleHeight = [V2Helper getTextHeightWithText:model.topicTitle Font:[UIFont systemFontOfSize:kTitleFontSize] Width:kTitleLabelWidth] + 1;
+    
+    NSInteger bottomHeight = (NSInteger)[V2Helper getTextHeightWithText:model.topicNode.nodeName Font:[UIFont systemFontOfSize:kBottomFontSize] Width:CGFLOAT_MAX] + 1;
+    
+    CGFloat cellHeight = 8 + 13 * 2 + titleHeight + bottomHeight;
+    model.cellHeight = cellHeight;
+    model.titleHeight = titleHeight;
+    
+    return cellHeight;
 }
 
 @end
