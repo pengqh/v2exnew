@@ -70,6 +70,9 @@ typedef NS_ENUM(NSInteger, V2RequestMethod) {
     
     // Handle Common Mission, Cache, Data Reading & etc.
     void (^responseHandleBlock)(NSURLSessionDataTask *task, id responseObject) = ^(NSURLSessionDataTask *task, id responseObject) {
+        
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+       
         success(task, responseObject);
     };
     
@@ -93,7 +96,7 @@ typedef NS_ENUM(NSInteger, V2RequestMethod) {
 
 #pragma mark - Public Request Methods - Get
 
-- (NSURLSessionDataTask *)getTopicListWithType:(V2HotNodesType)type Success:(void (^)(NSArray *))success failure:(void (^)(NSError *))failure {
+- (NSURLSessionDataTask *)getTopicListWithType:(V2HotNodesType)type Success:(void (^)(QHTopicList *))success failure:(void (^)(NSError *))failure {
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
     switch (type) {
         case V2HotNodesTypeTech:
@@ -141,7 +144,13 @@ typedef NS_ENUM(NSInteger, V2RequestMethod) {
     }
     
     return [self requestWithMethod:V2RequestMethodHTTPGET URLString:@"" parameters:parameters success:^(NSURLSessionDataTask *task, id responseObject) {
-        [QHTopicList getTopicListFromResponseObject:responseObject];
+        QHTopicList *list = [QHTopicList getTopicListFromResponseObject:responseObject];
+        if (list) {
+            success(list);
+        } else {
+            NSError *error = [[NSError alloc] initWithDomain:self.manager.baseURL.absoluteString code:V2ErrorTypeGetTopicListFailure userInfo:nil];
+            failure(error);
+        }
     } failure:^(NSError *error) {
         failure(error);
     }];

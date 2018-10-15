@@ -9,8 +9,9 @@
 #import "QHCategoriesViewController.h"
 #import "QHTopicViewController.h"
 #import "QHSubMenuSectionView.h"
+#import "QHTopicListCell.h"
 
-@interface QHCategoriesViewController () <UITableViewDataSource, UITableViewDelegate>
+@interface QHCategoriesViewController () <UITableViewDataSource, UITableViewDelegate, UIViewControllerPreviewingDelegate>
 
 @property (nonatomic, strong) QHSubMenuSectionView             *sectionView;
 @property (nonatomic, strong) UIScreenEdgePanGestureRecognizer *edgePanRecognizer;
@@ -41,18 +42,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    UIButton *testBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    testBtn.frame = CGRectMake(100, 100, 50, 50);
-    testBtn.backgroundColor = [UIColor yellowColor];
-    [testBtn setTitle:@"test" forState:UIControlStateNormal];
-    [testBtn addTarget:self action:@selector(test:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:testBtn];
-    
     self.sc_navigationItem.leftBarButtonItem = self.leftBarItem;
     self.sc_navigationItem.rightBarButtonItem = self.rightBarItemExpend;
     self.sc_navigationItem.title = @"好玩";
-    
-    [[QHDataManager manager] getTopicListWithType:V2HotNodesTypeTech Success:^(NSArray *list) {
+    [self.tableView scrollRectToVisible:(CGRect){0, 0, 1, 1} animated:YES];
+    [[QHDataManager manager] getTopicListWithType:V2HotNodesTypeTech Success:^(QHTopicList *list) {
         self.topicList = list;
     } failure:^(NSError *error) {
         
@@ -121,6 +115,7 @@
     self.tableView.contentInsetTop = UIView.sc_navigationBarHeight;  // Notice
     self.tableView.delegate        = self;
     self.tableView.dataSource      = self;
+    self.tableView.backgroundColor = [UIColor yellowColor];
     [self.view addSubview:self.tableView];
     
     self.aboveTableViewButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -243,11 +238,6 @@
     [self.aboveTableViewButton addGestureRecognizer:panRecognizer];
 }
 
-- (void)test:(id)sender {
-    QHTopicViewController *topViewController = [[QHTopicViewController alloc] init];
-    [self.navigationController pushViewController:topViewController animated:YES];
-}
-
 #pragma mark - Data
 
 - (void)setTopicList:(QHTopicList *)topicList {
@@ -265,40 +255,51 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [self heightOfTopicCellForIndexPath:indexPath];
+    CGFloat height = [self heightOfTopicCellForIndexPath:indexPath];
+    return height;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [[UITableViewCell alloc] init];
-//    static NSString *CellIdentifier = @"CellIdentifier";
-//    V2TopicListCell *cell = (V2TopicListCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-//    if (!cell) {
-//        cell = [[V2TopicListCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-//
-//        // register for 3D Touch (if available)
-//        if(NSFoundationVersionNumber > NSFoundationVersionNumber_iOS_8_4) {
-//            if (self.traitCollection.forceTouchCapability == UIForceTouchCapabilityAvailable) {
-//                [self registerForPreviewingWithDelegate:self sourceView:cell];
-//            }
-//        }
-//    }
-//
-//    return [self configureTopicCellWithCell:cell IndexPath:indexPath];
+    static NSString *CellIdentifier = @"CellIdentifier";
+    QHTopicListCell *cell = (QHTopicListCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (!cell) {
+        cell = [[QHTopicListCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+
+        // register for 3D Touch (if available)
+        if(NSFoundationVersionNumber > NSFoundationVersionNumber_iOS_8_4) {
+            if (self.traitCollection.forceTouchCapability == UIForceTouchCapabilityAvailable) {
+                [self registerForPreviewingWithDelegate:self sourceView:cell];
+            }
+        }
+    }
+    cell.backgroundColor = [UIColor greenColor];
+    return [self configureTopicCellWithCell:cell IndexPath:indexPath];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-//    V2TopicModel *model = self.topicList.list[indexPath.row];
-//    V2TopicViewController *topicViewController = [[V2TopicViewController alloc] init];
-//    topicViewController.model = model;
-//    [self.navigationController pushViewController:topicViewController animated:YES];
+    QHTopicModel *model = self.topicList.list[indexPath.row];
+    QHTopicViewController *topicViewController = [[QHTopicViewController alloc] init];
+    //topicViewController.model = model;
+    [self.navigationController pushViewController:topicViewController animated:YES];
     
 }
 
 #pragma mark - Configure TableCell
 
 - (CGFloat)heightOfTopicCellForIndexPath:(NSIndexPath *)indexPath {
-    return 44.0;
+    QHTopicModel *model = self.topicList.list[indexPath.row];
+    return [QHTopicListCell getCellHeightWithTopicModel:model];;
+}
+
+- (QHTopicListCell *)configureTopicCellWithCell:(QHTopicListCell *)cell IndexPath:(NSIndexPath *)indexPath {
+    
+    QHTopicModel *model = self.topicList.list[indexPath.row];
+    
+    cell.model = model;
+    cell.isTop = !indexPath.row;
+    
+    return cell;
 }
 
 #pragma mark - Private Methods

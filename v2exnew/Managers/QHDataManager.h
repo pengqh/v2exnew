@@ -10,6 +10,21 @@
 
 #import "QHTopicModel.h"
 
+typedef NS_ENUM(NSInteger, V2ErrorType) {
+    
+    V2ErrorTypeNoOnceAndNext          = 700,
+    V2ErrorTypeLoginFailure           = 701,
+    V2ErrorTypeRequestFailure         = 702,
+    V2ErrorTypeGetFeedURLFailure      = 703,
+    V2ErrorTypeGetTopicListFailure    = 704,
+    V2ErrorTypeGetNotificationFailure = 705,
+    V2ErrorTypeGetFavUrlFailure       = 706,
+    V2ErrorTypeGetMemberReplyFailure  = 707,
+    V2ErrorTypeGetTopicTokenFailure   = 708,
+    V2ErrorTypeGetCheckInURLFailure   = 709,
+    
+};
+
 typedef NS_ENUM (NSInteger, V2HotNodesType) {
     
     V2HotNodesTypeTech,
@@ -38,7 +53,7 @@ typedef NS_ENUM (NSInteger, V2HotNodesType) {
 #pragma mark - GET
 
 - (NSURLSessionDataTask *)getTopicListWithType:(V2HotNodesType)type
-                                       Success:(void (^)(NSArray *list))success
+                                       Success:(void (^)(QHTopicList *list))success
                                        failure:(void (^)(NSError *error))failure;
 
 @end

@@ -9,6 +9,7 @@
 #import "QHTopicModel.h"
 #import "HTMLParser.h"
 #import "RegexKitLite.h"
+#import "QHTopicListCell.h"
 
 @implementation QHTopicModel
 
@@ -147,8 +148,7 @@
                     index ++;
                 }
                 //model.state = [[V2TopicStateManager manager] getTopicStateWithTopicModel:model];
-                //model.cellHeight = [QHTopicListCell heightWithTopicModel:model];
-                model.cellHeight = 44.0;
+                model.cellHeight = [QHTopicListCell heightWithTopicModel:model];
                 [topicArray addObject:model];
             }
         }

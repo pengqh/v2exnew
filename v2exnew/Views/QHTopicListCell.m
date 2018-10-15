@@ -46,7 +46,7 @@ static CGFloat const kBottomFontSize        = 12.0f;
         self.backgroundColor = kBackgroundColorWhite;
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         
-        
+        [self configureViews];
     }
     return self;
 }
@@ -155,25 +155,27 @@ static CGFloat const kBottomFontSize        = 12.0f;
             [[SDWebImageManager sharedManager].imageCache storeImage:cornerRadiusImage forKey:model.topicCreator.memberAvatarNormal];
             self.avatarImageView.image = cornerRadiusImage;
         }
-        
-        self.replyCountLabel.text = model.topicReplyCount;
-        self.titleLabel.text = model.topicTitle;
-        self.timeLabel.text = model.topicCreatedDescription;
-        [self.timeLabel sizeToFit];
-        
-        self.nameLabel.text = model.topicCreator.memberName;
-        [self.nameLabel sizeToFit];
-        
-        self.nodeLabel.text = [NSString stringWithFormat:@"%@", model.topicNode.nodeTitle];
-        [self.nodeLabel sizeToFit];
-        self.nodeLabel.width += 4;
-        
-        self.titleHeight = ceil(model.titleHeight);
-        
-        self.avatarImageView.alpha = kSetting.imageViewAlphaForCurrentTheme;
-        
-        [self updateStatus];
     }];
+    
+    
+    self.replyCountLabel.text = model.topicReplyCount;
+    self.titleLabel.text = model.topicTitle;
+    self.timeLabel.text = model.topicCreatedDescription;
+    [self.timeLabel sizeToFit];
+    
+    self.nameLabel.text = model.topicCreator.memberName;
+    [self.nameLabel sizeToFit];
+    
+    self.nodeLabel.text = [NSString stringWithFormat:@"%@", model.topicNode.nodeTitle];
+    [self.nodeLabel sizeToFit];
+    self.nodeLabel.width += 4;
+    
+    self.titleHeight = ceil(model.titleHeight);
+    
+    self.avatarImageView.alpha = kSetting.imageViewAlphaForCurrentTheme;
+    
+    [self updateStatus];
+    self.backgroundColor = [UIColor yellowColor];
 }
 
 - (void)updateStatus {
