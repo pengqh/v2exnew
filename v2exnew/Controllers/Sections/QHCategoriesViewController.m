@@ -450,7 +450,7 @@
     
     QHTopicModel *model = self.topicList.list[indexPath.row];
     QHTopicViewController *topicViewController = [[QHTopicViewController alloc] init];
-    // topicViewController.model = model;
+    topicViewController.model = model;
     [self.navigationController pushViewController:topicViewController animated:YES];
     
 }

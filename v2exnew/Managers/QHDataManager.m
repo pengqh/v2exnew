@@ -80,6 +80,18 @@ typedef NS_ENUM(NSInteger, V2RequestMethod) {
     
     [self.manager.requestSerializer setValue:self.userAgentMobile forHTTPHeaderField:@"User-Agent"];
     
+    if (method == V2RequestMethodJSONGET) {
+        AFHTTPResponseSerializer *responseSerializer = [AFJSONResponseSerializer serializer];
+        self.manager.responseSerializer = responseSerializer;
+        task = [self.manager GET:URLString parameters:parameters success:^(NSURLSessionDataTask *task, id responseObject) {
+            responseHandleBlock(task, responseObject);
+        } failure:^(NSURLSessionDataTask *task, NSError *error) {
+            //V2Log(@"Error: \n%@", [error description]);
+            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+            failure(error);
+        }];
+    }
+    
     if (method == V2RequestMethodHTTPGET) {
         AFHTTPResponseSerializer *responseSerializer = [AFHTTPResponseSerializer serializer];
         self.manager.responseSerializer = responseSerializer;
@@ -188,6 +200,44 @@ typedef NS_ENUM(NSInteger, V2RequestMethod) {
             NSError *error = [[NSError alloc] initWithDomain:self.manager.baseURL.absoluteString code:V2ErrorTypeGetTopicListFailure userInfo:nil];
             failure(error);
         }
+    } failure:^(NSError *error) {
+        failure(error);
+    }];
+}
+
+- (NSURLSessionDataTask *)getTopicWithTopicId:(NSString *)topicId
+                                      success:(void (^)(QHTopicModel *model))success
+                                      failure:(void (^)(NSError *error))failure {
+    
+    NSDictionary *parameters;
+    if (topicId) {
+        parameters = @{
+                       @"id": topicId
+                       };
+    }
+    
+    return [self requestWithMethod:V2RequestMethodJSONGET URLString:@"/api/topics/show.json" parameters:parameters success:^(NSURLSessionDataTask *task, id responseObject) {
+        QHTopicModel *model = [[QHTopicModel alloc] initWithDictionary:[responseObject firstObject]];
+        success(model);
+    } failure:^(NSError *error) {
+        failure(error);
+    }];
+    
+}
+
+- (NSURLSessionDataTask *)getReplyListWithTopicId:(NSString *)topicId
+                                          success:(void (^)(QHReplyList *list))success
+                                          failure:(void (^)(NSError *error))failure {
+    NSDictionary *parameters;
+    if (topicId) {
+        parameters = @{
+                       @"topic_id": topicId
+                       };
+    }
+    
+    return [self requestWithMethod:V2RequestMethodJSONGET URLString:@"/api/replies/show.json" parameters:parameters success:^(NSURLSessionDataTask *task, id responseObject) {
+        QHReplyList *list = [[QHReplyList alloc] initWithArray:responseObject];
+        success(list);
     } failure:^(NSError *error) {
         failure(error);
     }];

@@ -13,4 +13,6 @@
 @property (nonatomic, strong) UIImage *imageForCurrentTheme;
 - (UIImage *)imageWithTintColor:(UIColor *)tintColor;
 
+- (CGSize)fitWidth:(CGFloat)fitWidth;
+
 @end

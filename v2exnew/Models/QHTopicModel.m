@@ -10,8 +10,186 @@
 #import "HTMLParser.h"
 #import "RegexKitLite.h"
 #import "QHTopicListCell.h"
+#import "QHNodeModel.h"
+#import "QHMemberModel.h"
+#import "NSString+SCMention.h"
+#import "SCQuote.h"
 
 @implementation QHTopicModel
+
+- (instancetype)initWithDictionary:(NSDictionary *)dict {
+    if (self = [super initWithDictionary:dict]) {
+        self.topicId              = [dict objectForSafeKey:@"id"];
+        self.topicTitle           = [dict objectForSafeKey:@"title"];
+        self.topicReplyCount      = [NSString stringWithFormat:@"%@", [dict objectForSafeKey:@"replies"]];
+        self.topicUrl             = [dict objectForSafeKey:@"url"];
+        self.topicContent         = [dict objectForSafeKey:@"content"];
+        self.topicContentRendered = [dict objectForSafeKey:@"content_rendered"];
+        self.topicCreated         = [dict objectForSafeKey:@"created"];
+        self.topicModified        = [dict objectForSafeKey:@"last_modified"];
+        self.topicTouched         = [dict objectForSafeKey:@"last_touched"];
+        
+        NSDictionary *nodeDict    = [dict objectForSafeKey:@"node"];
+        self.topicNode            = [[QHNodeModel alloc] initWithDictionary:nodeDict];
+        
+        NSDictionary *creatorDict = [dict objectForSafeKey:@"member"];
+        self.topicCreator         = [[QHMemberModel alloc] initWithDictionary:creatorDict];
+        
+        //self.state                = [[V2TopicStateManager manager] getTopicStateWithTopicModel:self];
+        
+        
+        self.topicContent = [self.topicContent stringByReplacingOccurrencesOfString:@"\r" withString:@"\n"];
+        while ([self.topicContent rangeOfString:@"\n\n"].location != NSNotFound) {
+            self.topicContent = [self.topicContent stringByReplacingOccurrencesOfString:@"\n\n" withString:@"\n"];
+        }
+        
+        //        self.topicContent = [self.topicContent stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+        
+        if (self.topicCreated) {
+            self.topicCreatedDescription = [V2Helper timeRemainDescriptionWithDateSP:self.topicCreated];
+        }
+        
+        self.quoteArray = [self.topicContentRendered quoteArray];
+        
+        NSString *mentionString = self.topicContent;
+        NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:self.topicContent];
+        [attributedString addAttribute:NSForegroundColorAttributeName value:kFontColorBlackDark range:NSMakeRange(0, attributedString.length)];
+        [attributedString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:16] range:NSMakeRange(0, attributedString.length)];
+        
+        NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc] init];
+        style.lineSpacing = 8.0;
+        
+        [attributedString addAttributes:@{
+                                          NSParagraphStyleAttributeName: style,
+                                          } range:NSMakeRange(0, attributedString.length)];
+        
+        NSMutableArray *imageURLs = [[NSMutableArray alloc] init];
+        
+        for (SCQuote *quote in self.quoteArray) {
+            NSRange range = [mentionString rangeOfString:quote.string];
+            if (range.location != NSNotFound) {
+                mentionString = [mentionString stringByReplacingOccurrencesOfString:quote.string withString:[self spaceWithLength:range.length]];
+                quote.range = range;
+                if (quote.type == SCQuoteTypeUser) {
+                    [attributedString addAttribute:NSForegroundColorAttributeName value:(id)RGB(0x778087, 0.8) range:NSMakeRange(range.location - 1, 1)];
+                } else {
+                }
+            } else {
+                NSString *string = [quote.string stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+                NSRange range = [mentionString rangeOfString:string];
+                if (range.location != NSNotFound) {
+                    mentionString = [mentionString stringByReplacingOccurrencesOfString:quote.string withString:[self spaceWithLength:range.length]];
+                    quote.range = range;
+                } else {
+                    quote.range = NSMakeRange(0, 0);
+                }
+            }
+            if (quote.type == SCQuoteTypeImage) {
+                [imageURLs addObject:quote.identifier];
+            }
+        }
+        
+        self.imageURLs = imageURLs;
+        self.attributedString = attributedString;
+        
+        if (!kSetting.trafficSaveModeOn) {
+            
+            NSMutableArray *contentArray = [[NSMutableArray alloc] init];
+            
+            __block NSUInteger lastStringIndex = 0;
+            __block NSUInteger lastImageQuoteIndex = 0;
+            
+            [self.quoteArray enumerateObjectsUsingBlock:^(SCQuote *quote, NSUInteger idx, BOOL *stop) {
+                
+                if (quote.type == SCQuoteTypeImage) {
+                    
+                    if (quote.range.location > lastStringIndex) {
+                        
+                        QHContentStringModel *stringModel = [[QHContentStringModel alloc] init];
+                        
+                        NSAttributedString *subString = [attributedString attributedSubstringFromRange:(NSRange){lastStringIndex, quote.range.location - lastStringIndex}];
+                        NSAttributedString *firstString = [subString attributedSubstringFromRange:(NSRange){0, 1}];
+                        NSInteger stringOffset = 0;
+                        if ([firstString.string isEqualToString:@"\n"]) {
+                            stringOffset = 1;
+                            subString = [attributedString attributedSubstringFromRange:(NSRange){lastStringIndex + stringOffset, quote.range.location - lastStringIndex - stringOffset}];
+                        }
+                        stringModel.attributedString = subString;
+                        
+                        NSMutableArray *quotes = [[NSMutableArray alloc] init];
+                        for (NSInteger i = lastImageQuoteIndex; i < idx; i ++) {
+                            SCQuote *otherQuote = self.quoteArray[i];
+                            otherQuote.range = (NSMakeRange(otherQuote.range.location - lastStringIndex, otherQuote.range.length));
+                            [quotes addObject:self.quoteArray[i]];
+                        }
+                        if (quotes.count > 0) {
+                            stringModel.quoteArray = quotes;
+                        }
+                        
+                        [contentArray addObject:stringModel];
+                        
+                    }
+                    
+                    QHContentImageModel *imageModel = [[QHContentImageModel alloc] init];
+                    imageModel.imageQuote = quote;
+                    
+                    [contentArray addObject:imageModel];
+                    
+                    lastImageQuoteIndex = idx + 1;
+                    lastStringIndex = quote.range.location + quote.range.length;
+                }
+                
+            }];
+            
+            if (lastStringIndex < attributedString.length) {
+                
+                QHContentStringModel *stringModel = [[QHContentStringModel alloc] init];
+                
+                NSAttributedString *subString = [attributedString attributedSubstringFromRange:(NSRange){lastStringIndex, attributedString.length - lastStringIndex}];
+                NSAttributedString *firstString = [subString attributedSubstringFromRange:(NSRange){0, 1}];
+                NSInteger stringOffset = 0;
+                if ([firstString.string isEqualToString:@"\n"]) {
+                    stringOffset = 1;
+                    subString = [attributedString attributedSubstringFromRange:(NSRange){lastStringIndex + stringOffset, attributedString.length - lastStringIndex - stringOffset}];
+                }
+                stringModel.attributedString = subString;
+                
+                NSMutableArray *quotes = [[NSMutableArray alloc] init];
+                for (NSInteger i = lastImageQuoteIndex; i < self.quoteArray.count; i ++) {
+                    SCQuote *otherQuote = self.quoteArray[i];
+                    NSInteger location = otherQuote.range.location - lastStringIndex - stringOffset;
+                    if (location >= 0) {
+                        otherQuote.range = NSMakeRange(location, otherQuote.range.length);
+                    } else {
+                        otherQuote.range = NSMakeRange(0, 0);
+                    }
+                    [quotes addObject:self.quoteArray[i]];
+                }
+                if (quotes.count > 0) {
+                    stringModel.quoteArray = quotes;
+                }
+                
+                [contentArray addObject:stringModel];
+                
+            }
+            
+            self.contentArray = contentArray;
+        }
+        
+    }
+    return self;
+}
+
+- (NSString *)spaceWithLength:(NSUInteger)length {
+    
+    NSString *spaceString = @"";
+    
+    while (spaceString.length < length) {
+        spaceString = [spaceString stringByAppendingString:@" "];
+    }
+    
+    return spaceString;
+}
 
 @end
 
@@ -161,6 +339,55 @@
     }
     
     return list;
+}
+
+@end
+
+@implementation QHContentBaseModel
+
+- (instancetype)init {
+    
+    if (self = [super init]) {
+        
+        
+    }
+    
+    return self;
+    
+}
+
+@end
+
+
+@implementation QHContentStringModel
+
+- (instancetype)init {
+    
+    if (self = [super init]) {
+        
+        self.contentType = V2ContentTypeString;
+        
+    }
+    
+    return self;
+    
+}
+
+@end
+
+
+@implementation QHContentImageModel
+
+- (instancetype)init {
+    
+    if (self = [super init]) {
+        
+        self.contentType = V2ContentTypeImage;
+        
+    }
+    
+    return self;
+    
 }
 
 @end

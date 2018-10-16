@@ -10,6 +10,8 @@
 
 @interface QHTopicViewController : SCPullRefreshViewController
 
+@property (nonatomic, assign, getter=isCreate) BOOL create;
+
 @property (nonatomic, strong) QHTopicModel *model;
 
 @end

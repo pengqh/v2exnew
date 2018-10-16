@@ -28,6 +28,12 @@ static NSString *const kThemeAutoChange = @"ThemeAutoChange";
 
 static NSString *const kNavigationBarHidden   = @"NavigationBarHidden";
 static NSString *const kPreferHttps = @"PreferHttps";
+static NSString *const kTrafficeSaveOn = @"TrafficeSaveOn";
+
+@interface QHSettingManager () {
+    BOOL _trafficSaveModeOn;
+}
+@end
 
 @implementation QHSettingManager
 
@@ -53,6 +59,13 @@ static NSString *const kPreferHttps = @"PreferHttps";
             _themeAutoChange = [themeAutoChange boolValue];
         } else {
             _themeAutoChange = YES;
+        }
+        
+        id trafficSaveOn = [userDefaults objectForKey:kTrafficeSaveOn];
+        if (trafficSaveOn) {
+            _trafficSaveModeOn = [trafficSaveOn boolValue];
+        } else {
+            _trafficSaveModeOn = NO;
         }
         
         id preferHttps = [userDefaults objectForKey:kPreferHttps];
@@ -182,6 +195,23 @@ static NSString *const kPreferHttps = @"PreferHttps";
 }
 
 #pragma mark - Traffic
+
+- (void)setTrafficSaveModeOn:(BOOL)trafficSaveModeOn {
+    _trafficSaveModeOn = trafficSaveModeOn;
+    
+    [userDefaults setObject:@(trafficSaveModeOn) forKey:kTrafficeSaveOn];
+    [userDefaults synchronize];
+    
+}
+
+- (BOOL)trafficSaveModeOn {
+    
+    return ![AFNetworkReachabilityManager sharedManager].isReachableViaWiFi && _trafficSaveModeOn;
+}
+
+- (BOOL)trafficSaveModeOnSetting {
+    return _trafficSaveModeOn;
+}
 
 - (void)setPreferHttps:(BOOL)preferHttps {
     _preferHttps = preferHttps;

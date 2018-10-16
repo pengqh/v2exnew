@@ -41,4 +41,17 @@
     
 }
 
+- (CGSize)fitWidth:(CGFloat)fitWidth {
+    
+    CGFloat height = self.size.height;
+    CGFloat width = self.size.width;
+    
+    if (width > fitWidth) {
+        height *= fitWidth/width;
+        width = fitWidth;
+    }
+    
+    return CGSizeMake(width, height);
+}
+
 @end

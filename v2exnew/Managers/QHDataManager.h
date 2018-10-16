@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 #import "QHTopicModel.h"
+#import "QHReplyModel.h"
 
 typedef NS_ENUM(NSInteger, V2ErrorType) {
     
@@ -61,4 +62,13 @@ typedef NS_ENUM (NSInteger, V2HotNodesType) {
                                                 page:(NSInteger)page
                                              Success:(void (^)(QHTopicList *list))success
                                              failure:(void (^)(NSError *error))failure;
+
+- (NSURLSessionDataTask *)getTopicWithTopicId:(NSString *)topicId
+                                      success:(void (^)(QHTopicModel *model))success
+                                      failure:(void (^)(NSError *error))failure;
+
+- (NSURLSessionDataTask *)getReplyListWithTopicId:(NSString *)topicId
+                                          success:(void (^)(QHReplyList *list))success
+                                          failure:(void (^)(NSError *error))failure;
+
 @end

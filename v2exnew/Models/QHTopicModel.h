@@ -10,6 +10,7 @@
 #import "QHBaseModel.h"
 #import "QHMemberModel.h"
 #import "QHNodeModel.h"
+#import "SCQuote.h"
 
 typedef NS_ENUM (NSInteger, V2TopicState) {
     
@@ -22,7 +23,12 @@ typedef NS_ENUM (NSInteger, V2TopicState) {
     
 };
 
-@interface QHTopicModel : NSObject
+typedef NS_ENUM(NSInteger, V2ContentType) {
+    V2ContentTypeString,
+    V2ContentTypeImage,
+};
+
+@interface QHTopicModel : QHBaseModel
 
 @property (nonatomic, copy) NSString *topicId;
 @property (nonatomic, copy) NSString *topicTitle;
@@ -57,5 +63,24 @@ typedef NS_ENUM (NSInteger, V2TopicState) {
 - (instancetype)initWithArray:(NSArray *)array;
 
 + (QHTopicList *)getTopicListFromResponseObject:(id)responseObject;
+
+@end
+
+@interface QHContentBaseModel : NSObject
+
+@property (nonatomic, assign) V2ContentType contentType;
+
+@end
+
+@interface QHContentStringModel : QHContentBaseModel
+
+@property (nonatomic, copy) NSAttributedString *attributedString;
+@property (nonatomic, strong) NSArray *quoteArray;
+
+@end
+
+@interface QHContentImageModel : QHContentBaseModel
+
+@property (nonatomic, strong) SCQuote *imageQuote;
 
 @end

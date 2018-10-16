@@ -55,6 +55,8 @@ typedef NS_ENUM(NSInteger, V2Theme) {
 
 #pragma mark - Traffic
 
+@property (nonatomic, assign) BOOL trafficSaveModeOn;
+@property (nonatomic, assign) BOOL trafficSaveModeOnSetting;
 @property (nonatomic, assign) BOOL preferHttps;
 
 @end

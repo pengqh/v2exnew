@@ -14,6 +14,7 @@
 @property (strong, nonatomic) UIWindow *window;
 
 @property (nonatomic, strong) V2RootViewController *rootViewController;
+@property (nonatomic, assign) QHNavigationController *currentNavigationController;
 
 @end
 
