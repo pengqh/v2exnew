@@ -11,6 +11,9 @@
 #import "QHSubMenuSectionView.h"
 #import "QHTopicListCell.h"
 
+#define keyFromCategoriesType(type) [NSString stringWithFormat:@"categoriesKey%zd", type]
+#define keyFromFavoriteType(type) [NSString stringWithFormat:@"categoriesKey%zd", type]
+
 @interface QHCategoriesViewController () <UITableViewDataSource, UITableViewDelegate, UIViewControllerPreviewingDelegate>
 
 @property (nonatomic, strong) QHSubMenuSectionView             *sectionView;
@@ -24,10 +27,32 @@
 @property (nonatomic, strong) QHBarButtonItem *rightBarItemExpend;
 
 @property (nonatomic, strong) QHTopicList *topicList;
+@property (nonatomic, strong) NSMutableDictionary              *topicListDict;
+
+@property (nonatomic, assign) V2HotNodesType categoriesType;
+@property (nonatomic, assign) V2HotNodesType favoriteType;
+
+@property (nonatomic, copy) NSURLSessionDataTask* (^getTopicListBlock)(V2HotNodesType type, BOOL isLoadMore);
+@property (nonatomic, strong) NSURLSessionDataTask * currentTask;
+@property (nonatomic, assign) NSInteger currentPage;
+
+@property (nonatomic, assign) BOOL needsRefresh;
 
 @end
 
 @implementation QHCategoriesViewController
+
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        self.topicListDict = [[NSMutableDictionary alloc] init];
+        self.needsRefresh = YES;
+        
+        self.favorite = NO;
+        self.currentPage = 1;
+    }
+    return self;
+}
 
 - (void)loadView {
     [super loadView];
@@ -42,15 +67,27 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self configureBlocks];
+    
     self.sc_navigationItem.leftBarButtonItem = self.leftBarItem;
     self.sc_navigationItem.rightBarButtonItem = self.rightBarItemExpend;
-    self.sc_navigationItem.title = @"好玩";
-    [self.tableView scrollRectToVisible:(CGRect){0, 0, 1, 1} animated:YES];
-    [[QHDataManager manager] getTopicListWithType:V2HotNodesTypeTech Success:^(QHTopicList *list) {
-        self.topicList = list;
-    } failure:^(NSError *error) {
+    
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    if (self.needsRefresh) {
+        self.needsRefresh = NO;
         
-    }];
+        if (self.isFavorite) {
+            self.sc_navigationItem.title = self.sectionView.sectionTitleArray[[QHSettingManager manager].favoriteSelectedSectionIndex];
+        } else {
+            self.sc_navigationItem.title = self.sectionView.sectionTitleArray[[QHSettingManager manager].categoriesSelectedSectionIndex];
+        }
+        
+        [self beginRefresh];
+    }
 }
 
 #pragma mark - Layouts
@@ -105,6 +142,40 @@
     }
     
     [self.view addSubview:self.sectionView];
+    
+    @weakify(self);
+    [self.sectionView setDidSelectedIndexBlock:^(NSInteger index) {
+        @strongify(self);
+        
+        if (self.isFavorite) {
+            [QHSettingManager manager].favoriteSelectedSectionIndex = index;
+        } else {
+            [QHSettingManager manager].categoriesSelectedSectionIndex = index;
+        }
+        
+        self.sc_navigationItem.title = self.sectionView.sectionTitleArray[index];
+        
+        [UIView animateWithDuration:0.3 animations:^{
+            [self setMenuOffset:0.0];
+        } completion:^(BOOL finished) {
+            self.aboveTableViewButton.hidden = YES;
+            QHTopicList *storedList;
+            if (self.isFavorite) {
+                storedList = [self.topicListDict objectForSafeKey:keyFromFavoriteType(self.favoriteType)];
+            } else {
+                storedList = [self.topicListDict objectForSafeKey:keyFromCategoriesType(self.categoriesType)];
+            }
+            
+            if (storedList) {
+                self.topicList = storedList;
+            } else {
+                self.topicList = nil;
+                [self sc_setNavigationBarHidden:NO animated:YES];
+            }
+            [self beginRefresh];
+            [self.tableView scrollRectToVisible:(CGRect){0,0,1,1} animated:YES];
+        }];
+    }];
 }
 
 - (void)configureTableView {
@@ -238,6 +309,105 @@
     [self.aboveTableViewButton addGestureRecognizer:panRecognizer];
 }
 
+- (void)configureBlocks {
+    
+    @weakify(self);
+    self.getTopicListBlock = ^(V2HotNodesType type, BOOL isLoadMore) {
+        @strongify(self);
+        
+        if (self.currentTask) {
+            [self.currentTask cancel];
+        }
+        
+        if (self.isFavorite && self.favoriteType != V2HotNodesTypeNodes) {
+            type = self.favoriteType;
+            NSInteger page = 1;
+            
+            if (isLoadMore) {
+                page = self.currentPage + 1;
+            }
+            
+            self.currentTask = [[QHDataManager manager] getMemberTopicListWithType:type page:page Success:^(QHTopicList *list) {
+                @strongify(self);
+                
+                if (isLoadMore) {
+                    self.currentPage = page;
+                    NSMutableArray *newList = [NSMutableArray arrayWithArray:self.topicList.list];
+                    [newList addObjectsFromArray:list.list];
+                    list.list = newList;
+                } else {
+                    self.currentPage = 1;
+                }
+                
+                self.topicList = list;
+                [self.topicListDict setObject:list forKey:keyFromFavoriteType(type)];
+                
+                if (isLoadMore) {
+                    [self endLoadMore];
+                } else {
+                    [self endRefresh];
+                }
+                
+            } failure:^(NSError *error) {
+                @strongify(self);
+                
+                if (isLoadMore) {
+                    [self endLoadMore];
+                } else {
+                    [self endRefresh];
+                }
+                
+            }];
+        } else {
+            
+            if (self.isFavorite) {
+                type = V2HotNodesTypeNodes;
+            } else {
+                type = self.categoriesType;
+            }
+            
+            self.currentTask = [[QHDataManager manager] getTopicListWithType:type Success:^(QHTopicList *list) {
+                
+                self.topicList = list;
+                [self.topicListDict setObject:list forKey:keyFromCategoriesType(type)];
+                if (isLoadMore) {
+                    [self endLoadMore];
+                } else {
+                    [self endRefresh];
+                }
+                
+            } failure:^(NSError *error) {
+                @strongify(self);
+                if (isLoadMore) {
+                    [self endLoadMore];
+                } else {
+                    [self endRefresh];
+                }
+            }];
+        }
+        
+        return self.currentTask;
+    };
+    
+    self.refreshBlock = ^{
+        @strongify(self);
+        
+        if (self.isFavorite) {
+            self.getTopicListBlock(self.favoriteType, NO);
+        } else {
+            self.getTopicListBlock(self.categoriesType, NO);
+        }
+    };
+    
+    if (self.isFavorite) {
+        self.loadMoreBlock = ^{
+            @strongify(self);
+            self.getTopicListBlock(self.favoriteType, YES);
+        };
+    }
+    
+}
+
 #pragma mark - Data
 
 - (void)setTopicList:(QHTopicList *)topicList {
@@ -280,7 +450,7 @@
     
     QHTopicModel *model = self.topicList.list[indexPath.row];
     QHTopicViewController *topicViewController = [[QHTopicViewController alloc] init];
-    //topicViewController.model = model;
+    // topicViewController.model = model;
     [self.navigationController pushViewController:topicViewController animated:YES];
     
 }
@@ -313,6 +483,72 @@
     self.leftShadowImageView.alpha = MIN((-offset / 200), 0.3);
     self.sectionView.x             = kScreenWidth - 20 + (offset / self.sectionView.width) * (self.sectionView.width - 20);
     
+}
+
+- (V2HotNodesType)categoriesType {
+    
+    V2HotNodesType type = V2HotNodesTypeHot;
+    
+    switch ([QHSettingManager manager].categoriesSelectedSectionIndex) {
+        case 0:
+            type = V2HotNodesTypeTech;
+            break;
+        case 1:
+            type = V2HotNodesTypeCreative;
+            break;
+        case 2:
+            type = V2HotNodesTypePlay;
+            break;
+        case 3:
+            type = V2HotNodesTypeApple;
+            break;
+        case 4:
+            type = V2HotNodesTypeJobs;
+            break;
+        case 5:
+            type = V2HotNodesTypeDeals;
+            break;
+        case 6:
+            type = V2HotNodesTypeCity;
+            break;
+        case 7:
+            type = V2HotNodesTypeQna;
+            break;
+        case 8:
+            type = V2HotNodesTypeHot;
+            break;
+        case 9:
+            type = V2HotNodesTypeAll;
+            break;
+        case 10:
+            type = V2HotNodesTypeR2;
+            break;
+        default:
+            type = V2HotNodesTypeAll;
+            break;
+    }
+    
+    return type;
+}
+
+- (V2HotNodesType)favoriteType {
+    V2HotNodesType type = V2HotNodesTypeAll;
+    
+    switch ([QHSettingManager manager].favoriteSelectedSectionIndex) {
+        case 0:
+            type = V2HotNodesTypeNodes;
+            break;
+        case 1:
+            type = V2HotNodesTypeMembers;
+            break;
+        case 2:
+            type = V2HotNodesTypeFav;
+            break;
+        default:
+            break;
+    }
+    
+    return type;
 }
 
 

@@ -43,6 +43,8 @@ static NSString *const kPreferHttps = @"PreferHttps";
 - (instancetype)init {
     if (self = [super init]) {
         self.selectedSectionIndex = [[userDefaults objectForKey:kSelectedSectionIndex] unsignedIntegerValue];
+        self.categoriesSelectedSectionIndex = [[userDefaults objectForKey:kCategoriesSelectedSectionIndex] unsignedIntegerValue];
+        self.favoriteSelectedSectionIndex = [[userDefaults objectForKey:kFavoriteSelectedSectionIndex] unsignedIntegerValue];
         
         _theme = [[userDefaults objectForKey:kTheme] integerValue];
         
@@ -59,6 +61,8 @@ static NSString *const kPreferHttps = @"PreferHttps";
         } else {
             _preferHttps = NO;
         }
+        
+        [self configureTheme:_theme];
         
     }
     return self;

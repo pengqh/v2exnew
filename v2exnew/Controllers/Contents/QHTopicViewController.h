@@ -6,8 +6,10 @@
 //  Copyright © 2018年 pengquanhua. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "SCPullRefreshViewController.h"
 
-@interface QHTopicViewController : UIViewController
+@interface QHTopicViewController : SCPullRefreshViewController
+
+@property (nonatomic, strong) QHTopicModel *model;
 
 @end

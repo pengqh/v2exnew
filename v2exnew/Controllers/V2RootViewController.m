@@ -122,8 +122,8 @@ static CGFloat const kMenuWidth = 240.0;
     self.nodesViewController        = [[UIViewController alloc] init];
     self.nodesNavigationController = [[QHNavigationController alloc] initWithRootViewController:self.nodesViewController];
     
-    self.favouriteViewController      = [[UIViewController alloc] init];
-    //self.favouriteViewController.favorite = YES;
+    self.favouriteViewController      = [[QHCategoriesViewController alloc] init];
+    self.favouriteViewController.favorite = YES;
     self.favoriteNavigationController = [[QHNavigationController alloc] initWithRootViewController:self.favouriteViewController];
     
     self.notificationViewController = [[UIViewController alloc] init];
@@ -157,17 +157,71 @@ static CGFloat const kMenuWidth = 240.0;
 #pragma mark - Private Methods
 
 - (void)showViewControllerAtIndex:(V2SectionIndex)index animated:(BOOL)animated {
-    NSLog(@"aaaaaaaa");
-    [UIView animateWithDuration:0.3 delay:0.1 options:UIViewAnimationOptionCurveEaseOut animations:^{
-        [self setMenuOffset:0.0f];
-    } completion:nil];
+    
+    if (self.currentSelectedIndex != index) {
+        
+        @weakify(self);
+        void (^showBlock)(void) = ^{
+            @strongify(self);
+            UIViewController *previousViewController = [self viewControllerForIndex:self.currentSelectedIndex];
+            UIViewController *willShowViewController = [self viewControllerForIndex:index];
+            
+            if (willShowViewController) {
+                
+                BOOL isViewInRootView = NO;
+                for (UIView *subView in self.view.subviews) {
+                    if ([subView isEqual:willShowViewController.view]) {
+                        isViewInRootView = YES;
+                    }
+                }
+                if (isViewInRootView) {
+                    willShowViewController.view.x = 320;
+                    [self.viewControllerContainView bringSubviewToFront:willShowViewController.view];
+                } else {
+                    [self.viewControllerContainView addSubview:willShowViewController.view];
+                    willShowViewController.view.x = 320;
+                }
+                
+                if (animated) {
+                    [UIView animateWithDuration:0.2 animations:^{
+                        previousViewController.view.x += 20;
+                    }];
+                    
+                    [UIView animateWithDuration:0.6 delay:0 usingSpringWithDamping:1 initialSpringVelocity:1.2 options:UIViewAnimationOptionCurveLinear animations:^{
+                        willShowViewController.view.x = 0;
+                    } completion:nil];
+                    
+                    [UIView animateWithDuration:0.3 delay:0.1 options:UIViewAnimationOptionCurveEaseOut animations:^{
+                        [self setMenuOffset:0.0f];
+                    } completion:nil];
+                } else {
+                    previousViewController.view.x += 20;
+                    willShowViewController.view.x = 0;
+                    [self setMenuOffset:0.0f];
+                }
+                self.currentSelectedIndex = index;
+            }
+        };
+        showBlock();
+    
+    } else {
+        UIViewController *willShowViewController = [self viewControllerForIndex:index];
+        
+        [UIView animateWithDuration:0.4 animations:^{
+            willShowViewController.view.x = 0;
+        }];
+        [UIView animateWithDuration:0.5 animations:^{
+            [self setMenuOffset:0.0f];
+        }];
+        
+    }
     [self.menuView selectIndex:index];
+    
 }
 
 - (UIViewController *)viewControllerForIndex:(V2SectionIndex)index {
     
     UIViewController *viewController;
-    index = 1;
     switch (index) {
         case V2SectionIndexLatest:
             viewController = self.latestNavigationController;

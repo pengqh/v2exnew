@@ -156,4 +156,41 @@ typedef NS_ENUM(NSInteger, V2RequestMethod) {
     }];
 }
 
+- (NSURLSessionDataTask *)getMemberTopicListWithType:(V2HotNodesType)type
+                                                page:(NSInteger)page
+                                             Success:(void (^)(QHTopicList *list))success
+                                             failure:(void (^)(NSError *error))failure {
+    NSString *urlString;
+    switch (type) {
+        case V2HotNodesTypeNodes:
+            urlString = @"/my/nodes";
+            break;
+        case V2HotNodesTypeMembers:
+            urlString = @"my/following";
+            break;
+        case V2HotNodesTypeFav:
+            urlString = @"my/topics";
+            break;
+        default:
+            urlString = @"/my/nodes";
+            break;
+    }
+    
+    NSDictionary *parameters = @{@"p": @(page)};
+    
+    return [self requestWithMethod:V2RequestMethodHTTPGET URLString:urlString parameters:parameters success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        QHTopicList *list = [QHTopicList getTopicListFromResponseObject:responseObject];
+        
+        if (list) {
+            success(list);
+        } else {
+            NSError *error = [[NSError alloc] initWithDomain:self.manager.baseURL.absoluteString code:V2ErrorTypeGetTopicListFailure userInfo:nil];
+            failure(error);
+        }
+    } failure:^(NSError *error) {
+        failure(error);
+    }];
+}
+
 @end

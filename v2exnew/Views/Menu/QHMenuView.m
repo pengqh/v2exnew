@@ -40,7 +40,6 @@
     [self addSubview:self.backgroundContainView];
     
     self.backgroundImageView = [[UIImageView alloc] init];
-    //self.backgroundImageView.backgroundColor = [UIColor yellowColor];
     [self.backgroundContainView addSubview:self.backgroundImageView];
     
     self.sectionView = [[QHMenuSectionView alloc] init];

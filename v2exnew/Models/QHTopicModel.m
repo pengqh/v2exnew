@@ -46,7 +46,6 @@
         
         for (HTMLNode *cellNode in cellNodes) {
             if ([[cellNode getAttributeNamed:@"class"] isEqualToString:@"cell item"]) {
-                NSLog(@"%@", cellNode.rawContents);
                 
                 QHTopicModel *model = [[QHTopicModel alloc] init];
                 model.topicCreator = [[QHMemberModel alloc] init];
