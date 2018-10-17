@@ -198,6 +198,14 @@
 - (instancetype)initWithArray:(NSArray *)array {
     if (self = [super init]) {
         
+        NSMutableArray *list = [[NSMutableArray alloc] init];
+        
+        for (NSDictionary *dict in array) {
+            QHTopicModel *model = [[QHTopicModel alloc] initWithDictionary:dict];
+            [list addObject:model];
+        }
+        self.list = list;
+        
     }
     return self;
 }

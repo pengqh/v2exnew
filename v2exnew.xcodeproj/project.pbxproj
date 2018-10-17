@@ -18,6 +18,7 @@
 		115662F721770DDE0005B2EC /* UIImage+REFrosted.m in Sources */ = {isa = PBXBuildFile; fileRef = 115662F321770DDD0005B2EC /* UIImage+REFrosted.m */; };
 		115662F821770DDE0005B2EC /* UIView+REFrosted.m in Sources */ = {isa = PBXBuildFile; fileRef = 115662F621770DDE0005B2EC /* UIView+REFrosted.m */; };
 		115662FB2177170C0005B2EC /* QHNodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 115662FA2177170B0005B2EC /* QHNodeViewController.m */; };
+		115662FE21771AC30005B2EC /* QHTopicToolBarItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 115662FD21771AC30005B2EC /* QHTopicToolBarItemView.m */; };
 		11C33577214D2956009D3CE1 /* QHNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 11C33576214D2956009D3CE1 /* QHNavigationController.m */; };
 		11C33580214D2B97009D3CE1 /* QHViewController+NaviBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 11C3357F214D2B97009D3CE1 /* QHViewController+NaviBar.m */; };
 		11C33583214D2C51009D3CE1 /* QHNavigationItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 11C33582214D2C51009D3CE1 /* QHNavigationItem.m */; };
@@ -110,6 +111,8 @@
 		115662F621770DDE0005B2EC /* UIView+REFrosted.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+REFrosted.m"; sourceTree = "<group>"; };
 		115662F92177170B0005B2EC /* QHNodeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QHNodeViewController.h; sourceTree = "<group>"; };
 		115662FA2177170B0005B2EC /* QHNodeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QHNodeViewController.m; sourceTree = "<group>"; };
+		115662FC21771AC30005B2EC /* QHTopicToolBarItemView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QHTopicToolBarItemView.h; sourceTree = "<group>"; };
+		115662FD21771AC30005B2EC /* QHTopicToolBarItemView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QHTopicToolBarItemView.m; sourceTree = "<group>"; };
 		11C33575214D2956009D3CE1 /* QHNavigationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QHNavigationController.h; sourceTree = "<group>"; };
 		11C33576214D2956009D3CE1 /* QHNavigationController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QHNavigationController.m; sourceTree = "<group>"; };
 		11C3357E214D2B97009D3CE1 /* QHViewController+NaviBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "QHViewController+NaviBar.h"; sourceTree = "<group>"; };
@@ -586,6 +589,8 @@
 				115662EA2176EC930005B2EC /* QHActionItemView.m */,
 				115662EC2176EECF0005B2EC /* QHActionCellView.h */,
 				115662ED2176EECF0005B2EC /* QHActionCellView.m */,
+				115662FC21771AC30005B2EC /* QHTopicToolBarItemView.h */,
+				115662FD21771AC30005B2EC /* QHTopicToolBarItemView.m */,
 			);
 			path = Topic;
 			sourceTree = "<group>";
@@ -754,6 +759,7 @@
 			files = (
 				11DED61921719C0E00B832C2 /* HTMLNode.m in Sources */,
 				11DB38D0216F0CC200E63924 /* EXTScope.m in Sources */,
+				115662FE21771AC30005B2EC /* QHTopicToolBarItemView.m in Sources */,
 				11DED6882175A09800B832C2 /* IDMTapDetectingImageView.m in Sources */,
 				11C33590214D38E0009D3CE1 /* UIView+SafeArea.m in Sources */,
 				11DED60E2170988500B832C2 /* QHDataManager.m in Sources */,

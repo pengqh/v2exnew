@@ -13,6 +13,7 @@
 #import "QHTopicReplyCell.h"
 #import "SCActionSheet.h"
 #import "QHActionCellView.h"
+#import "QHNodeViewController.h"
 
 @interface QHTopicViewController () <UITableViewDelegate, UITableViewDataSource>
 
@@ -157,7 +158,10 @@
     @weakify(self);
     [headerButton bk_addEventHandler:^(id sender) {
         @strongify(self);
-        NSLog(@"click headerButton");
+        QHNodeViewController *nodeVC = [[QHNodeViewController alloc] init];
+        nodeVC.model = self.nodeModel;
+        [self.navigationController pushViewController:nodeVC animated:YES];
+        
     } forControlEvents:UIControlEventTouchUpInside];
 }
 

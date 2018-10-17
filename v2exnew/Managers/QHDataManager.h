@@ -71,4 +71,11 @@ typedef NS_ENUM (NSInteger, V2HotNodesType) {
                                           success:(void (^)(QHReplyList *list))success
                                           failure:(void (^)(NSError *error))failure;
 
+
+- (NSURLSessionDataTask *)getTopicListWithNodeId:(NSString *)nodeId
+                                        nodename:(NSString *)name
+                                        username:(NSString *)username
+                                            page:(NSInteger)page
+                                         success:(void (^)(QHTopicList *list))success
+                                         failure:(void (^)(NSError *error))failure;
 @end

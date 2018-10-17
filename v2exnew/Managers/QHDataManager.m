@@ -243,4 +243,39 @@ typedef NS_ENUM(NSInteger, V2RequestMethod) {
     }];
 }
 
+- (NSURLSessionDataTask *)getTopicListWithNodeId:(NSString *)nodeId
+                                        nodename:(NSString *)name
+                                        username:(NSString *)username
+                                            page:(NSInteger)page
+                                         success:(void (^)(QHTopicList *list))success
+                                         failure:(void (^)(NSError *error))failure {
+    NSDictionary *parameters;
+    if (nodeId) {
+        parameters = @{
+                       @"node_id": nodeId,
+                       @"p": @(page)
+                       };
+    }
+    if (name) {
+        parameters = @{
+                       @"node_name": name,
+                       @"p": @(page)
+                       };
+    }
+    if (username) {
+        parameters = @{
+                       @"username": username,
+                       @"p": @(page)
+                       };
+    }
+    
+    return [self requestWithMethod:V2RequestMethodJSONGET URLString:@"/api/topics/show.json" parameters:parameters success:^(NSURLSessionDataTask *task, id responseObject) {
+        QHTopicList *list = [[QHTopicList alloc] initWithArray:responseObject];
+        success(list);
+    } failure:^(NSError *error) {
+        failure(error);
+    }];
+    
+}
+
 @end

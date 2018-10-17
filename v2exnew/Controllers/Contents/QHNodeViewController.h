@@ -6,8 +6,10 @@
 //  Copyright © 2018年 pengquanhua. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "SCPullRefreshViewController.h"
 
-@interface QHNodeViewController : UIViewController
+@interface QHNodeViewController : SCPullRefreshViewController
+
+@property (nonatomic, strong) QHNodeModel *model;
 
 @end
