@@ -16,6 +16,7 @@
 #import "QHNodeViewController.h"
 #import "MBProgressHUD.h"
 #import "QHWebViewController.h"
+#import "QHTopicToolBarView.h"
 
 @interface QHTopicViewController () <UITableViewDelegate, UITableViewDataSource>
 
@@ -33,6 +34,9 @@
 
 @property (nonatomic, strong) MBProgressHUD      *HUD;
 @property (nonatomic, strong) SCActionSheet      *actionSheet;
+@property (nonatomic, strong) QHTopicToolBarView *toolBarView;
+
+
 
 @property (nonatomic, copy) NSURLSessionDataTask* (^getTopicBlock)();
 @property (nonatomic, copy) NSURLSessionDataTask* (^getReplyListBlock)(NSInteger page);
@@ -61,6 +65,7 @@
     [self configureBarItems];
     [self configureTableView];
     [self configureHeaderView];
+    [self configureToolBarView];
     
 }
 
@@ -100,6 +105,19 @@
     }
 }
 
+#pragma mark - Layout
+
+- (void)viewWillLayoutSubviews {
+    [super viewWillLayoutSubviews];
+    
+    self.view.backgroundColor = kBackgroundColorWhite;
+    self.tableView.backgroundColor = kBackgroundColorWhite;
+    self.hiddenEnabled = YES;
+    
+    self.tableView.contentInsetTop = UIView.sc_navigationBarHeight - 36;
+    
+}
+
 #pragma mark - configure
 
 - (void)configureBarItems {
@@ -121,6 +139,14 @@
         shareAction.actionSheet = self.actionSheet;
         actionAction.actionSheet = self.actionSheet;
         [self.actionSheet sc_show:YES];
+        
+        @weakify(self);
+        [self.actionSheet sc_setButtonHandler:^{
+            @strongify(self);
+            
+            [self.toolBarView showReplyViewWithQuotes:nil animated:YES];
+            
+        } forIndex:0];
         
         [actionAction sc_setButtonHandler:^{
             @strongify(self);
@@ -225,6 +251,48 @@
         self.getReplyListBlock(1);
     };
 }
+
+- (void)configureToolBarView {
+    
+    self.toolBarView = [[QHTopicToolBarView alloc] initWithFrame:(CGRect){0, 0, kScreenWidth, self.view.height}];
+    self.toolBarView.create = self.isCreate;
+    [self.view addSubview:self.toolBarView];
+    
+    @weakify(self);
+    [self.toolBarView setContentIsEmptyBlock:^(BOOL isEmpty) {
+        @strongify(self);
+        
+        //[self updateNaviBarStatus];
+        
+    }];
+    
+    [self.toolBarView setInsertImageBlock:^{
+        @strongify(self);
+        
+        self.actionSheet = [[SCActionSheet alloc] sc_initWithTitles:@[@"插入图片"] customViews:nil buttonTitles:@"拍照", @"图片库", nil];
+        
+        @weakify(self);
+        
+        [self.actionSheet sc_setButtonHandler:^{
+            @strongify(self);
+            
+            //[self pickImageFrom:V2ImagePickerSourceTypeCamera];
+            
+        } forIndex:0];
+        
+        [self.actionSheet sc_setButtonHandler:^{
+            @strongify(self);
+            
+            //[self pickImageFrom:V2ImagePickerSourceTypePhotoLibrary];
+            
+        } forIndex:1];
+        
+        [self.actionSheet sc_show:YES];
+        
+    }];
+    
+}
+
 
 #pragma mark - Data Methods
 
