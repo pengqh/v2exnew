@@ -11,6 +11,7 @@
 #import "QHTopicInfoCell.h"
 #import "QHTopicBodyCell.h"
 #import "QHTopicReplyCell.h"
+#import "SCActionSheet.h"
 
 @interface QHTopicViewController () <UITableViewDelegate, UITableViewDataSource>
 
@@ -25,6 +26,8 @@
 @property (nonatomic, strong) QHNodeModel *nodeModel;
 @property (nonatomic, strong) QHReplyList *replyList;
 @property (nonatomic, strong) QHReplyModel *selectedReplyModel;
+
+@property (nonatomic, strong) SCActionSheet      *actionSheet;
 
 @property (nonatomic, copy) NSURLSessionDataTask* (^getTopicBlock)();
 @property (nonatomic, copy) NSURLSessionDataTask* (^getReplyListBlock)(NSInteger page);
@@ -57,7 +60,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.sc_navigationItem.leftBarButtonItem = self.leftBarItem;
-    
+    self.sc_navigationItem.rightBarButtonItem = self.addBarItem;
     
     [self configureBlocks];
     
@@ -90,6 +93,10 @@
     }];
     
     self.addBarItem = [[QHBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navi_more"] style:SCBarButtonItemStylePlain handler:^(id sender) {
+        
+        self.actionSheet = [[SCActionSheet alloc] sc_initWithTitles:@[@"分享", @""] customViews:@[[UILabel new], [UILabel new]] buttonTitles:nil];
+        
+        [self.actionSheet sc_show:YES];
         
     }];
 }

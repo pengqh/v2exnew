@@ -11,6 +11,7 @@
 		113444702148F545001D3046 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1134446F2148F545001D3046 /* Assets.xcassets */; };
 		113444762148F545001D3046 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 113444752148F545001D3046 /* main.m */; };
 		114C2AD2214904A300F71482 /* V2RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 114C2AD1214904A300F71482 /* V2RootViewController.m */; };
+		115662E82176D3DC0005B2EC /* SCActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 115662E72176D3DC0005B2EC /* SCActionSheet.m */; };
 		11C33577214D2956009D3CE1 /* QHNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 11C33576214D2956009D3CE1 /* QHNavigationController.m */; };
 		11C33580214D2B97009D3CE1 /* QHViewController+NaviBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 11C3357F214D2B97009D3CE1 /* QHViewController+NaviBar.m */; };
 		11C33583214D2C51009D3CE1 /* QHNavigationItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 11C33582214D2C51009D3CE1 /* QHNavigationItem.m */; };
@@ -89,6 +90,8 @@
 		113444752148F545001D3046 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		114C2AD0214904A300F71482 /* V2RootViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = V2RootViewController.h; sourceTree = "<group>"; };
 		114C2AD1214904A300F71482 /* V2RootViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = V2RootViewController.m; sourceTree = "<group>"; };
+		115662E62176D3DC0005B2EC /* SCActionSheet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCActionSheet.h; sourceTree = "<group>"; };
+		115662E72176D3DC0005B2EC /* SCActionSheet.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SCActionSheet.m; sourceTree = "<group>"; };
 		11C33575214D2956009D3CE1 /* QHNavigationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QHNavigationController.h; sourceTree = "<group>"; };
 		11C33576214D2956009D3CE1 /* QHNavigationController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QHNavigationController.m; sourceTree = "<group>"; };
 		11C3357E214D2B97009D3CE1 /* QHViewController+NaviBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "QHViewController+NaviBar.h"; sourceTree = "<group>"; };
@@ -296,9 +299,19 @@
 			path = Controllers;
 			sourceTree = "<group>";
 		};
+		115662E52176D39D0005B2EC /* SCActionSheet */ = {
+			isa = PBXGroup;
+			children = (
+				115662E62176D3DC0005B2EC /* SCActionSheet.h */,
+				115662E72176D3DC0005B2EC /* SCActionSheet.m */,
+			);
+			path = SCActionSheet;
+			sourceTree = "<group>";
+		};
 		11C33573214D2900009D3CE1 /* Additions */ = {
 			isa = PBXGroup;
 			children = (
+				115662E52176D39D0005B2EC /* SCActionSheet */,
 				11DED6922175A10F00B832C2 /* SVProgressHUD */,
 				11DED68E2175A0CB00B832C2 /* DACircularProgress */,
 				11DED6752175A07A00B832C2 /* IDMPhotoBrowser */,
@@ -758,6 +771,7 @@
 				11DED6912175A0F100B832C2 /* DACircularProgressView.m in Sources */,
 				11DED64F21730DAC00B832C2 /* UIButton+WebCache.m in Sources */,
 				11DED65321730DAC00B832C2 /* SDWebImagePrefetcher.m in Sources */,
+				115662E82176D3DC0005B2EC /* SCActionSheet.m in Sources */,
 				11DED68D2175A09800B832C2 /* IDMTapDetectingView.m in Sources */,
 				11DED64A21730DAC00B832C2 /* UIImage+GIF.m in Sources */,
 				11C33583214D2C51009D3CE1 /* QHNavigationItem.m in Sources */,
