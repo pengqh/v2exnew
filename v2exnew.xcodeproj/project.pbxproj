@@ -12,6 +12,7 @@
 		113444762148F545001D3046 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 113444752148F545001D3046 /* main.m */; };
 		114C2AD2214904A300F71482 /* V2RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 114C2AD1214904A300F71482 /* V2RootViewController.m */; };
 		115662E82176D3DC0005B2EC /* SCActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 115662E72176D3DC0005B2EC /* SCActionSheet.m */; };
+		115662EB2176EC930005B2EC /* QHActionItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 115662EA2176EC930005B2EC /* QHActionItemView.m */; };
 		11C33577214D2956009D3CE1 /* QHNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 11C33576214D2956009D3CE1 /* QHNavigationController.m */; };
 		11C33580214D2B97009D3CE1 /* QHViewController+NaviBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 11C3357F214D2B97009D3CE1 /* QHViewController+NaviBar.m */; };
 		11C33583214D2C51009D3CE1 /* QHNavigationItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 11C33582214D2C51009D3CE1 /* QHNavigationItem.m */; };
@@ -92,6 +93,8 @@
 		114C2AD1214904A300F71482 /* V2RootViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = V2RootViewController.m; sourceTree = "<group>"; };
 		115662E62176D3DC0005B2EC /* SCActionSheet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCActionSheet.h; sourceTree = "<group>"; };
 		115662E72176D3DC0005B2EC /* SCActionSheet.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SCActionSheet.m; sourceTree = "<group>"; };
+		115662E92176EC930005B2EC /* QHActionItemView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QHActionItemView.h; sourceTree = "<group>"; };
+		115662EA2176EC930005B2EC /* QHActionItemView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QHActionItemView.m; sourceTree = "<group>"; };
 		11C33575214D2956009D3CE1 /* QHNavigationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QHNavigationController.h; sourceTree = "<group>"; };
 		11C33576214D2956009D3CE1 /* QHNavigationController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QHNavigationController.m; sourceTree = "<group>"; };
 		11C3357E214D2B97009D3CE1 /* QHViewController+NaviBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "QHViewController+NaviBar.h"; sourceTree = "<group>"; };
@@ -548,6 +551,8 @@
 				11DED66F21759F0900B832C2 /* QHTopicBodyCell.m */,
 				11DED69B2175D58100B832C2 /* QHTopicReplyCell.h */,
 				11DED69C2175D58100B832C2 /* QHTopicReplyCell.m */,
+				115662E92176EC930005B2EC /* QHActionItemView.h */,
+				115662EA2176EC930005B2EC /* QHActionItemView.m */,
 			);
 			path = Topic;
 			sourceTree = "<group>";
@@ -743,6 +748,7 @@
 				11C3359F214E403E009D3CE1 /* QHNavigationPushAnimation.m in Sources */,
 				11DED61821719C0E00B832C2 /* HTMLParser.m in Sources */,
 				11DED67021759F0900B832C2 /* QHTopicBodyCell.m in Sources */,
+				115662EB2176EC930005B2EC /* QHActionItemView.m in Sources */,
 				11C33599214E0C10009D3CE1 /* QHCategoriesViewController.m in Sources */,
 				11DED659217310BC00B832C2 /* UIImage+Cache..m in Sources */,
 				11DED6212171CB0E00B832C2 /* QHNodeModel.m in Sources */,
