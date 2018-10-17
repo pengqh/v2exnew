@@ -10,5 +10,6 @@ target 'v2exnew' do
   pod 'BlocksKit', '~> 2.2.0'
   pod 'AFNetworking', '~> 2.2'
   pod 'RegexKitLite', '~> 4.0'
+  pod 'MBProgressHUD', '~> 0.8'
 
 end

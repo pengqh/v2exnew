@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "BC2507DBCBAF1CB08533FBFE2D13383F"
-               BlueprintName = "RegexKitLite"
+               BlueprintIdentifier = "AF0A24A128BB2A58DFB46D09A5EAB3DE"
+               BlueprintName = "MBProgressHUD"
                ReferencedContainer = "container:Pods.xcodeproj"
-               BuildableName = "libRegexKitLite.a">
+               BuildableName = "libMBProgressHUD.a">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
