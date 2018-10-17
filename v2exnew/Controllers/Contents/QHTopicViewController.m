@@ -14,6 +14,8 @@
 #import "SCActionSheet.h"
 #import "QHActionCellView.h"
 #import "QHNodeViewController.h"
+#import "MBProgressHUD.h"
+#import "QHWebViewController.h"
 
 @interface QHTopicViewController () <UITableViewDelegate, UITableViewDataSource>
 
@@ -29,6 +31,7 @@
 @property (nonatomic, strong) QHReplyList *replyList;
 @property (nonatomic, strong) QHReplyModel *selectedReplyModel;
 
+@property (nonatomic, strong) MBProgressHUD      *HUD;
 @property (nonatomic, strong) SCActionSheet      *actionSheet;
 
 @property (nonatomic, copy) NSURLSessionDataTask* (^getTopicBlock)();
@@ -36,6 +39,8 @@
 @property (nonatomic, copy) NSURLSessionDataTask* (^replyCreateBlock)(NSString *content);
 
 @property (nonatomic, assign) BOOL isDragging;
+
+@property (nonatomic, copy) NSString *token;
 
 @end
 
@@ -116,6 +121,26 @@
         shareAction.actionSheet = self.actionSheet;
         actionAction.actionSheet = self.actionSheet;
         [self.actionSheet sc_show:YES];
+        
+        [actionAction sc_setButtonHandler:^{
+            @strongify(self);
+            [self ignoreTopic];
+        } forIndex:0];
+        
+        [actionAction sc_setButtonHandler:^{
+            @strongify(self);
+            [self favTopic];
+        } forIndex:1];
+        
+        [actionAction sc_setButtonHandler:^{
+            @strongify(self);
+            [self thankTopic];
+        } forIndex:2];
+        
+        [actionAction sc_setButtonHandler:^{
+            @strongify(self);
+            [self openWithWeb];
+        } forIndex:3];
         
     }];
 }
@@ -432,5 +457,140 @@
     }];
     
     return cell;
+}
+
+#pragma mark - Actions
+
+- (void)ignoreTopic {
+    self.HUD = [[MBProgressHUD alloc] initWithView:self.view];
+    self.HUD.removeFromSuperViewOnHide = YES;
+    [self.view addSubview:self.HUD];
+    [self.HUD show:YES];
+    
+    @weakify(self);
+    [[QHDataManager manager] topicIgnoreWithTopicId:self.model.topicId success:^(NSString *message) {
+        @strongify(self);
+        UIImage *image = [UIImage imageNamed:@"37x-Checkmark"];
+        UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+        self.HUD.customView = imageView;
+        self.HUD.mode = MBProgressHUDModeCustomView;
+        self.HUD.labelText = @"已忽略";
+        [self.HUD hide:YES afterDelay:0.6];
+        
+        [self.HUD setCompletionBlock:^{
+            @strongify(self);
+            
+            [self.navigationController popViewControllerAnimated:YES];
+            
+            [self bk_performBlock:^(id obj) {
+                [[NSNotificationCenter defaultCenter] postNotificationName:kIgnoreTopicSuccessNotification object:self.model];
+            } afterDelay:0.6];
+            
+        }];
+        
+    } failure:^(NSError *error) {
+        @strongify(self);
+        
+        UIImage *image = [UIImage imageNamed:@"37x-Checkmark"];
+        UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+        self.HUD.customView = imageView;
+        self.HUD.mode = MBProgressHUDModeCustomView;
+        self.HUD.labelText = @"忽略失败";
+        [self.HUD hide:YES afterDelay:0.6];
+    }];
+}
+
+- (void)favTopic {
+    self.HUD = [[MBProgressHUD alloc] initWithView:self.view];
+    self.HUD.removeFromSuperViewOnHide = YES;
+    [self.view addSubview:self.HUD];
+    [self.HUD show:YES];
+    
+    @weakify(self);
+    [self getTokenWithBlock:^(NSString *token) {
+        @strongify(self);
+        
+        [[QHDataManager manager] topicFavWithTopicId:self.model.topicId token:token success:^(NSString *message) {
+            @strongify(self);
+            UIImage *image = [UIImage imageNamed:@"37x-Checkmark"];
+            UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+            self.HUD.customView = imageView;
+            self.HUD.mode = MBProgressHUDModeCustomView;
+            self.HUD.labelText = @"已收藏";
+            [self.HUD hide:YES afterDelay:0.6];
+            
+        } failure:^(NSError *error) {
+            @strongify(self);
+            
+            UIImage *image = [UIImage imageNamed:@"37x-Checkmark"];
+            UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+            self.HUD.customView = imageView;
+            self.HUD.mode = MBProgressHUDModeCustomView;
+            self.HUD.labelText = @"Failed";
+            [self.HUD hide:YES afterDelay:0.6];
+        }];
+        
+    }];
+}
+
+- (void)thankTopic {
+    
+    self.HUD = [[MBProgressHUD alloc] initWithView:self.view];
+    self.HUD.removeFromSuperViewOnHide = YES;
+    [self.view addSubview:self.HUD];
+    [self.HUD show:YES];
+    
+    @weakify(self);
+    [self getTokenWithBlock:^(NSString *token) {
+        @strongify(self);
+        
+        [[QHDataManager manager] topicThankWithTopicId:self.model.topicId token:token success:^(NSString *message) {
+            @strongify(self);
+            UIImage *image = [UIImage imageNamed:@"37x-Checkmark"];
+            UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+            self.HUD.customView = imageView;
+            self.HUD.mode = MBProgressHUDModeCustomView;
+            self.HUD.labelText = @"已感谢";
+            [self.HUD hide:YES afterDelay:0.6];
+            
+        } failure:^(NSError *error) {
+            @strongify(self);
+            
+            UIImage *image = [UIImage imageNamed:@"37x-Checkmark"];
+            UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+            self.HUD.customView = imageView;
+            self.HUD.mode = MBProgressHUDModeCustomView;
+            self.HUD.labelText = @"Failed";
+            [self.HUD hide:YES afterDelay:0.6];
+        }];
+        
+    }];
+    
+}
+
+- (void)openWithWeb {
+    
+    QHWebViewController *webVC = [[QHWebViewController alloc] init];
+    NSString *urlString = [NSString stringWithFormat:@"https://v2ex.com/t/%@", self.model.topicId];
+    webVC.url = [NSURL URLWithString:urlString];
+    [self.navigationController pushViewController:webVC animated:YES];
+    
+}
+
+- (void)getTokenWithBlock:(void (^)(NSString *token))block {
+    
+    if (self.token) {
+        block(self.token);
+    } else {
+        @weakify(self);
+        [[QHDataManager manager] getTopicTokenWithTopicId:self.model.topicId success:^(NSString *token) {
+            @strongify(self);
+            self.token = token;
+            block(token);
+        } failure:^(NSError *error) {
+            block(nil);
+        }];
+    }
+    
 }
 @end

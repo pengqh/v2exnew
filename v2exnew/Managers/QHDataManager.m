@@ -8,6 +8,8 @@
 
 #import "QHDataManager.h"
 #import <AFNetworking.h>
+#import "HTMLParser.h"
+#import "RegexKitLite.h"
 
 typedef NS_ENUM(NSInteger, V2RequestMethod) {
     V2RequestMethodJSONGET    = 1,
@@ -276,6 +278,285 @@ typedef NS_ENUM(NSInteger, V2RequestMethod) {
         failure(error);
     }];
     
+}
+
+- (NSURLSessionDataTask *)favNodeWithName:(NSString *)nodeName
+                                  success:(void (^)(NSString *message))success
+                                  failure:(void (^)(NSError *error))failure {
+    NSString *urlString = [NSString stringWithFormat:@"/go/%@", nodeName];
+    
+    [self requestFavUrlWithURLString:urlString success:^(NSString *urlString) {
+        
+        //http://www.v2ex.com/unfavorite/node/10?t=1332044729
+        if ([urlString rangeOfString:@"unfavorite"].location == NSNotFound) {
+            [self requestWithMethod:V2RequestMethodHTTPGET URLString:urlString parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+                
+                success(@"fav success.");
+                
+            } failure:^(NSError *error) {
+                failure(error);
+            }];
+            
+        } else {
+            success(@"fav success.");
+        }
+        
+        
+    } failure:^(NSError *error) {
+        failure(error);
+    }];
+    
+    return nil;
+}
+
+- (NSURLSessionDataTask *)requestFavUrlWithURLString:(NSString *)urlString success:(void (^)(NSString *urlString))success
+                                             failure:(void (^)(NSError *error))failure {
+    
+    return [self requestWithMethod:V2RequestMethodHTTPGET URLString:urlString parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        NSString *string = [self getFavUrlStringFromResponseObject:responseObject];
+        if (string.length < 5) {
+            NSError *error = [[NSError alloc] initWithDomain:self.manager.baseURL.absoluteString code:V2ErrorTypeGetFavUrlFailure userInfo:nil];
+            failure(error);
+        } else {
+            success(string);
+        }
+        
+    } failure:^(NSError *error) {
+        failure(error);
+    }];
+    
+}
+
+- (NSString *)getFavUrlStringFromResponseObject:(id)responseObject {
+    
+    __block NSString *favUrlString;
+    
+    @autoreleasepool {
+        
+        
+        NSString *htmlString = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        
+        NSError *error = nil;
+        HTMLParser *parser = [[HTMLParser alloc] initWithString:htmlString error:&error];
+        
+        if (error) {
+            NSLog(@"Error: %@", error);
+        }
+        
+        HTMLNode *bodyNode = [parser body];
+        
+        NSArray *aNodes = [bodyNode findChildTags:@"a"];
+        
+        [aNodes enumerateObjectsUsingBlock:^(HTMLNode *aNode, NSUInteger idx, BOOL *stop) {
+            //            NSLog(@"string:\n%@", aNode.allContents);
+            
+            if ([aNode.allContents rangeOfString:@"收藏"].location != NSNotFound) {
+                favUrlString = [aNode getAttributeNamed:@"href"];
+                *stop = YES;
+            }
+            
+        }];
+        
+    }
+    
+    return favUrlString;
+}
+
+- (NSURLSessionDataTask *)topicIgnoreWithTopicId:(NSString *)topicId
+                                         success:(void (^)(NSString *message))success
+                                         failure:(void (^)(NSError *error))failure {
+    
+    NSString *urlString = [NSString stringWithFormat:@"/t/%@", topicId];
+    
+    [self.manager.requestSerializer setValue:urlString forHTTPHeaderField:@"Referer"];
+    
+    [self requestIgnoreOnceWithURLString:urlString success:^(NSString *onceString) {
+        
+        NSString *ignoreUrlString = [NSString stringWithFormat:@"ignore/topic/%@?once=%@", topicId, onceString];
+        
+        [self requestWithMethod:V2RequestMethodHTTPGET URLString:ignoreUrlString parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+            success(nil);
+        } failure:^(NSError *error) {
+            failure(error);
+        }];
+        
+    } failure:^(NSError *error) {
+        failure(error);
+    }];
+    
+    return nil;
+    
+}
+
+- (NSURLSessionDataTask *)requestIgnoreOnceWithURLString:(NSString *)urlString success:(void (^)(NSString *onceString))success
+                                                 failure:(void (^)(NSError *error))failure {
+    
+    return [self requestWithMethod:V2RequestMethodHTTPGET URLString:urlString parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        NSString *onceString = [self getIgnoreOnceStringFromHtmlResponseObject:responseObject];
+        if (onceString) {
+            success(onceString);
+        } else {
+            NSError *error = [[NSError alloc] initWithDomain:self.manager.baseURL.absoluteString code:V2ErrorTypeNoOnceAndNext userInfo:nil];
+            failure(error);
+        }
+        
+    } failure:^(NSError *error) {
+        failure(error);
+    }];
+    
+}
+
+- (NSString *)getIgnoreOnceStringFromHtmlResponseObject:(id)responseObject {
+    
+    __block NSString *onceString;
+    
+    @autoreleasepool {
+        NSString *htmlString = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        
+        NSString *regex1 = @"ignore/topic/(.*?)';";
+        NSString *regex2 = @"once=(.*?)';";
+        NSString *ignoreString = [htmlString stringByMatching:regex1];
+        onceString = [ignoreString stringByMatching:regex2];
+        onceString = [onceString stringByReplacingOccurrencesOfString:@"once=" withString:@""];
+        onceString = [onceString stringByReplacingOccurrencesOfString:@"';" withString:@""];
+        
+    }
+    
+    return onceString;
+}
+
+- (NSURLSessionDataTask *)topicFavWithTopicId:(NSString *)topicId
+                                        token:(NSString *)token
+                                      success:(void (^)(NSString *message))success
+                                      failure:(void (^)(NSError *error))failure {
+    
+    if (!token) {
+        NSError *error = [[NSError alloc] initWithDomain:self.manager.baseURL.absoluteString code:V2ErrorTypeGetTopicTokenFailure userInfo:nil];
+        failure(error);
+        return nil;
+    }
+    
+    NSString *urlString = [NSString stringWithFormat:@"/favorite/topic/%@?t=%@", topicId, token];
+    
+    return [self requestWithMethod:V2RequestMethodHTTPGET URLString:urlString parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        success(@"fav success.");
+        
+    } failure:^(NSError *error) {
+        failure(error);
+    }];
+    
+}
+
+- (NSURLSessionDataTask *)topicFavCancelWithTopicId:(NSString *)topicId
+                                              token:(NSString *)token
+                                            success:(void (^)(NSString *message))success
+                                            failure:(void (^)(NSError *error))failure {
+    
+    if (!token) {
+        NSError *error = [[NSError alloc] initWithDomain:self.manager.baseURL.absoluteString code:V2ErrorTypeGetTopicTokenFailure userInfo:nil];
+        failure(error);
+        return nil;
+    }
+    
+    NSString *urlString = [NSString stringWithFormat:@"/unfavorite/topic/%@?t=%@", topicId, token];
+    
+    return [self requestWithMethod:V2RequestMethodHTTPGET URLString:urlString parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        success(@"fav success.");
+        
+    } failure:^(NSError *error) {
+        failure(error);
+    }];
+    
+}
+
+- (NSURLSessionDataTask *)topicThankWithTopicId:(NSString *)topicId
+                                          token:(NSString *)token
+                                        success:(void (^)(NSString *message))success
+                                        failure:(void (^)(NSError *error))failure {
+    
+    if (!token) {
+        NSError *error = [[NSError alloc] initWithDomain:self.manager.baseURL.absoluteString code:V2ErrorTypeGetTopicTokenFailure userInfo:nil];
+        failure(error);
+        return nil;
+    }
+    
+    NSString *urlString = [NSString stringWithFormat:@"/thank/topic/%@?t=%@", topicId, token];
+    
+    return [self requestWithMethod:V2RequestMethodHTTPPOST URLString:urlString parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        success(@"fav success.");
+        
+    } failure:^(NSError *error) {
+        failure(error);
+    }];
+    
+}
+
+#pragma mark - Token
+
+- (NSURLSessionDataTask *)getTopicTokenWithTopicId:(NSString *)topicId
+                                           success:(void (^)(NSString *token))success
+                                           failure:(void (^)(NSError *error))failure {
+    
+    NSString *urlString = [NSString stringWithFormat:@"/t/%@", topicId];
+    
+    return [self requestWithMethod:V2RequestMethodHTTPGET URLString:urlString parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        NSString *string = [self getTopicTokenFromResponseObject:responseObject];
+        if (string.length < 5) {
+            NSError *error = [[NSError alloc] initWithDomain:self.manager.baseURL.absoluteString code:V2ErrorTypeGetFavUrlFailure userInfo:nil];
+            failure(error);
+        } else {
+            success(string);
+        }
+        
+    } failure:^(NSError *error) {
+        failure(error);
+    }];
+    
+}
+
+- (NSString *)getTopicTokenFromResponseObject:(id)responseObject {
+    
+    __block NSString *token;
+    
+    @autoreleasepool {
+        
+        
+        NSString *htmlString = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        
+        NSError *error = nil;
+        HTMLParser *parser = [[HTMLParser alloc] initWithString:htmlString error:&error];
+        
+        if (error) {
+            NSLog(@"Error: %@", error);
+        }
+        
+        HTMLNode *bodyNode = [parser body];
+        
+        HTMLNode *frNode = [bodyNode findChildOfClass:@"inner"];
+        
+        NSArray *aNodes = [frNode findChildTags:@"a"];
+        
+        [aNodes enumerateObjectsUsingBlock:^(HTMLNode *aNode, NSUInteger idx, BOOL *stop) {
+            //            NSLog(@"string:\n%@", aNode.allContents);
+            
+            if ([aNode.allContents rangeOfString:@"收藏"].location != NSNotFound) {
+                NSString *hrefString = [aNode getAttributeNamed:@"href"];
+                NSArray *components = [hrefString componentsSeparatedByString:@"?t="];
+                token = components.lastObject;
+                *stop = YES;
+            }
+            
+        }];
+        
+    }
+    
+    return token;
 }
 
 @end

@@ -11,6 +11,7 @@
 #import "QHTopicViewController.h"
 #import "QHTopicListCell.h"
 #import "QHTopicModel.h"
+#import "MBProgressHUD.h"
 
 @interface QHNodeViewController () <UITableViewDelegate, UITableViewDataSource>
 
@@ -20,6 +21,8 @@
 @property (nonatomic, strong) UIView          *menuContainView;
 @property (nonatomic, strong) UIView          *menuView;
 @property (nonatomic, strong) UIButton        *menuBackgroundButton;
+
+@property (nonatomic, strong) MBProgressHUD *HUD;
 
 @property (nonatomic, strong) QHTopicList     *topicList;
 @property (nonatomic, assign) NSInteger       pageCount;
@@ -171,7 +174,32 @@
         }
         
         if (index == 1) {
+            self.HUD = [[MBProgressHUD alloc] initWithView:self.view];
+            self.HUD.removeFromSuperViewOnHide = YES;
+            [self.view addSubview:self.HUD];
+            [self.HUD show:YES];
             
+            [[QHDataManager manager] favNodeWithName:self.model.nodeName success:^(NSString *message) {
+                @strongify(self);
+                
+                UIImage *image = [UIImage imageNamed:@"37x-Checkmark"];
+                UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+                self.HUD.customView = imageView;
+                self.HUD.mode = MBProgressHUDModeCustomView;
+                self.HUD.labelText = @"Saved";
+                [self.HUD hide:YES afterDelay:0.6];
+                
+            } failure:^(NSError *error) {
+                @strongify(self);
+                
+                UIImage *image = [UIImage imageNamed:@"37x-Checkmark"];
+                UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+                self.HUD.customView = imageView;
+                self.HUD.mode = MBProgressHUDModeCustomView;
+                self.HUD.labelText = @"Failed";
+                [self.HUD hide:YES afterDelay:0.6];
+                
+            }];
         }
         
         [self hideMenuAnimated:NO];

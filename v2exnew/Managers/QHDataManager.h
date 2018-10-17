@@ -78,4 +78,35 @@ typedef NS_ENUM (NSInteger, V2HotNodesType) {
                                             page:(NSInteger)page
                                          success:(void (^)(QHTopicList *list))success
                                          failure:(void (^)(NSError *error))failure;
+
+#pragma mark - Action
+
+- (NSURLSessionDataTask *)favNodeWithName:(NSString *)nodeName
+                                  success:(void (^)(NSString *message))success
+                                  failure:(void (^)(NSError *error))failure;
+
+- (NSURLSessionDataTask *)topicIgnoreWithTopicId:(NSString *)topicId
+                                         success:(void (^)(NSString *message))success
+                                         failure:(void (^)(NSError *error))failure;
+
+- (NSURLSessionDataTask *)topicFavWithTopicId:(NSString *)topicId
+                                        token:(NSString *)token
+                                      success:(void (^)(NSString *message))success
+                                      failure:(void (^)(NSError *error))failure;
+
+- (NSURLSessionDataTask *)topicFavCancelWithTopicId:(NSString *)topicId
+                                              token:(NSString *)token
+                                            success:(void (^)(NSString *message))success
+                                            failure:(void (^)(NSError *error))failure;
+
+- (NSURLSessionDataTask *)topicThankWithTopicId:(NSString *)topicId
+                                          token:(NSString *)token
+                                        success:(void (^)(NSString *message))success
+                                        failure:(void (^)(NSError *error))failure;
+
+#pragma mark - Token
+
+- (NSURLSessionDataTask *)getTopicTokenWithTopicId:(NSString *)topicId
+                                           success:(void (^)(NSString *token))success
+                                           failure:(void (^)(NSError *error))failure;
 @end
