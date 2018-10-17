@@ -7,6 +7,9 @@
 //
 
 #import "SCActionSheet.h"
+#import "SCActionSheetButton.h"
+#import "UIImage+REFrosted.h"
+#import "UIView+REFrosted.h"
 
 #define kButtonWidth (kScreenWidth - 64.0)
 
@@ -144,6 +147,55 @@ static BOOL kActionSheetShowing = NO;
             self.titleLabelArray = titleLabelArray;
         }
         
+        // configureButtons
+        
+        if (buttonTitles.count) {
+            NSMutableArray *buttonArray = [[NSMutableArray alloc] init];
+            
+            for (NSInteger i=0; i < buttonTitles.count; i++) {
+                
+                UIView *buttonContainView = [[UIView alloc] init];
+                SCActionSheetButton *button = [self createActionSheetButtonWithTitle:buttonTitles[i]];
+                [buttonContainView addSubview:button];
+                [buttonArray addObject:button];
+                
+                // layout
+                CGFloat space = 15;
+                button.y = space;
+                if (i != buttonTitles.count - 1) {
+                    buttonContainView.frame = (CGRect){0, 0, kScreenWidth, kButtonHeight + space};
+                } else {
+                    buttonContainView.frame = (CGRect){0, 0, kScreenWidth, kButtonHeight + space * 2};
+                }
+                
+                
+                [self.contentView addSubview:buttonContainView];
+                [viewArray addObject:buttonContainView];
+                
+            }
+            
+            self.buttonArray = buttonArray;
+        }
+        
+        UIView *buttonContainView = [[UIView alloc] init];
+        UIButton *button = [[UIButton alloc] initWithFrame:(CGRect){0, 0, kScreenWidth, kButtonHeight}];
+        [button setTitle:@"取消" forState:UIControlStateNormal];
+        [button setTitleColor:kFontColorBlackMid forState:UIControlStateNormal];
+        button.titleLabel.font = [UIFont systemFontOfSize:kButtonFontSize];
+        [buttonContainView addSubview:button];
+        [button addTarget:self action:@selector(backgroundButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+        
+        UIView *lineView = [[UIView alloc] initWithFrame:(CGRect){0, 0, kScreenWidth, 0.5}];
+        lineView.backgroundColor = self.deviderLineColor;
+        [buttonContainView addSubview:lineView];
+        
+        // layout
+        buttonContainView.frame = (CGRect){0, 0, kScreenWidth, kButtonHeight + 10 + UIView.sc_bottomInset};
+        button.y = 5;
+        
+        [self.contentView addSubview:buttonContainView];
+        [viewArray addObject:buttonContainView];
+        
         CGFloat allHeight = 0;
         for (NSInteger i = 0; i < viewArray.count; i ++) {
             UIView *view = viewArray[i];
@@ -165,7 +217,7 @@ static BOOL kActionSheetShowing = NO;
     self.backgroundButton.backgroundColor = [UIColor colorWithWhite:0.000 alpha:1];
     self.backgroundButton.alpha = 0.0;
     self.backgroundButton.frame = [UIScreen mainScreen].bounds;
-    [self.backgroundButton addTarget:self action:@selector(backgroundButtonPresed) forControlEvents:UIControlEventTouchUpInside];
+    [self.backgroundButton addTarget:self action:@selector(backgroundButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     
     self.backgroundMaskView = [[UIView alloc] initWithFrame:self.frame];
     self.backgroundMaskView.y = kScreenHeight;
@@ -181,6 +233,7 @@ static BOOL kActionSheetShowing = NO;
 }
 
 #pragma mark - Private
+
 - (UILabel*)createTitleLabelWithTitle:(NSString*)title {
     UILabel *label = [[UILabel alloc] init];
     label.backgroundColor = [UIColor clearColor];
@@ -194,13 +247,58 @@ static BOOL kActionSheetShowing = NO;
     return label;
 }
 
+- (SCActionSheetButton *)createActionSheetButtonWithTitle:(NSString *)title {
+    
+    SCActionSheetButton *actionSheetButton = [[SCActionSheetButton alloc] initWithFrame:(CGRect){0, 0, kButtonWidth, kButtonHeight}];
+    actionSheetButton.centerX = kScreenWidth/2;
+    [actionSheetButton setTitle:title forState:UIControlStateNormal];
+    actionSheetButton.titleLabel.font = [UIFont systemFontOfSize:kButtonFontSize];
+    
+    return actionSheetButton;
+}
+
 #pragma mark - Private Action
 
-- (void)backgroundButtonPresed {
+- (void)backgroundButtonPressed {
     [self sc_hide:YES];
 }
 
 #pragma mark - Public Action
+
++ (BOOL)isActionSheetShowing {
+    return kActionSheetShowing;
+}
+
+- (void)sc_setButtonHandler:(void (^)(void))block forIndex:(NSInteger)index {
+    
+    if (index >= self.buttonArray.count || !block) {
+        return;
+    }
+    
+    UIButton *button = self.buttonArray[index];
+    
+    @weakify(self);
+    [button bk_removeEventHandlersForControlEvents:UIControlEventTouchUpInside];
+    [button bk_addEventHandler:^(id sender) {
+        @strongify(self);
+        
+        [self sc_hide:YES];
+        block();
+    } forControlEvents:UIControlEventTouchUpInside];
+    
+}
+
+- (void)sc_configureButtonWithBlock:(void (^)(SCActionSheetButton *button))block forIndex:(NSInteger)index {
+    
+    if (index >= self.buttonArray.count || !block) {
+        return;
+    }
+    
+    SCActionSheetButton *button = self.buttonArray[index];
+    
+    block(button);
+    
+}
 
 - (void)sc_show:(BOOL)animated {
     kActionSheetShowing = YES;
@@ -234,8 +332,16 @@ static BOOL kActionSheetShowing = NO;
         }
     };
     
+    if (self.showInView) {
+        image = [self.showInView re_screenshot];
+    } else {
+        image = [window re_screenshot];
+    }
+    
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        image = [image re_applyBlurWithRadius:7.0 tintColor:[UIColor colorWithWhite:1 alpha:0.85f] saturationDeltaFactor:1.8 maskImage:nil];
         dispatch_async(dispatch_get_main_queue(), ^{
+            self.blurBackgroundImageView.image = image;
             showBlock();
         });
     });

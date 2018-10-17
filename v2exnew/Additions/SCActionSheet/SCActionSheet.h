@@ -8,12 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+@class SCActionSheetButton;
 
 @interface SCActionSheet : UIView
 
 @property (nonatomic, copy) UIColor *titleTextColor;
 @property (nonatomic, copy) UIColor *deviderLineColor;
-@property (nonatomic, copy) void (^endAnimationBlock)();
+@property (nonatomic, copy) void (^endAnimationBlock)(void);
 
 @property (nonatomic, strong) UIView *showInView;
 
@@ -23,7 +24,7 @@
 
 - (void)sc_setButtonHandler:(void (^)(void))block forIndex:(NSInteger)index;
 
-//- (void)sc_configureButtonWithBlock:(void (^)(SCActionSheetButton *button))block forIndex:(NSInteger)index;
+- (void)sc_configureButtonWithBlock:(void (^)(SCActionSheetButton *button))block forIndex:(NSInteger)index;
 
 - (void)sc_show:(BOOL)animated;
 

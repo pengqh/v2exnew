@@ -13,6 +13,10 @@
 		114C2AD2214904A300F71482 /* V2RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 114C2AD1214904A300F71482 /* V2RootViewController.m */; };
 		115662E82176D3DC0005B2EC /* SCActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 115662E72176D3DC0005B2EC /* SCActionSheet.m */; };
 		115662EB2176EC930005B2EC /* QHActionItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 115662EA2176EC930005B2EC /* QHActionItemView.m */; };
+		115662EE2176EECF0005B2EC /* QHActionCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 115662ED2176EECF0005B2EC /* QHActionCellView.m */; };
+		115662F12176F5250005B2EC /* SCActionSheetButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 115662F02176F5250005B2EC /* SCActionSheetButton.m */; };
+		115662F721770DDE0005B2EC /* UIImage+REFrosted.m in Sources */ = {isa = PBXBuildFile; fileRef = 115662F321770DDD0005B2EC /* UIImage+REFrosted.m */; };
+		115662F821770DDE0005B2EC /* UIView+REFrosted.m in Sources */ = {isa = PBXBuildFile; fileRef = 115662F621770DDE0005B2EC /* UIView+REFrosted.m */; };
 		11C33577214D2956009D3CE1 /* QHNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 11C33576214D2956009D3CE1 /* QHNavigationController.m */; };
 		11C33580214D2B97009D3CE1 /* QHViewController+NaviBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 11C3357F214D2B97009D3CE1 /* QHViewController+NaviBar.m */; };
 		11C33583214D2C51009D3CE1 /* QHNavigationItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 11C33582214D2C51009D3CE1 /* QHNavigationItem.m */; };
@@ -95,6 +99,14 @@
 		115662E72176D3DC0005B2EC /* SCActionSheet.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SCActionSheet.m; sourceTree = "<group>"; };
 		115662E92176EC930005B2EC /* QHActionItemView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QHActionItemView.h; sourceTree = "<group>"; };
 		115662EA2176EC930005B2EC /* QHActionItemView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QHActionItemView.m; sourceTree = "<group>"; };
+		115662EC2176EECF0005B2EC /* QHActionCellView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QHActionCellView.h; sourceTree = "<group>"; };
+		115662ED2176EECF0005B2EC /* QHActionCellView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QHActionCellView.m; sourceTree = "<group>"; };
+		115662EF2176F5250005B2EC /* SCActionSheetButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCActionSheetButton.h; sourceTree = "<group>"; };
+		115662F02176F5250005B2EC /* SCActionSheetButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SCActionSheetButton.m; sourceTree = "<group>"; };
+		115662F321770DDD0005B2EC /* UIImage+REFrosted.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+REFrosted.m"; sourceTree = "<group>"; };
+		115662F421770DDE0005B2EC /* UIImage+REFrosted.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+REFrosted.h"; sourceTree = "<group>"; };
+		115662F521770DDE0005B2EC /* UIView+REFrosted.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+REFrosted.h"; sourceTree = "<group>"; };
+		115662F621770DDE0005B2EC /* UIView+REFrosted.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+REFrosted.m"; sourceTree = "<group>"; };
 		11C33575214D2956009D3CE1 /* QHNavigationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QHNavigationController.h; sourceTree = "<group>"; };
 		11C33576214D2956009D3CE1 /* QHNavigationController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QHNavigationController.m; sourceTree = "<group>"; };
 		11C3357E214D2B97009D3CE1 /* QHViewController+NaviBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "QHViewController+NaviBar.h"; sourceTree = "<group>"; };
@@ -307,13 +319,27 @@
 			children = (
 				115662E62176D3DC0005B2EC /* SCActionSheet.h */,
 				115662E72176D3DC0005B2EC /* SCActionSheet.m */,
+				115662EF2176F5250005B2EC /* SCActionSheetButton.h */,
+				115662F02176F5250005B2EC /* SCActionSheetButton.m */,
 			);
 			path = SCActionSheet;
+			sourceTree = "<group>";
+		};
+		115662F221770DB30005B2EC /* REForestedView */ = {
+			isa = PBXGroup;
+			children = (
+				115662F421770DDE0005B2EC /* UIImage+REFrosted.h */,
+				115662F321770DDD0005B2EC /* UIImage+REFrosted.m */,
+				115662F521770DDE0005B2EC /* UIView+REFrosted.h */,
+				115662F621770DDE0005B2EC /* UIView+REFrosted.m */,
+			);
+			path = REForestedView;
 			sourceTree = "<group>";
 		};
 		11C33573214D2900009D3CE1 /* Additions */ = {
 			isa = PBXGroup;
 			children = (
+				115662F221770DB30005B2EC /* REForestedView */,
 				115662E52176D39D0005B2EC /* SCActionSheet */,
 				11DED6922175A10F00B832C2 /* SVProgressHUD */,
 				11DED68E2175A0CB00B832C2 /* DACircularProgress */,
@@ -553,6 +579,8 @@
 				11DED69C2175D58100B832C2 /* QHTopicReplyCell.m */,
 				115662E92176EC930005B2EC /* QHActionItemView.h */,
 				115662EA2176EC930005B2EC /* QHActionItemView.m */,
+				115662EC2176EECF0005B2EC /* QHActionCellView.h */,
+				115662ED2176EECF0005B2EC /* QHActionCellView.m */,
 			);
 			path = Topic;
 			sourceTree = "<group>";
@@ -737,6 +765,7 @@
 				11C33577214D2956009D3CE1 /* QHNavigationController.m in Sources */,
 				11DED6272172F71A00B832C2 /* QHMemberModel.m in Sources */,
 				11DED64B21730DAC00B832C2 /* SDWebImageCompat.m in Sources */,
+				115662F821770DDE0005B2EC /* UIView+REFrosted.m in Sources */,
 				11DED65521730DAC00B832C2 /* NSData+ImageContentType.m in Sources */,
 				11DED68B2175A09800B832C2 /* IDMPhotoBrowser.m in Sources */,
 				11DED660217589BB00B832C2 /* NSString+SCMention.m in Sources */,
@@ -762,6 +791,7 @@
 				11C33594214D3B7F009D3CE1 /* QHSettingManager.m in Sources */,
 				11DED66D21759D5200B832C2 /* QHTopicInfoCell.m in Sources */,
 				11C3359C214E0C2B009D3CE1 /* QHTopicViewController.m in Sources */,
+				115662EE2176EECF0005B2EC /* QHActionCellView.m in Sources */,
 				11DED65621730DAC00B832C2 /* UIImage+WebP.m in Sources */,
 				11DED62A2173046A00B832C2 /* QHTopicListCell.m in Sources */,
 				11DB38CB216DF97200E63924 /* UIImage+Tint.m in Sources */,
@@ -772,12 +802,14 @@
 				11DED66321758A2400B832C2 /* SCQuote.m in Sources */,
 				113444682148F539001D3046 /* AppDelegate.m in Sources */,
 				11DED61E2171C91600B832C2 /* QHBaseModel.m in Sources */,
+				115662F721770DDE0005B2EC /* UIImage+REFrosted.m in Sources */,
 				11DED69D2175D58100B832C2 /* QHTopicReplyCell.m in Sources */,
 				11DED60B21705C2400B832C2 /* QHSubMenuSectionCell.m in Sources */,
 				11DED6912175A0F100B832C2 /* DACircularProgressView.m in Sources */,
 				11DED64F21730DAC00B832C2 /* UIButton+WebCache.m in Sources */,
 				11DED65321730DAC00B832C2 /* SDWebImagePrefetcher.m in Sources */,
 				115662E82176D3DC0005B2EC /* SCActionSheet.m in Sources */,
+				115662F12176F5250005B2EC /* SCActionSheetButton.m in Sources */,
 				11DED68D2175A09800B832C2 /* IDMTapDetectingView.m in Sources */,
 				11DED64A21730DAC00B832C2 /* UIImage+GIF.m in Sources */,
 				11C33583214D2C51009D3CE1 /* QHNavigationItem.m in Sources */,

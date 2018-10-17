@@ -12,6 +12,7 @@
 #import "QHTopicBodyCell.h"
 #import "QHTopicReplyCell.h"
 #import "SCActionSheet.h"
+#import "QHActionCellView.h"
 
 @interface QHTopicViewController () <UITableViewDelegate, UITableViewDataSource>
 
@@ -59,8 +60,19 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.sc_navigationItem.leftBarButtonItem = self.leftBarItem;
-    self.sc_navigationItem.rightBarButtonItem = self.addBarItem;
+    if (self.isPreview) {
+        
+    } else {
+        self.sc_navigationItem.leftBarButtonItem = self.leftBarItem;
+        self.sc_navigationItem.rightBarButtonItem = self.addBarItem;
+        
+        if (self.model) {
+            self.sc_navigationItem.title = self.model.topicTitle;
+            self.nodeModel = self.model.topicNode;
+        } else {
+            self.sc_navigationItem.title = @"Topic";
+        }
+    }
     
     [self configureBlocks];
     
@@ -94,8 +106,14 @@
     
     self.addBarItem = [[QHBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navi_more"] style:SCBarButtonItemStylePlain handler:^(id sender) {
         
-        self.actionSheet = [[SCActionSheet alloc] sc_initWithTitles:@[@"分享", @""] customViews:@[[UILabel new], [UILabel new]] buttonTitles:nil];
+        QHActionCellView *shareAction = [[QHActionCellView alloc] initWithTitles:nil imageNames:@[@"share_wechat_friends", @"share_wechat_moments", @"share_twitter", @"share_weibo"]];
         
+        QHActionCellView *actionAction = [[QHActionCellView alloc] initWithTitles:@[@"忽略", @"收藏", @"感谢", @"Safari"] imageNames:@[@"action_forbidden", @"action_favorite", @"action_thank", @"action_safari"]];
+        
+        
+        self.actionSheet = [[SCActionSheet alloc] sc_initWithTitles:@[@"分享", @""] customViews:@[shareAction, actionAction] buttonTitles:@"回复", nil];
+        shareAction.actionSheet = self.actionSheet;
+        actionAction.actionSheet = self.actionSheet;
         [self.actionSheet sc_show:YES];
         
     }];
