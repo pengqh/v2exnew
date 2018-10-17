@@ -17,6 +17,7 @@
 		115662F12176F5250005B2EC /* SCActionSheetButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 115662F02176F5250005B2EC /* SCActionSheetButton.m */; };
 		115662F721770DDE0005B2EC /* UIImage+REFrosted.m in Sources */ = {isa = PBXBuildFile; fileRef = 115662F321770DDD0005B2EC /* UIImage+REFrosted.m */; };
 		115662F821770DDE0005B2EC /* UIView+REFrosted.m in Sources */ = {isa = PBXBuildFile; fileRef = 115662F621770DDE0005B2EC /* UIView+REFrosted.m */; };
+		115662FB2177170C0005B2EC /* QHNodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 115662FA2177170B0005B2EC /* QHNodeViewController.m */; };
 		11C33577214D2956009D3CE1 /* QHNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 11C33576214D2956009D3CE1 /* QHNavigationController.m */; };
 		11C33580214D2B97009D3CE1 /* QHViewController+NaviBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 11C3357F214D2B97009D3CE1 /* QHViewController+NaviBar.m */; };
 		11C33583214D2C51009D3CE1 /* QHNavigationItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 11C33582214D2C51009D3CE1 /* QHNavigationItem.m */; };
@@ -107,6 +108,8 @@
 		115662F421770DDE0005B2EC /* UIImage+REFrosted.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+REFrosted.h"; sourceTree = "<group>"; };
 		115662F521770DDE0005B2EC /* UIView+REFrosted.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+REFrosted.h"; sourceTree = "<group>"; };
 		115662F621770DDE0005B2EC /* UIView+REFrosted.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+REFrosted.m"; sourceTree = "<group>"; };
+		115662F92177170B0005B2EC /* QHNodeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QHNodeViewController.h; sourceTree = "<group>"; };
+		115662FA2177170B0005B2EC /* QHNodeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QHNodeViewController.m; sourceTree = "<group>"; };
 		11C33575214D2956009D3CE1 /* QHNavigationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QHNavigationController.h; sourceTree = "<group>"; };
 		11C33576214D2956009D3CE1 /* QHNavigationController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QHNavigationController.m; sourceTree = "<group>"; };
 		11C3357E214D2B97009D3CE1 /* QHViewController+NaviBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "QHViewController+NaviBar.h"; sourceTree = "<group>"; };
@@ -415,6 +418,8 @@
 			children = (
 				11C3359A214E0C2B009D3CE1 /* QHTopicViewController.h */,
 				11C3359B214E0C2B009D3CE1 /* QHTopicViewController.m */,
+				115662F92177170B0005B2EC /* QHNodeViewController.h */,
+				115662FA2177170B0005B2EC /* QHNodeViewController.m */,
 			);
 			path = Contents;
 			sourceTree = "<group>";
@@ -794,6 +799,7 @@
 				115662EE2176EECF0005B2EC /* QHActionCellView.m in Sources */,
 				11DED65621730DAC00B832C2 /* UIImage+WebP.m in Sources */,
 				11DED62A2173046A00B832C2 /* QHTopicListCell.m in Sources */,
+				115662FB2177170C0005B2EC /* QHNodeViewController.m in Sources */,
 				11DB38CB216DF97200E63924 /* UIImage+Tint.m in Sources */,
 				11DB38D5216F1D0E00E63924 /* QHMenuView.m in Sources */,
 				11DED601217051B200B832C2 /* SCAnimationView.m in Sources */,
