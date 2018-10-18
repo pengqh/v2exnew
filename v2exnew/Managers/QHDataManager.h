@@ -10,6 +10,7 @@
 
 #import "QHTopicModel.h"
 #import "QHReplyModel.h"
+#import "QHUserModel.h"
 
 typedef NS_ENUM(NSInteger, V2ErrorType) {
     
@@ -49,6 +50,7 @@ typedef NS_ENUM (NSInteger, V2HotNodesType) {
 
 + (instancetype)manager;
 
+@property (nonatomic, strong) QHUserModel *user;
 @property (nonatomic, assign) BOOL preferHttps;
 
 #pragma mark - GET
@@ -79,6 +81,15 @@ typedef NS_ENUM (NSInteger, V2HotNodesType) {
                                          success:(void (^)(QHTopicList *list))success
                                          failure:(void (^)(NSError *error))failure;
 
+- (NSURLSessionDataTask *)getMemberNodeListSuccess:(void (^)(NSArray *list))success
+                                           failure:(void (^)(NSError *error))failure;
+
+
+- (NSURLSessionDataTask *)getMemberProfileWithUserId:(NSString *)userid
+                                            username:(NSString *)username
+                                             success:(void (^)(QHMemberModel *member))success
+                                             failure:(void (^)(NSError *error))failure;
+
 #pragma mark - Action
 
 - (NSURLSessionDataTask *)favNodeWithName:(NSString *)nodeName
@@ -104,9 +115,21 @@ typedef NS_ENUM (NSInteger, V2HotNodesType) {
                                         success:(void (^)(NSString *message))success
                                         failure:(void (^)(NSError *error))failure;
 
+
+- (NSURLSessionDataTask *)replyThankWithReplyId:(NSString *)replyId
+                                          token:(NSString *)token
+                                        success:(void (^)(NSString *message))success
+                                        failure:(void (^)(NSError *error))failure;
+
 #pragma mark - Token
 
 - (NSURLSessionDataTask *)getTopicTokenWithTopicId:(NSString *)topicId
                                            success:(void (^)(NSString *token))success
                                            failure:(void (^)(NSError *error))failure;
+
+#pragma mark - Public Request Methods - Login & Profile
+
+- (NSURLSessionDataTask *)UserLoginWithUsername:(NSString *)username password:(NSString *)password
+                                        success:(void (^)(NSString *message))success
+                                        failure:(void (^)(NSError *error))failure;
 @end

@@ -9,7 +9,10 @@
 #import "V2RootViewController.h"
 
 #import "QHCategoriesViewController.h"
+#import "QHNodesViewController.h"
+#import "QHProfileViewController.h"
 #import "QHMenuView.h"
+#import "QHLoginViewController.h"
 
 static CGFloat const kMenuWidth = 240.0;
 
@@ -17,10 +20,10 @@ static CGFloat const kMenuWidth = 240.0;
 
 @property (nonatomic, strong) QHCategoriesViewController       *latestViewController;
 @property (nonatomic, strong) QHCategoriesViewController   *categoriesViewController;
-@property (nonatomic, strong) QHCategoriesViewController        *nodesViewController;
+@property (nonatomic, strong) QHNodesViewController        *nodesViewController;
 @property (nonatomic, strong) QHCategoriesViewController     *favouriteViewController;
 @property (nonatomic, strong) QHCategoriesViewController *notificationViewController;
-@property (nonatomic, strong) QHCategoriesViewController      *profileViewController;
+@property (nonatomic, strong) QHProfileViewController      *profileViewController;
 
 @property (nonatomic, strong) QHNavigationController       *latestNavigationController;
 @property (nonatomic, strong) QHNavigationController       *categoriesNavigationController;
@@ -119,7 +122,7 @@ static CGFloat const kMenuWidth = 240.0;
     self.categoriesViewController = [[QHCategoriesViewController alloc] init];
     self.categoriesNavigationController = [[QHNavigationController alloc] initWithRootViewController:self.categoriesViewController];
     
-    self.nodesViewController        = [[UIViewController alloc] init];
+    self.nodesViewController        = [[QHNodesViewController alloc] init];
     self.nodesNavigationController = [[QHNavigationController alloc] initWithRootViewController:self.nodesViewController];
     
     self.favouriteViewController      = [[QHCategoriesViewController alloc] init];
@@ -129,8 +132,8 @@ static CGFloat const kMenuWidth = 240.0;
     self.notificationViewController = [[UIViewController alloc] init];
     self.nofificationNavigationController = [[QHNavigationController alloc] initWithRootViewController:self.notificationViewController];
     
-    self.profileViewController      = [[UIViewController alloc] init];
-    //self.profileViewController.isSelf = YES;
+    self.profileViewController      = [[QHProfileViewController alloc] init];
+    self.profileViewController.isSelf = YES;
     self.profilenavigationController = [[QHNavigationController alloc] initWithRootViewController:self.profileViewController];
     
     self.currentSelectedIndex = [QHSettingManager manager].selectedSectionIndex;
@@ -140,6 +143,17 @@ static CGFloat const kMenuWidth = 240.0;
 - (void)configureNotifications {
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didReceiveShowMenuNotification) name:kShowMenuNotification object:nil];
+
+    @weakify(self);
+    [[NSNotificationCenter defaultCenter] addObserverForName:kShowLoginVCNotification object:nil queue:nil usingBlock:^(NSNotification *note) {
+        @strongify(self);
+        
+        QHLoginViewController *loginViewController = [[QHLoginViewController alloc] init];
+        [self presentViewController:loginViewController animated:YES completion:^{
+            ;
+        }];
+        
+    }];
 }
 
 - (void)configureGestures {

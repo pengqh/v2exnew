@@ -11,6 +11,17 @@
 #import "HTMLParser.h"
 #import "RegexKitLite.h"
 
+static NSString *const kOnceString =  @"once";
+static NSString *const kNextString =  @"next";
+
+static NSString *const kUsername = @"username";
+static NSString *const kUserid = @"userid";
+static NSString *const kAvatarURL = @"avatarURL";
+static NSString *const kUserIsLogin = @"userIsLogin";
+
+static NSString *const kLoginPassword = @"p";
+static NSString *const kLoginUsername = @"u";
+
 typedef NS_ENUM(NSInteger, V2RequestMethod) {
     V2RequestMethodJSONGET    = 1,
     V2RequestMethodHTTPPOST   = 2,
@@ -36,6 +47,17 @@ typedef NS_ENUM(NSInteger, V2RequestMethod) {
         self.userAgentPC = @"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_2) AppleWebKit/537.75.14 (KHTML, like Gecko) Version/7.0.3 Safari/537.75.14";
         
         self.preferHttps = kSetting.preferHttps;
+        BOOL isLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:kUserIsLogin] boolValue];
+        if (isLogin) {
+            QHUserModel *user = [[QHUserModel alloc] init];
+            user.login = YES;
+            QHMemberModel *member = [[QHMemberModel alloc] init];
+            user.member = member;
+            user.member.memberName = [[NSUserDefaults standardUserDefaults] objectForKey:kUsername];
+            user.member.memberId = [[NSUserDefaults standardUserDefaults] objectForKey:kUserid];
+            user.member.memberAvatarLarge = [[NSUserDefaults standardUserDefaults] objectForKey:kAvatarURL];
+            _user = user;
+        }
     }
     return self;
 }
@@ -50,6 +72,27 @@ typedef NS_ENUM(NSInteger, V2RequestMethod) {
     self.manager = [[AFHTTPSessionManager alloc] initWithBaseURL:baseUrl];
     AFHTTPRequestSerializer* serializer = [AFHTTPRequestSerializer serializer];
     self.manager.requestSerializer = serializer;
+}
+
+- (void)setUser:(QHUserModel *)user {
+    _user = user;
+    
+    if (user) {
+        self.user.login = YES;
+        
+        [[NSUserDefaults standardUserDefaults] setObject:user.member.memberName forKey:kUsername];
+        [[NSUserDefaults standardUserDefaults] setObject:user.member.memberId forKey:kUserid];
+        [[NSUserDefaults standardUserDefaults] setObject:user.member.memberAvatarLarge forKey:kAvatarURL];
+        [[NSUserDefaults standardUserDefaults] setObject:@(YES) forKey:kUserIsLogin];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    } else {
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:kUsername];
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:kUserid];
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:kAvatarURL];
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:kUserIsLogin];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
+    
 }
 
 + (instancetype)manager {
@@ -280,6 +323,105 @@ typedef NS_ENUM(NSInteger, V2RequestMethod) {
     
 }
 
+- (NSURLSessionDataTask *)getMemberNodeListSuccess:(void (^)(NSArray *list))success
+                                           failure:(void (^)(NSError *error))failure {
+    
+    NSString *urlString = @"my/nodes";
+    
+    [self requestWithMethod:V2RequestMethodHTTPGET URLString:urlString parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        NSArray *list = [self getNodeListFromResponseObject:responseObject];
+        
+        if (list) {
+            success(list);
+        } else {
+            NSError *error = [[NSError alloc] initWithDomain:self.manager.baseURL.absoluteString code:V2ErrorTypeGetTopicListFailure userInfo:nil];
+            failure(error);
+        }
+    } failure:^(NSError *error) {
+        failure(error);
+    }];
+    
+    return nil;
+}
+
+- (NSURLSessionDataTask *)getMemberProfileWithUserId:(NSString *)userid
+                                            username:(NSString *)username
+                                             success:(void (^)(QHMemberModel *member))success
+                                             failure:(void (^)(NSError *error))failure {
+    
+    NSDictionary *parameters;
+    if (userid) {
+        parameters = @{
+                       @"id": userid,
+                       };
+    }
+    if (username) {
+        parameters = @{
+                       @"username": username,
+                       };
+    }
+    
+    return [self requestWithMethod:V2RequestMethodJSONGET URLString:@"/api/members/show.json" parameters:parameters success:^(NSURLSessionDataTask *task, id responseObject) {
+        if ([responseObject isKindOfClass:[NSDictionary class]]) {
+            QHMemberModel *member = [[QHMemberModel alloc] initWithDictionary:responseObject];
+            success(member);
+        } else {
+            failure(nil);
+        }
+    } failure:^(NSError *error) {
+        failure(error);
+    }];
+    
+}
+
+- (NSURLSessionDataTask *)UserLoginWithUsername:(NSString *)username password:(NSString *)password
+                                        success:(void (^)(NSString *message))success
+                                        failure:(void (^)(NSError *error))failure {
+    
+    
+    NSHTTPCookieStorage *storage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+    for (NSHTTPCookie *cookie in [storage cookies]) {
+        [storage deleteCookie:cookie];
+    }
+    
+    [self requestOnceWithURLString:@"/signin" success:^(NSString *onceString, id respnseObject) {
+        
+        NSDictionary *loginDict =  [self getLoginDictFromHtmlResponseObject:respnseObject];
+        
+        NSDictionary *parameters = @{
+                                     kOnceString: onceString,
+                                     kNextString: @"/",
+                                     loginDict[kLoginPassword] ?: @"p": password,
+                                     loginDict[kLoginUsername] ?: @"u": username,
+                                     };
+        
+        [self.manager.requestSerializer setValue:@"https://v2ex.com/signin" forHTTPHeaderField:@"Referer"];
+        
+        [self requestWithMethod:V2RequestMethodHTTPPOST URLString:@"/signin" parameters:parameters success:^(NSURLSessionDataTask *task, id responseObject) {
+            
+            NSString *htmlString = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+            
+            if ([htmlString rangeOfString:@"/notifications"].location != NSNotFound) {
+                [[QHCheckInManager manager] resetStatus];
+                success(username);
+            } else {
+                NSError *error = [[NSError alloc] initWithDomain:self.manager.baseURL.absoluteString code:V2ErrorTypeLoginFailure userInfo:nil];
+                failure(error);
+            }
+            
+        } failure:^(NSError *error) {
+            failure(error);
+        }];
+    } failure:^(NSError *error) {
+        failure(error);
+    }];
+    
+    return nil;
+}
+
+#pragma mark - Actions
+
 - (NSURLSessionDataTask *)favNodeWithName:(NSString *)nodeName
                                   success:(void (^)(NSString *message))success
                                   failure:(void (^)(NSError *error))failure {
@@ -473,6 +615,29 @@ typedef NS_ENUM(NSInteger, V2RequestMethod) {
     
 }
 
+- (NSURLSessionDataTask *)replyThankWithReplyId:(NSString *)replyId
+                                          token:(NSString *)token
+                                        success:(void (^)(NSString *message))success
+                                        failure:(void (^)(NSError *error))failure {
+    
+    if (!token) {
+        NSError *error = [[NSError alloc] initWithDomain:self.manager.baseURL.absoluteString code:V2ErrorTypeGetTopicTokenFailure userInfo:nil];
+        failure(error);
+        return nil;
+    }
+    
+    NSString *urlString = [NSString stringWithFormat:@"/thank/reply/%@?t=%@", replyId, token];
+    
+    return [self requestWithMethod:V2RequestMethodHTTPPOST URLString:urlString parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        success(@"fav success.");
+        
+    } failure:^(NSError *error) {
+        failure(error);
+    }];
+    
+}
+
 - (NSURLSessionDataTask *)topicThankWithTopicId:(NSString *)topicId
                                           token:(NSString *)token
                                         success:(void (^)(NSString *message))success
@@ -557,6 +722,142 @@ typedef NS_ENUM(NSInteger, V2RequestMethod) {
     }
     
     return token;
+}
+
+- (NSArray *)getNodeListFromResponseObject:(id)responseObject {
+    
+    NSArray *list;
+    
+    @autoreleasepool {
+        
+        
+        NSString *htmlString = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        
+        NSError *error = nil;
+        HTMLParser *parser = [[HTMLParser alloc] initWithString:htmlString error:&error];
+        
+        if (error) {
+            NSLog(@"Error: %@", error);
+        }
+        
+        HTMLNode *bodyNode = [parser body];
+        
+        HTMLNode *myNode = [bodyNode findChildWithAttribute:@"id" matchingName:@"MyNodes" allowPartial:YES];
+        NSArray *nodes = [myNode findChildrenOfClass:@"grid_item"];
+        
+        NSMutableArray *nodesArray = [[NSMutableArray alloc] init];
+        
+        [nodes enumerateObjectsUsingBlock:^(HTMLNode *node, NSUInteger idx, BOOL *stop) {
+            //            NSLog(@"string:\n%@", node.allContents);
+            HTMLNode *numberNode = [node findChildTag:@"span"];
+            NSString *nodeName = [node.allContents stringByReplacingOccurrencesOfString:numberNode.allContents withString:@""];
+            nodeName = [nodeName stringByReplacingOccurrencesOfString:@" " withString:@""];
+            NSString *regex1 = @"href=\"/go/(.*?)\"";
+            NSString *nodeIdString = [node.rawContents stringByMatching:regex1];
+            nodeIdString = [nodeIdString stringByReplacingOccurrencesOfString:@"href=\"/go/" withString:@""];
+            nodeIdString = [nodeIdString stringByReplacingOccurrencesOfString:@"\"" withString:@""];
+            
+            NSDictionary *nodeDict = @{
+                                       @"name": nodeName,
+                                       @"title": nodeIdString
+                                       };
+            [nodesArray addObject:nodeDict];
+        }];
+        
+        list = nodesArray;
+    }
+    
+    return list;
+}
+
+- (NSURLSessionDataTask *)requestOnceWithURLString:(NSString *)urlString success:(void (^)(NSString *onceString, id responseObject))success
+                                           failure:(void (^)(NSError *error))failure {
+    
+    return [self requestWithMethod:V2RequestMethodHTTPGET URLString:urlString parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        NSString *onceString = [self getOnceStringFromHtmlResponseObject:responseObject];
+        if (onceString) {
+            success(onceString, responseObject);
+        } else {
+            NSError *error = [[NSError alloc] initWithDomain:self.manager.baseURL.absoluteString code:V2ErrorTypeNoOnceAndNext userInfo:nil];
+            failure(error);
+        }
+        
+    } failure:^(NSError *error) {
+        failure(error);
+    }];
+    
+}
+
+- (NSString *)getOnceStringFromHtmlResponseObject:(id)responseObject {
+    
+    __block NSString *onceString;
+    
+    @autoreleasepool {
+        NSString *htmlString = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        
+        NSError *error = nil;
+        HTMLParser *parser = [[HTMLParser alloc] initWithString:htmlString error:&error];
+        
+        if (error) {
+            NSLog(@"Error: %@", error);
+        }
+        
+        HTMLNode *bodyNode = [parser body];
+        
+        NSArray *inputNodes = [bodyNode findChildTags:@"input"];
+        
+        [inputNodes enumerateObjectsUsingBlock:^(HTMLNode *aNode, NSUInteger idx, BOOL *stop) {
+            
+            if ([[aNode getAttributeNamed:@"name"] isEqualToString:@"once"]) {
+                onceString = [aNode getAttributeNamed:@"value"];
+            }
+            
+        }];
+        
+    }
+    
+    return onceString;
+}
+
+- (NSDictionary *)getLoginDictFromHtmlResponseObject:(id)responseObject {
+    
+    __block NSMutableDictionary *loginDict = [NSMutableDictionary new];
+    
+    @autoreleasepool {
+        NSString *htmlString = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        
+        NSError *error = nil;
+        HTMLParser *parser = [[HTMLParser alloc] initWithString:htmlString error:&error];
+        
+        if (error) {
+            NSLog(@"Error: %@", error);
+        }
+        
+        HTMLNode *bodyNode = [parser body];
+        
+        NSArray *inputNodes = [bodyNode findChildTags:@"input"];
+        
+        [inputNodes enumerateObjectsUsingBlock:^(HTMLNode *aNode, NSUInteger idx, BOOL *stop) {
+            
+            if ([[aNode getAttributeNamed:@"type"] isEqualToString:@"text"]) {
+                NSString *textName = [aNode getAttributeNamed:@"name"];
+                if (textName) {
+                    loginDict[kLoginUsername] = textName;
+                }
+            }
+            
+            if ([[aNode getAttributeNamed:@"type"] isEqualToString:@"password"]) {
+                NSString *passwordName = [aNode getAttributeNamed:@"name"];
+                if (passwordName) {
+                    loginDict[kLoginPassword] = passwordName;
+                }
+            }
+        }];
+        
+    }
+    
+    return loginDict;
 }
 
 @end

@@ -454,6 +454,37 @@
     return [UITableViewCell new];
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if (indexPath.section == 1) {
+        QHReplyModel *model = self.replyList.list[indexPath.row];
+        
+        self.actionSheet = [[SCActionSheet alloc] sc_initWithTitles:@[model.replyCreator.memberName] customViews:nil buttonTitles:@"回复", @"感谢", nil];
+        
+        @weakify(self);
+        [self.actionSheet sc_setButtonHandler:^{
+            @strongify(self);
+            
+            SCQuote *quote = [[SCQuote alloc] init];
+            quote.string = model.replyCreator.memberName;
+            quote.type = SCQuoteTypeUser;
+            
+            [self sc_setNavigationBarHidden:NO animated:YES];
+            [self.toolBarView showReplyViewWithQuotes:@[quote] animated:YES];
+            
+        } forIndex:0];
+        
+        [self.actionSheet sc_setButtonHandler:^{
+            @strongify(self);
+            
+            [self thankReplyActionWithReplyId:model.replyId];
+            
+        } forIndex:1];
+        
+        [self.actionSheet sc_show:YES];
+    }
+}
+
 #pragma mark - Configure TableCell
 
 - (QHTopicTitleCell *)configureTitleCellWithCell:(QHTopicTitleCell *)cell IndexPath:(NSIndexPath *)indexPath {
@@ -629,6 +660,41 @@
             self.HUD.customView = imageView;
             self.HUD.mode = MBProgressHUDModeCustomView;
             self.HUD.labelText = @"Failed";
+            [self.HUD hide:YES afterDelay:0.6];
+        }];
+        
+    }];
+    
+}
+
+- (void)thankReplyActionWithReplyId:(NSString *)replyId {
+    
+    self.HUD = [[MBProgressHUD alloc] initWithView:self.view];
+    self.HUD.removeFromSuperViewOnHide = YES;
+    [self.view addSubview:self.HUD];
+    [self.HUD show:YES];
+    
+    @weakify(self);
+    [self getTokenWithBlock:^(NSString *token) {
+        @strongify(self);
+        
+        [[QHDataManager manager] replyThankWithReplyId:replyId token:token success:^(NSString *message) {
+            @strongify(self);
+            UIImage *image = [UIImage imageNamed:@"37x-Checkmark"];
+            UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+            self.HUD.customView = imageView;
+            self.HUD.mode = MBProgressHUDModeCustomView;
+            self.HUD.labelText = @"已感谢";
+            [self.HUD hide:YES afterDelay:0.6];
+            
+        } failure:^(NSError *error) {
+            @strongify(self);
+            
+            UIImage *image = [UIImage imageNamed:@"37x-Checkmark"];
+            UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+            self.HUD.customView = imageView;
+            self.HUD.mode = MBProgressHUDModeCustomView;
+            self.HUD.labelText = @"感谢失败";
             [self.HUD hide:YES afterDelay:0.6];
         }];
         

@@ -8,6 +8,8 @@
 
 #import "QHMenuSectionView.h"
 #import "QHMenuSectionCell.h"
+#import "SCActionSheet.h"
+#import "SCActionSheetButton.h"
 
 static CGFloat const kAvatarHeight = 70.0f;
 
@@ -18,7 +20,7 @@ static CGFloat const kAvatarHeight = 70.0f;
 @property (nonatomic, strong) UIImageView *divideImageView;
 @property (nonatomic, strong) UILabel     *usernameLabel;
 
-//@property (nonatomic, strong) SCActionSheet      *actionSheet;
+@property (nonatomic, strong) SCActionSheet      *actionSheet;
 
 @property (nonatomic, strong) UITableView *tableView;
 
@@ -63,12 +65,12 @@ static CGFloat const kAvatarHeight = 70.0f;
     self.avatarImageView.layer.borderWidth = 1.0f;
     [self addSubview:self.avatarImageView];
     
-//    self.avatarImageView.alpha = kSetting.imageViewAlphaForCurrentTheme;
-//
-//    if ([V2DataManager manager].user.isLogin) {
-//        [self.avatarImageView setImageWithURL:[NSURL URLWithString:[V2DataManager manager].user.member.memberAvatarLarge] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
-//        self.avatarImageView.layer.borderColor = RGB(0x8a8a8a, 0.1).CGColor;
-//    }
+    self.avatarImageView.alpha = kSetting.imageViewAlphaForCurrentTheme;
+
+    if ([QHDataManager manager].user.isLogin) {
+        [self.avatarImageView setImageWithURL:[NSURL URLWithString:[QHDataManager manager].user.member.memberAvatarLarge] placeholderImage:[UIImage imageNamed:@"avatar_default"]];
+        self.avatarImageView.layer.borderColor = RGB(0x8a8a8a, 0.1).CGColor;
+    }
     
     self.avatarButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self addSubview:self.avatarButton];
@@ -82,7 +84,25 @@ static CGFloat const kAvatarHeight = 70.0f;
     
     // Handles
     [self.avatarButton bk_addEventHandler:^(id sender) {
-        
+        if (![QHDataManager manager].user.isLogin) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:kShowLoginVCNotification object:nil];
+        } else {
+            
+            self.actionSheet = [[SCActionSheet alloc] sc_initWithTitles:@[@"是否注销？"] customViews:nil buttonTitles:@"注销", nil];
+            
+            [self.actionSheet sc_configureButtonWithBlock:^(SCActionSheetButton *button) {
+                button.type = SCActionSheetButtonTypeRed;
+            } forIndex:0];
+            
+            [self.actionSheet sc_setButtonHandler:^{
+                
+                //[[QHDataManager manager] UserLogout];
+                
+            } forIndex:0];
+            
+            [self.actionSheet sc_show:YES];
+            
+        }
     } forControlEvents:UIControlEventTouchUpInside];
     
 }

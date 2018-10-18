@@ -97,4 +97,27 @@
     }
 }
 
+#pragma mark - Placeholder Methods
+- (void)textChanged:(NSNotification *)notification
+{
+    if([[self placeholder] length] == 0)
+    {
+        return;
+    }
+    
+    if([[self text] length] == 0)
+    {
+        [[self viewWithTag:999] setAlpha:1];
+    }
+    else
+    {
+        [[self viewWithTag:999] setAlpha:0];
+    }
+}
+
+- (void)setText:(NSString *)text {
+    [super setText:text];
+    [self textChanged:nil];
+}
+
 @end

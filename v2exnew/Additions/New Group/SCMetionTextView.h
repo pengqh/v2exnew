@@ -20,7 +20,7 @@
 @property (nonatomic, copy) BOOL (^textViewShouldChangeBlock)(UITextView *textView, NSString *text);
 @property (nonatomic, copy) void (^textViewDidChangeBlock)(UITextView *textView);
 
-@property (nonatomic, copy) void (^textViewDidAddQuoteSuccessBlock)();
+@property (nonatomic, copy) void (^textViewDidAddQuoteSuccessBlock)(void);
 
 // getter
 @property (nonatomic, copy) NSString *renderedString;

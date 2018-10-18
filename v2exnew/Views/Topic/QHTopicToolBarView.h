@@ -12,7 +12,7 @@
 
 @property (nonatomic, assign, getter = isCreate) BOOL create;
 
-@property (nonatomic, copy) void (^insertImageBlock)();
+@property (nonatomic, copy) void (^insertImageBlock)(void);
 @property (nonatomic, copy) void (^contentIsEmptyBlock)(BOOL isEmpty);
 
 - (void)showReplyViewWithQuotes:(NSArray *)quotes animated:(BOOL)animated;
